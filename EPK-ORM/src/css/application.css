@@ -1,0 +1,166 @@
+.root {
+	-fx-box-border: transparent;
+}
+
+#start-lehrer-auswahl .label {
+	-fx-border-color: transparent;
+	-fx-border-width: 20.0;
+	-fx-text-alignment: center;
+	-fx-font-size: 20.0;
+}
+
+#start-lehrer-auswahl .tile-lehrer-auswahl {
+	-fx-alignment: center;
+	-fx-padding: 15.0px;
+}
+
+#start-lehrer-auswahl .tile-lehrer-auswahl .label {
+	-fx-font-size: 15.0;
+	-fx-font-weight: bold;
+	-fx-alignment: center;
+	-fx-background-color: red;
+	-fx-background-radius: 5.0;
+	-fx-background-insets: 3.0;
+	-fx-border-color: blue;
+	-fx-border-radius: 5.0;
+	-fx-border-insets: 3.0;
+	-fx-border-width: 2.0;
+	-fx-border-style: solid;
+}
+
+#start-lehrer-auswahl .tile-lehrer-auswahl .label:hover {
+	-fx-background-color: lightskyblue;
+}
+
+.tab-pane {
+	-fx-padding: 1.0 5.0 0.0 10.0;
+}
+
+.anim-label {
+	-fx-font-size: 20.0;
+	-fx-font-weight: bold;
+	-fx-alignment: center;
+	-fx-background-color: lightskyblue;
+	-fx-background-radius: 5.0;
+	-fx-background-insets: 3.0;
+	-fx-border-color: blue;
+	-fx-border-radius: 5.0;
+	-fx-border-insets: 3.0;
+	-fx-border-width: 2.0;
+	-fx-border-style: solid;
+}
+
+.anim-label-active {
+	-fx-background-color: navajowhite;
+}
+
+.rahmen {
+	-fx-border-color: blue;
+	-fx-border-radius: 5.0;
+	-fx-border-insets: 3.0;
+	-fx-border-width: 1.0;
+	-fx-border-style: solid;
+}
+
+.sos-info-zeile {
+	-fx-font-weight: bold;
+	-fx-font-size: 16.0pt;
+	-fx-background-color: navajowhite;
+	-fx-background-insets: 3.0;
+	-fx-background-radius: 5.0;
+	-fx-text-alignment: center;
+}
+
+.sos-info-zeile .schule {
+	-fx-font-weight: normal;
+	-fx-font-size: 16.0pt;
+}
+
+.sos-info-zeile .empf-gym {
+	-fx-text-fill: forestgreen;
+}
+
+.sos-info-zeile .empf-eingeschr {
+	-fx-text-fill: crimson;
+}
+
+.titled-pane>.title {
+	-fx-background-color: lightblue;
+	-fx-background-radius: 4.0;
+	-fx-padding: -2 0.0 -2 20;
+}
+
+.epkbox-notenzeile {
+	-fx-background-color: white;
+	-fx-background-insets: 0.0 0.0 5.0 0.0;
+	-fx-padding: 12.0 2.0 2.0 10.0;
+	-fx-font-weight: bold;
+	-fx-font-size: 14.0pt;
+}
+
+.note-einzel-box {
+	-fx-alignment: center;
+}
+
+.note-einzel-box .label {
+	-fx-padding: -7.0 5.0 0.0 20.0;
+}
+
+.note-gut .label {
+	-fx-text-fill: green;
+}
+
+.note-schlecht .label {
+	-fx-text-fill: red;
+}
+
+.konferenz-box {
+	
+}
+
+.bemerkung-tab {
+	-fx-font-size: 12pt;
+}
+
+.bemerkung {
+	-fx-background-color: lightgrey;
+	-fx-padding: -2 0.0 -2 6;
+}
+
+.junge-bemerkung {
+	-fx-background-color: navajowhite;
+}
+
+.neue-bemerkung {
+	-fx-background-color: #bbeebb;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+.editierbar:hover {
+	-fx-opacity: 0.5;
+}
+
+.unterschrift {
+	
+}
+
+.neu-unterschrieben {
+	-fx-text-fill: orangered;
+	-fx-font-weight: bold;
+}
+
+.aktuell-ist-unterzeichner {
+	
+}
