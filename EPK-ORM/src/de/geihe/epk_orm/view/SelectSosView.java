@@ -19,8 +19,7 @@ public class SelectSosView extends AbstractSelectView<Sos, SelectSosController> 
 	private ListView<Sos> listView;
 	private SelectSosController controller;
 
-	public SelectSosView(SelectSosController controller,
-			ObservableList<Sos> list) {
+	public SelectSosView(SelectSosController controller, ObservableList<Sos> list) {
 		super(controller, list);
 
 		this.controller = controller;
@@ -34,16 +33,19 @@ public class SelectSosView extends AbstractSelectView<Sos, SelectSosController> 
 
 	private void createListView(ObservableList<Sos> list) {
 		if (checkMode()) {
-			listView = new CheckListView<Sos>(list);
+			if (list == null) { // new Checklistview(null) ergibt Fehler
+				listView = new CheckListView<Sos>();
+			} else {
+				listView = new CheckListView<Sos>(list);
+			}
 		} else {
 			listView = new ListView<Sos>(list);
 		}
-		listView.getSelectionModel().selectedItemProperty()
-				.addListener((ov, alt, neu) -> {
-					if (neu != null && alt != neu) {
-						controller.newSelection(neu);
-					}
-				});
+		listView.getSelectionModel().selectedItemProperty().addListener((ov, alt, neu) -> {
+			if (neu != null && alt != neu) {
+				controller.newSelection(neu);
+			}
+		});
 	}
 
 	public ObservableList<Sos> getChecked() {
@@ -68,10 +70,12 @@ public class SelectSosView extends AbstractSelectView<Sos, SelectSosController> 
 
 	@Override
 	public void update() {
-		listView.setItems(getList());
-
-		listView.getSelectionModel().selectFirst();
-		listView.requestFocus();
+		ObservableList<Sos> l = getList();
+		if (l != null) {
+			listView.setItems(getList());
+			listView.getSelectionModel().selectFirst();
+			listView.requestFocus();
+		}
 	}
 
 	@Override
