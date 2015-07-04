@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -89,12 +91,13 @@ public class Main_ORM extends Application {
 			starteLehrerAuswahl();
 			break;
 		case READONLY:
-			Dialogs.create()
-					.title("Nur-Lesen-Modus")
-					.message(
-							"Das Programm befindet sich im Nur-Lesen-Modus,\n"
-									+ "weil Herr Geihe gerade etwas wichtiges an der Datenbank macht :-)")
-					.showWarning();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Hinweis");
+			alert.setHeaderText("Nur-Lesen-Modus");
+			alert.setContentText("Das Programm befindet sich im Nur-Lesen-Modus,\n"
+					+ "weil Herr Geihe gerade etwas wichtiges an der Datenbank macht :-)");
+			alert.showAndWait();
+
 
 		case KONFERENZ:
 		case ADMIN:
