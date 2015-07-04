@@ -61,7 +61,7 @@ public class NotenTab extends Tab {
 	}
 
 	private void fachWahl(String newString) {
-		fach = Fach.getId(newString);
+		fach = R.getFachManager().getFach(newString).getId();
 		dialog.close();
 		update();
 	}
@@ -83,7 +83,7 @@ public class NotenTab extends Tab {
 		}
 
 		String epkString = epk.toLangString();
-		String fachString = Fach.toStringLang(fach);
+		String fachString = R.getFachManager().getFach(fach).getfachstringLang();
 		titel = new Text("Noteneingabe " + fachString + "\n" + epkString);
 		titel.setFont(Font.font(25));
 

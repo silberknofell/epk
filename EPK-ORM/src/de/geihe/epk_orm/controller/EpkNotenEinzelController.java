@@ -19,7 +19,7 @@ public class EpkNotenEinzelController extends
 	}
 
 	public String getFachString() {
-		return Fach.toString(note.getFach());
+		return note.getFachString();
 	}
 
 	public String getNoteString() {

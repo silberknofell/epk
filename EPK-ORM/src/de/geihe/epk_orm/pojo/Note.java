@@ -3,6 +3,7 @@ package de.geihe.epk_orm.pojo;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.db.daos.EpkDao;
 import de.geihe.epk_orm.db.daos.NoteDao;
 
@@ -82,10 +83,18 @@ public class Note extends EntityMitEpk {
 		return notenArray;
 	}
 
-	public int getFach() {
+	public int getFachId() {
 		return fach_id;
 	}
 
+	public Fach getFach() {
+		return R.getFachManager().getFach(fach_id);
+	}
+	
+	public String getFachString() {
+		return getFach().fachstring;
+	}
+	
 	public Lehrer getLehrer() {
 		return lehrer;
 	}

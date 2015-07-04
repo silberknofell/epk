@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.stage.FileChooser;
 
@@ -13,6 +15,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 
 import de.geihe.epk_orm.Logger;
 import de.geihe.epk_orm.R;
+import de.geihe.epk_orm.manager.FachManager;
 import de.geihe.epk_orm.pojo.Epk;
 import de.geihe.epk_orm.pojo.Fach;
 import de.geihe.epk_orm.pojo.Note;
@@ -88,12 +91,17 @@ public class Importer {
 
 	private void importNoten(Epk epk) throws IOException {
 
+		FachManager fachManager = R.getFachManager();
+		
 		int schild_id = Integer.parseInt(schild.get(0));
-		for (String fachString : Fach.getFaecherListeSchild()) {
+		List<String> fl = fachManager.getFachListe().stream()
+				.map(fach -> fach.schildString())
+				.collect(Collectors.toList());
+		for (String fachString : fl) {
 			String fachSchild = fachString + "_Punkte";
 			String punkteString = schild.get(fachSchild);
 			if (punkteString.length() > 0) {
-				createNote(epk, schild_id, Fach.getId(fachString), punkteString);
+				createNote(epk, schild_id,fachManager.getFach(fachString).getId(), punkteString);
 				frageNoteInDBab();
 				if (noteSchonInDB) {
 					updateNoteInDB();
@@ -106,8 +114,10 @@ public class Importer {
 
 	private void createNote(Epk epk, int schild_id, int fach_id,
 			String punkteString) {
-		l.log(epk.toString() + " " + Integer.toString(schild_id) + " "
-				+ Fach.toString(fach_id) + " " + punkteString);
+		l.log(epk.toString() 
+				+ " " + Integer.toString(schild_id) + " "
+				+ R.getFachManager().getFach(fach_id).getFachString() + " " 
+				+ punkteString);
 
 		Sos sos = null;
 		sos = R.DB.sosDao.queryForId(schild_id);
@@ -124,7 +134,7 @@ public class Importer {
 		QueryBuilder<Note, Integer> qb = R.DB.noteDao.queryBuilder();
 		try {
 			Note dbNote = qb.where().eq("sos_id", note.getSos().getId()).and()
-					.eq("fach_id", note.getFach()).and()
+					.eq("fach_id", note.getFachId()).and()
 					.eq("epk_id", note.getEpk_id()).queryForFirst();
 
 			if (dbNote != null) {

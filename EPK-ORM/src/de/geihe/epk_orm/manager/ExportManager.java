@@ -138,7 +138,8 @@ public class ExportManager {
 			ende = " </span>";
 		}
 
-		text.append(start).append(Fach.toString(note.getFach())).append(" ")
+		
+		text.append(start).append(note.getFachString()).append(" ")
 		.append(note.toString()).append("  ").append(ende);
 
 		listBuilder.add("einzel-note", text.toString());

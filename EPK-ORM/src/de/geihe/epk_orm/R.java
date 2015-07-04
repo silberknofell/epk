@@ -29,6 +29,7 @@ import de.geihe.epk_orm.db.daos.SosDao;
 import de.geihe.epk_orm.db.daos.TextbausteinDao;
 import de.geihe.epk_orm.db.daos.UnterschriftDao;
 import de.geihe.epk_orm.inout.PrintOptions;
+import de.geihe.epk_orm.manager.FachManager;
 import de.geihe.epk_orm.manager.SceneManager;
 import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.Epk;
@@ -53,6 +54,16 @@ public final class R {
 	}
 	
 	public static SceneManager sceneManager;
+	
+	private static FachManager fachManager;
+	public static FachManager getFachManager() {
+		if (fachManager==null) {
+			fachManager = new FachManager();
+		}
+		return fachManager;
+	}
+	
+	
 	public static MenuBar menuBar;
 
 	public static final class DB {
