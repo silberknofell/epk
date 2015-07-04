@@ -13,7 +13,7 @@ public class Note extends EntityMitEpk {
 		Note note = new Note();
 		note.setSos(sos);
 		note.setEpk_id(epk.getId());
-		note.setFach(fach_id);
+		note.setFachId(fach_id);		
 		return note;
 	}
 
@@ -33,6 +33,8 @@ public class Note extends EntityMitEpk {
 
 	@DatabaseField
 	private int note_s;
+	
+	private Fach fach;
 
 	// Bei falscher Eingabe wird -1 zurückgegeben
 	public static int parseEineNote(String note) {
@@ -88,11 +90,14 @@ public class Note extends EntityMitEpk {
 	}
 
 	public Fach getFach() {
-		return R.getFachManager().getFach(fach_id);
+		if (fach==null) {
+			fach = R.getFachManager().getFach(fach_id);
+		}
+		return fach;
 	}
 	
 	public String getFachString() {
-		return getFach().fachstring;
+		return getFach().getFachString();
 	}
 	
 	public Lehrer getLehrer() {
@@ -107,8 +112,9 @@ public class Note extends EntityMitEpk {
 		return note_s;
 	}
 
-	public void setFach(int fach) {
-		this.fach_id = fach;
+	public void setFachId(int fach_id) {
+		this.fach_id = fach_id;
+		this.fach = R.getFachManager().getFach(fach_id);
 	}
 
 	public void setLehrer(Lehrer lehrer) {

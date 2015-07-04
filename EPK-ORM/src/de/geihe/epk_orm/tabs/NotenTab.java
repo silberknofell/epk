@@ -22,7 +22,7 @@ import de.geihe.epk_orm.scenes.FachSelectScene;
 public class NotenTab extends Tab {
 	private List<Sos> sosList;
 	private Epk epk;
-	private int fach;
+	private Fach fach;
 	private Stage dialog;
 	VBox vbox;
 
@@ -53,15 +53,14 @@ public class NotenTab extends Tab {
 		dialog.initModality(Modality.WINDOW_MODAL);
 		FachSelectScene fachSelectScene = new FachSelectScene();
 		fachSelectScene
-		.setListener((ov, oldString, newString) -> fachWahl(newString));
+		.setListener((ov, oldFach, newFach) -> fachWahl(newFach));
 		dialog.setScene(fachSelectScene);
 		System.out.println("Fach auswählen");
 		dialog.showAndWait();
-
 	}
 
-	private void fachWahl(String newString) {
-		fach = R.getFachManager().getFach(newString).getId();
+	private void fachWahl(Fach newFach) {
+		fach = newFach;
 		dialog.close();
 		update();
 	}
@@ -77,13 +76,13 @@ public class NotenTab extends Tab {
 		if (sosList == null) {
 			return;
 		}
-		if (fach == 0 || epk == null) {
+		if (fach == null || fach.getId() == 0 || epk == null) {
 			System.out.println("Fehler: " + fach + epk);
 			return;
 		}
 
 		String epkString = epk.toLangString();
-		String fachString = R.getFachManager().getFach(fach).getfachstringLang();
+		String fachString = fach.getfachstringLang();
 		titel = new Text("Noteneingabe " + fachString + "\n" + epkString);
 		titel.setFont(Font.font(25));
 
@@ -92,7 +91,7 @@ public class NotenTab extends Tab {
 
 		NotenEinzelController nec;
 		for (Sos sos : sosList) {
-			nec = new NotenEinzelController(sos, fach, epk);
+			nec = new NotenEinzelController(sos, fach.getId(), epk);
 			vbox.getChildren().add(nec.getView().getNode());
 		}
 

@@ -114,15 +114,16 @@ public class Importer {
 
 	private void createNote(Epk epk, int schild_id, int fach_id,
 			String punkteString) {
-		l.log(epk.toString() 
-				+ " " + Integer.toString(schild_id) + " "
-				+ R.getFachManager().getFach(fach_id).getFachString() + " " 
-				+ punkteString);
 
 		Sos sos = null;
 		sos = R.DB.sosDao.queryForId(schild_id);
-
 		note = Note.neueNote(sos, fach_id, epk);
+		
+		l.log(epk.toString() 
+				+ " " + Integer.toString(schild_id) + " "
+				+ note.getFach().getFachString() + " " 
+				+ punkteString);
+		
 		int punkte_schriftlich = -1;
 		int punkte_gesamt = Integer.parseInt(punkteString);
 		note.setNote_s(punkte_schriftlich);

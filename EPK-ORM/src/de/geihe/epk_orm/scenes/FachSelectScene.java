@@ -16,7 +16,7 @@ import de.geihe.epk_orm.view.AnimSelectView;
 
 public class FachSelectScene extends Scene {
 
-	private AnimSelectView<String> fachSelect;
+	private AnimSelectView<Fach> fachSelect;
 
 	public FachSelectScene() {
 		super(new VBox(10));
@@ -26,16 +26,13 @@ public class FachSelectScene extends Scene {
 		Text text = new Text("Bitte Fach wählen:");
 		text.setFont(Font.font(20));
 
-		List<String> faecherliste = R.getFachManager().getFachListe().stream()
-				.map(fach -> fach.getFachString())
-				.collect(Collectors.toList());
-//		List<String> faecherliste = Arrays.asList(Fach.getFaecherListe());
-		fachSelect = new AnimSelectView<String>(faecherliste);
+		List<Fach> faecherliste = R.getFachManager().getFachListe();
+		fachSelect = new AnimSelectView<Fach>(faecherliste);
 		fachSelect.setPrefWidth(260);
 		root.getChildren().addAll(text, fachSelect.getNode());
 	}
 
-	public void setListener(ChangeListener<String> listener) {
+	public void setListener(ChangeListener<Fach> listener) {
 		fachSelect.addListener(listener);
 	}
 }
