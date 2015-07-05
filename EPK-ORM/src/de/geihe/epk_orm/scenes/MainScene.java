@@ -36,14 +36,7 @@ public class MainScene extends SosListScene {
 
 		if (R.mode == Mode.ADMIN) {
 			createPrintTab();
-			createImportTab();
 		}
-	}
-
-	private void createImportTab() {
-//		importTab = new NotenImportTab(this);
-		addTab(importTab);
-		
 	}
 
 	private void createStatusLine() {

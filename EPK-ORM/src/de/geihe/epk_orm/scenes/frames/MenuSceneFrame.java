@@ -20,7 +20,7 @@ public class MenuSceneFrame extends Scene {
 		if (R.mode == Mode.ADMIN) {
 			addTop(R.menuBar);
 		}
-
+		
 		mainBorderPane = (BorderPane) getRoot();
 		mainBorderPane.setTop(headBox);
 

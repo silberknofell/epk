@@ -59,9 +59,9 @@ public class SceneManager {
 		stage.setScene(getMainScene());
 	}
 
-	public Object showNoten() {
-		// TODO Auto-generated method stub
-		return null;
+	public void showNoten() {
+		getMainScene().focusOnNotenTab();
+		stage.setScene(getMainScene());
 	}
 
 	public void showBems() {
