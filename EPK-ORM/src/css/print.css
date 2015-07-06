@@ -9,8 +9,7 @@
 		padding: 5px 5px 8px 15px;
 	}
 	div.sos {
-		page-break-inside: avoid;
-		page-break-after: always;
+		page-break-after: right;
 		clear: both;
 		margin: 10%;
 	}
@@ -48,6 +47,7 @@
 		border: 1px solid blue;
 		border-radius: 7px;
 		clear: both;
+		page-break-inside: avoid;
 	}
 	.table-row {
 		width: 100%;
@@ -61,19 +61,23 @@
 	.bem-list {
 		padding-left: 6px;
 		margin: 3px;
+		page-break-inside: avoid;
 	}
 	.konferenz {
 		background: #ddd;
 		margin-bottom: 4px;
 		padding: 7px;
+		page-break-inside: avoid;
 	}
 	.noten {
 		background: #ddffff;
 		border-radius: 7px;
 		margin: 5px 0px;
+		page-break-inside: avoid;
 	}
 	.note-liste {
 		display: inline;
+		page-break-inside: avoid;
 	}
 	.einzel-note {
 		display: inline;
