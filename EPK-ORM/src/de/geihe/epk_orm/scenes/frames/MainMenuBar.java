@@ -1,11 +1,11 @@
 package de.geihe.epk_orm.scenes.frames;
 
+import de.geihe.epk_orm.manager.SceneManager;
 import javafx.application.Platform;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import de.geihe.epk_orm.manager.SceneManager;
 
 public class MainMenuBar extends MenuBar {
 	SceneManager sceneManager;
@@ -59,7 +59,7 @@ public class MainMenuBar extends MenuBar {
 		CheckMenuItem jahrgang = new CheckMenuItem("_Jahrgang");
 		jahrgang.setId("Jahrgang");
 		jahrgang.setDisable(true);
-		
+
 		CheckMenuItem defizit = new CheckMenuItem("De_fizit");
 		defizit.setId("Defizit");
 		defizit.setDisable(true);

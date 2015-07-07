@@ -1,9 +1,9 @@
 package de.geihe.epk_orm.scenes;
 
+import de.geihe.epk_orm.controller.SelectLehrerController;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import de.geihe.epk_orm.controller.SelectLehrerController;
 
 public class SelectLehrerScene extends Scene {
 

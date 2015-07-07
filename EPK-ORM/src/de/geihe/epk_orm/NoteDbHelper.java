@@ -14,8 +14,7 @@ public class NoteDbHelper {
 	public NoteDbHelper(Sos sos, int fach_id, Epk epk) {
 		try {
 			QueryBuilder<Note, Integer> qb = R.DB.noteDao.queryBuilder();
-			qb.where().eq("sos_id", sos.getId()).and().eq("fach_id", fach_id)
-			.and().eq("epk_id", epk.getId());
+			qb.where().eq("sos_id", sos.getId()).and().eq("fach_id", fach_id).and().eq("epk_id", epk.getId());
 
 			note = qb.queryForFirst();
 

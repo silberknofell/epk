@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javafx.stage.FileChooser;
-
 import com.csvreader.CsvReader;
 import com.j256.ormlite.stmt.QueryBuilder;
 
@@ -17,9 +15,9 @@ import de.geihe.epk_orm.Logger;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.manager.FachManager;
 import de.geihe.epk_orm.pojo.Epk;
-import de.geihe.epk_orm.pojo.Fach;
 import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.pojo.Sos;
+import javafx.stage.FileChooser;
 
 public class Importer {
 	private static final String AKT_HALBJAHR = "Aktuelles Halbjahr";
@@ -48,8 +46,7 @@ public class Importer {
 
 	public void importNotenFromFile() {
 		try {
-			schild = new CsvReader(inputFile.getAbsolutePath(), ';',
-					StandardCharsets.UTF_8);
+			schild = new CsvReader(inputFile.getAbsolutePath(), ';', StandardCharsets.UTF_8);
 
 			schild.readHeaders();
 
@@ -79,8 +76,7 @@ public class Importer {
 
 			epk = Epk.getEpk(schildHalbjahr, schildKlasse);
 			if (epk == null) {
-				l.log("Keine Epk zu " + schildKlasse + " und " + schildHalbjahr
-						+ " gefunden.");
+				l.log("Keine Epk zu " + schildKlasse + " und " + schildHalbjahr + " gefunden.");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -92,16 +88,15 @@ public class Importer {
 	private void importNoten(Epk epk) throws IOException {
 
 		FachManager fachManager = R.getFachManager();
-		
+
 		int schild_id = Integer.parseInt(schild.get(0));
-		List<String> fl = fachManager.getFachListe().stream()
-				.map(fach -> fach.schildString())
+		List<String> fl = fachManager.getFachListe().stream().map(fach -> fach.schildString())
 				.collect(Collectors.toList());
 		for (String fachString : fl) {
 			String fachSchild = fachString + "_Punkte";
 			String punkteString = schild.get(fachSchild);
 			if (punkteString.length() > 0) {
-				createNote(epk, schild_id,fachManager.getFach(fachString).getId(), punkteString);
+				createNote(epk, schild_id, fachManager.getFach(fachString).getId(), punkteString);
 				frageNoteInDBab();
 				if (noteSchonInDB) {
 					updateNoteInDB();
@@ -112,18 +107,15 @@ public class Importer {
 		}
 	}
 
-	private void createNote(Epk epk, int schild_id, int fach_id,
-			String punkteString) {
+	private void createNote(Epk epk, int schild_id, int fach_id, String punkteString) {
 
 		Sos sos = null;
 		sos = R.DB.sosDao.queryForId(schild_id);
 		note = Note.neueNote(sos, fach_id, epk);
-		
-		l.log(epk.toString() 
-				+ " " + Integer.toString(schild_id) + " "
-				+ note.getFach().getFachString() + " " 
+
+		l.log(epk.toString() + " " + Integer.toString(schild_id) + " " + note.getFach().getFachString() + " "
 				+ punkteString);
-		
+
 		int punkte_schriftlich = -1;
 		int punkte_gesamt = Integer.parseInt(punkteString);
 		note.setNote_s(punkte_schriftlich);
@@ -134,8 +126,7 @@ public class Importer {
 	private void frageNoteInDBab() {
 		QueryBuilder<Note, Integer> qb = R.DB.noteDao.queryBuilder();
 		try {
-			Note dbNote = qb.where().eq("sos_id", note.getSos().getId()).and()
-					.eq("fach_id", note.getFachId()).and()
+			Note dbNote = qb.where().eq("sos_id", note.getSos().getId()).and().eq("fach_id", note.getFachId()).and()
 					.eq("epk_id", note.getEpk_id()).queryForFirst();
 
 			if (dbNote != null) {

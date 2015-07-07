@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import de.geihe.epk_orm.db.daos.SchuleDao;
 
-@DatabaseTable(tableName = "schule", daoClass=SchuleDao.class)
+@DatabaseTable(tableName = "schule", daoClass = SchuleDao.class)
 public class Schule extends Entity {
 
 	@DatabaseField

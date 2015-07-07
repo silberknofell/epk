@@ -8,8 +8,7 @@ import de.geihe.epk_orm.pojo.TextBaustein;
 
 public class TextbausteinDao extends EntityDao<TextBaustein> {
 
-	public TextbausteinDao(ConnectionSource connectionSource,
-			Class<TextBaustein> dataClass) throws SQLException {
+	public TextbausteinDao(ConnectionSource connectionSource, Class<TextBaustein> dataClass) throws SQLException {
 		super(connectionSource, dataClass);
 	}
 

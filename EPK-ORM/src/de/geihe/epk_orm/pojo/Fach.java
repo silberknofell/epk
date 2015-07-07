@@ -1,7 +1,5 @@
 package de.geihe.epk_orm.pojo;
 
-import java.util.Arrays;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 

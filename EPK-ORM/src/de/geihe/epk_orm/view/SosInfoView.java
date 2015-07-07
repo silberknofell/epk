@@ -1,13 +1,13 @@
 package de.geihe.epk_orm.view;
 
+import de.geihe.epk_orm.pojo.Empfehlung;
+import de.geihe.epk_orm.pojo.Sos;
+import de.geihe.epk_orm.view.abstr_and_interf.AbstractShowView;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import de.geihe.epk_orm.pojo.Empfehlung;
-import de.geihe.epk_orm.pojo.Sos;
-import de.geihe.epk_orm.view.abstr_and_interf.AbstractShowView;
 
 public class SosInfoView extends AbstractShowView<Sos> {
 

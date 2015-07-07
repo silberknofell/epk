@@ -1,14 +1,13 @@
 package de.geihe.epk_orm.view;
 
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import de.geihe.epk_orm.controller.EpkNotenEinzelController;
 import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 import de.geihe.epk_orm.view.abstr_and_interf.EditView;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
-public class EpkNoteEinzelView extends
-AbstractControlledView<EpkNotenEinzelController> implements EditView {
+public class EpkNoteEinzelView extends AbstractControlledView<EpkNotenEinzelController>implements EditView {
 
 	private static final String NOTE_SCHLECHT = "note-schlecht";
 	private static final String NOTE_GUT = "note-gut";

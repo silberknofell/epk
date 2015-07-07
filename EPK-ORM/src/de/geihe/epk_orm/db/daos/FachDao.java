@@ -8,12 +8,9 @@ import de.geihe.epk_orm.pojo.Fach;
 
 public class FachDao extends EntityDao<Fach> {
 
-	public FachDao(ConnectionSource connectionSource, Class<Fach> dataClass)
-			throws SQLException {
+	public FachDao(ConnectionSource connectionSource, Class<Fach> dataClass) throws SQLException {
 		super(connectionSource, dataClass);
 		// TODO Auto-generated constructor stub
 	}
-
-
 
 }

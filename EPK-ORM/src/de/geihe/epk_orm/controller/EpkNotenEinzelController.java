@@ -3,12 +3,10 @@ package de.geihe.epk_orm.controller;
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.abstr_and_interf.AbstractEditViewController;
-import de.geihe.epk_orm.pojo.Fach;
 import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.view.EpkNoteEinzelView;
 
-public class EpkNotenEinzelController extends
-		AbstractEditViewController<EpkNoteEinzelView> {
+public class EpkNotenEinzelController extends AbstractEditViewController<EpkNoteEinzelView> {
 
 	private Note note;
 
@@ -41,11 +39,11 @@ public class EpkNotenEinzelController extends
 
 	@Override
 	public boolean isEditierbar() {
-		if (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ) {
+		if ((R.mode == Mode.ADMIN) || (R.mode == Mode.KONFERENZ)) {
 			return true;
 		}
 
-		return R.mode == Mode.EINGABE && isAktuelleEPK();
+		return (R.mode == Mode.EINGABE) && isAktuelleEPK();
 	}
 
 	private boolean isAktuelleEPK() {

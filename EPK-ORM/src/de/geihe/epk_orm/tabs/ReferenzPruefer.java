@@ -81,7 +81,7 @@ public class ReferenzPruefer {
 
 	}
 
-	private void pruefeBemerkung()  {
+	private void pruefeBemerkung() {
 		int anz = 0;
 		int exSos = 0;
 		int exEpk = 0;

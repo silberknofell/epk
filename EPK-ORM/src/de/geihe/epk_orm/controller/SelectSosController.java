@@ -5,8 +5,7 @@ import de.geihe.epk_orm.pojo.Sos;
 import de.geihe.epk_orm.scenes.frames.SosListScene;
 import de.geihe.epk_orm.view.SelectSosView;
 
-public class SelectSosController extends
-		AbstractSelectViewController<SelectSosView, Sos> {
+public class SelectSosController extends AbstractSelectViewController<SelectSosView, Sos> {
 
 	private SosListScene esc;
 

@@ -2,6 +2,13 @@ package de.geihe.epk_orm.tabs;
 
 import java.util.List;
 
+import de.geihe.epk_orm.Main_ORM;
+import de.geihe.epk_orm.R;
+import de.geihe.epk_orm.controller.NotenEinzelController;
+import de.geihe.epk_orm.pojo.Epk;
+import de.geihe.epk_orm.pojo.Fach;
+import de.geihe.epk_orm.pojo.Sos;
+import de.geihe.epk_orm.scenes.FachSelectScene;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -11,13 +18,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import de.geihe.epk_orm.Main_ORM;
-import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.controller.NotenEinzelController;
-import de.geihe.epk_orm.pojo.Epk;
-import de.geihe.epk_orm.pojo.Fach;
-import de.geihe.epk_orm.pojo.Sos;
-import de.geihe.epk_orm.scenes.FachSelectScene;
 
 public class NotenTab extends Tab {
 	private List<Sos> sosList;
@@ -52,8 +52,7 @@ public class NotenTab extends Tab {
 		dialog.initOwner(Main_ORM.stage);
 		dialog.initModality(Modality.WINDOW_MODAL);
 		FachSelectScene fachSelectScene = new FachSelectScene();
-		fachSelectScene
-		.setListener((ov, oldFach, newFach) -> fachWahl(newFach));
+		fachSelectScene.setListener((ov, oldFach, newFach) -> fachWahl(newFach));
 		dialog.setScene(fachSelectScene);
 		System.out.println("Fach auswählen");
 		dialog.showAndWait();
@@ -76,7 +75,7 @@ public class NotenTab extends Tab {
 		if (sosList == null) {
 			return;
 		}
-		if (fach == null || fach.getId() == 0 || epk == null) {
+		if ((fach == null) || (fach.getId() == 0) || (epk == null)) {
 			System.out.println("Fehler: " + fach + epk);
 			return;
 		}

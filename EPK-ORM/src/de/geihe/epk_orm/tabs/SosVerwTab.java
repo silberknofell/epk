@@ -1,5 +1,12 @@
 package de.geihe.epk_orm.tabs;
 
+import de.geihe.epk_orm.Mode;
+import de.geihe.epk_orm.R;
+import de.geihe.epk_orm.controller.GutachtenController;
+import de.geihe.epk_orm.controller.SosVerwController;
+import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
+import de.geihe.epk_orm.pojo.Klasse;
+import de.geihe.epk_orm.pojo.Sos;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -11,13 +18,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.web.WebView;
-import de.geihe.epk_orm.Mode;
-import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.controller.GutachtenController;
-import de.geihe.epk_orm.controller.SosVerwController;
-import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
-import de.geihe.epk_orm.pojo.Klasse;
-import de.geihe.epk_orm.pojo.Sos;
 
 public class SosVerwTab extends Tab {
 	private Sos sos;
@@ -77,11 +77,8 @@ public class SosVerwTab extends Tab {
 		cbKlasse = new ComboBox<Klasse>();
 
 		if (controller.klasseEditierbar()) {
-			cbKlasse.getSelectionModel()
-			.selectedItemProperty()
-			.addListener(
-					(ov, oldKlasse, newKlasse) -> controller
-					.changeKlasse(sos, newKlasse));
+			cbKlasse.getSelectionModel().selectedItemProperty()
+					.addListener((ov, oldKlasse, newKlasse) -> controller.changeKlasse(sos, newKlasse));
 		}
 
 		gridPane.add(getLabel("Klasse"), 0, 0);
@@ -121,7 +118,7 @@ public class SosVerwTab extends Tab {
 	}
 
 	private void updateBtArchiv() {
-		btArchiv.setVisible(!sos.isArchiv() && R.mode == Mode.ADMIN);
+		btArchiv.setVisible(!sos.isArchiv() && (R.mode == Mode.ADMIN));
 
 	}
 
@@ -134,8 +131,7 @@ public class SosVerwTab extends Tab {
 		if (sos == null) {
 			return;
 		}
-		EditWebController<Sos> gutachtenController = new GutachtenController(
-				sos);
+		EditWebController<Sos> gutachtenController = new GutachtenController(sos);
 		WebView gaNode = gutachtenController.getView().getNode();
 		gaNode.setPrefHeight(400);
 		gridPane.add(gaNode, 1, 2);

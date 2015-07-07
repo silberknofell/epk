@@ -8,12 +8,9 @@ import de.geihe.epk_orm.pojo.Klasse;
 
 public class KlasseDao extends EntityDao<Klasse> {
 
-	public KlasseDao(ConnectionSource connectionSource, Class<Klasse> dataClass)
-			throws SQLException {
+	public KlasseDao(ConnectionSource connectionSource, Class<Klasse> dataClass) throws SQLException {
 		super(connectionSource, dataClass);
 		// TODO Auto-generated constructor stub
 	}
-
-
 
 }

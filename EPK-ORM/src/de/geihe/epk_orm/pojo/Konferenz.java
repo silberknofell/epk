@@ -3,7 +3,6 @@ package de.geihe.epk_orm.pojo;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import de.geihe.epk_orm.db.daos.EpkDao;
 import de.geihe.epk_orm.db.daos.KonferenzDao;
 import de.geihe.epk_orm.view.abstr_and_interf.WebViewSource;
 

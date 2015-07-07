@@ -45,8 +45,7 @@ public class HTML {
 	}
 
 	public void addRow(String cell1, String cell2) {
-		table = table + "<tr>" + "<td>" + cell1 + "</td>" + "<td>" + cell2
-				+ "</td>" + "</tr>";
+		table = table + "<tr>" + "<td>" + cell1 + "</td>" + "<td>" + cell2 + "</td>" + "</tr>";
 	}
 
 	public void endTable() {
@@ -55,16 +54,14 @@ public class HTML {
 	}
 
 	public String getHTML() {
-		return "<html>" + "<head>" + getHead() + "</head>" + "<body>"
-				+ getBody() + "</body>" + "</html>";
+		return "<html>" + "<head>" + getHead() + "</head>" + "<body>" + getBody() + "</body>" + "</html>";
 	}
 
 	public void htmlOut() {
 		Writer writer = null;
 
 		try {
-			writer = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(getPath()), "utf-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(getPath()), "utf-8"));
 			writer.write(getHTML());
 		} catch (IOException ex) {
 			System.out.println("IOException file" + getPath());

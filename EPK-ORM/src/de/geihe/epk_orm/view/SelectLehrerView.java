@@ -3,6 +3,10 @@ package de.geihe.epk_orm.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.geihe.epk_orm.R;
+import de.geihe.epk_orm.controller.SelectLehrerController;
+import de.geihe.epk_orm.pojo.Lehrer;
+import de.geihe.epk_orm.view.abstr_and_interf.AbstractSelectView;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -14,15 +18,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
-import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.controller.SelectLehrerController;
-import de.geihe.epk_orm.pojo.Lehrer;
-import de.geihe.epk_orm.view.abstr_and_interf.AbstractSelectView;
 
-public class SelectLehrerView extends
-AbstractSelectView<Lehrer, SelectLehrerController> {
-	private static final String TITEL = "EPK - Verwaltung\nVersion "
-			+ R.version;
+public class SelectLehrerView extends AbstractSelectView<Lehrer, SelectLehrerController> {
+	private static final String TITEL = "EPK - Verwaltung\nVersion " + R.version;
 	private static final String STYLE = "tile-lehrer-auswahl";
 	private static final String ID = "start-lehrer-auswahl";
 
@@ -32,8 +30,7 @@ AbstractSelectView<Lehrer, SelectLehrerController> {
 	private BorderPane pane;
 	private TilePane tiles;
 
-	public SelectLehrerView(SelectLehrerController controller,
-			ObservableList<Lehrer> observableList) {
+	public SelectLehrerView(SelectLehrerController controller, ObservableList<Lehrer> observableList) {
 		super(controller, observableList);
 		buildPane();
 	}
@@ -43,13 +40,10 @@ AbstractSelectView<Lehrer, SelectLehrerController> {
 		tiles = new TilePane();
 		tiles.getStyleClass().add(STYLE);
 
-		getList().forEach(
-				(l) -> tiles.getChildren().add(
-						new KuerzelView(getController(), l).getNode()));
+		getList().forEach((l) -> tiles.getChildren().add(new KuerzelView(getController(), l).getNode()));
 
 		titel = new Label(TITEL);
-		Image icon = new Image(getClass().getResourceAsStream(
-				"/raw/meeting.png"));
+		Image icon = new Image(getClass().getResourceAsStream("/raw/meeting.png"));
 		titel.setGraphic(new ImageView(icon));
 		titel.setContentDisplay(ContentDisplay.BOTTOM);
 		BorderPane.setAlignment(titel, Pos.CENTER);

@@ -1,14 +1,7 @@
 package de.geihe.epk_orm.tabs;
 
-import java.sql.SQLException;
 import java.util.Set;
 
-import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.web.WebView;
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.EpkController;
@@ -17,6 +10,12 @@ import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
 import de.geihe.epk_orm.manager.EpkGruppenManager;
 import de.geihe.epk_orm.pojo.Epk;
 import de.geihe.epk_orm.pojo.Sos;
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 
 public class BemsTab extends Tab {
 
@@ -26,6 +25,7 @@ public class BemsTab extends Tab {
 	private VBox box = new VBox(5);
 	private ScrollPane scrollPane;
 	private EpkGruppenManager epkGruppenManager;
+
 	public BemsTab() {
 		super(BEMERKUNGEN);
 		box.getStyleClass().add(BEMERKUNG_TAB);
@@ -38,8 +38,7 @@ public class BemsTab extends Tab {
 		sos = R.State.sos;
 		box.getChildren().clear();
 
-		EditWebController<Sos> gutachtenController = new GutachtenController(
-				sos);
+		EditWebController<Sos> gutachtenController = new GutachtenController(sos);
 
 		WebView gaNode = gutachtenController.getView().getNode();
 		gaNode.setPrefHeight(160);
@@ -57,14 +56,14 @@ public class BemsTab extends Tab {
 		for (int epk_id : epk_ids) {
 			addEpkBox(epk_id);
 		}
-		
+
 		klappeEin();
 		setContent(scrollPane);
 	}
 
 	private void klappeEin() {
 		int anzahl = box.getChildren().size();
-		for (int i = 0; i < anzahl - anzahlAusklappen(); i++) {
+		for (int i = 0; i < (anzahl - anzahlAusklappen()); i++) {
 			TitledPane tp = (TitledPane) box.getChildren().get(i);
 			tp.setExpanded(false);
 		}
@@ -80,7 +79,7 @@ public class BemsTab extends Tab {
 		return 2;
 	}
 
-	private void addEpkBox(int epk_id)  {
+	private void addEpkBox(int epk_id) {
 		Epk epk;
 		epk = R.DB.epkDao.queryForId(epk_id);
 

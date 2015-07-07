@@ -1,12 +1,12 @@
 package de.geihe.epk_orm.scenes.frames;
 
-import javafx.collections.ObservableList;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.FilterController;
 import de.geihe.epk_orm.controller.SelectSosController;
 import de.geihe.epk_orm.pojo.Sos;
 import de.geihe.epk_orm.view.SelectSosView;
 import de.geihe.epk_orm.view.SosInfoView;
+import javafx.collections.ObservableList;
 
 public abstract class SosListScene extends SosListSceneFrame {
 	private SelectSosView selectSosView;

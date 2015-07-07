@@ -37,8 +37,7 @@ public class EpkController extends AbstractController<EpkView> {
 		setView(new EpkView(this));
 	}
 
-	public BemerkungSuchErgebnis sucheErsteBemerkungInGruppen(String text,
-			int epk_id) {
+	public BemerkungSuchErgebnis sucheErsteBemerkungInGruppen(String text, int epk_id) {
 		return epkGgruppenManager.sucheErsteBemerkungInGruppenBis(text, epk_id);
 	}
 
@@ -60,7 +59,7 @@ public class EpkController extends AbstractController<EpkView> {
 		Konferenz konf = epkGgruppenManager.getKonferenz(epk_id);
 		EpkKonferenzController ctrl;
 		System.out.println(konf == null ? konf : konf.getId());
-		if (konf == null || konf.getId() == 0) {
+		if ((konf == null) || (konf.getId() == 0)) {
 			ctrl = new EpkKonferenzController(getEpk_id());
 		} else {
 			ctrl = new EpkKonferenzController(konf);
@@ -77,15 +76,14 @@ public class EpkController extends AbstractController<EpkView> {
 			contr.setEpkController(this);
 			list.add(contr.getView());
 		}
-		if (R.mode == Mode.EINGABE && isAktuelleEpk) {
+		if ((R.mode == Mode.EINGABE) && isAktuelleEpk) {
 			addLeereBemerkung(list);
 		}
 		return list;
 	}
 
 	public List<EpkBemEinzelView> addLeereBemerkung(List<EpkBemEinzelView> list) {
-		EpkBemEinzelController contr = BemerkungUtils
-				.createLeereBemerkungController(this);
+		EpkBemEinzelController contr = BemerkungUtils.createLeereBemerkungController(this);
 		contr.setEpkController(this);
 		list.add(contr.getView());
 

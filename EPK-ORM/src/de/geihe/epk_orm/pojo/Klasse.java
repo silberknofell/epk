@@ -8,7 +8,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import de.geihe.epk_orm.db.daos.EpkDao;
 import de.geihe.epk_orm.db.daos.KlasseDao;
 
 @DatabaseTable(daoClass = KlasseDao.class)
@@ -44,7 +43,7 @@ public class Klasse extends EntityMitArchiv {
 
 	public int getJahrgangsStufe() {
 		GregorianCalendar jetzt = new GregorianCalendar();
-		int stufe = jetzt.get(Calendar.YEAR) - einschulungsjahr + 5;
+		int stufe = (jetzt.get(Calendar.YEAR) - einschulungsjahr) + 5;
 		if (jetzt.get(Calendar.MONTH) < SCHULJAHRESWECHSELMONAT) {
 			stufe--;
 		}

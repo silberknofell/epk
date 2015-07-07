@@ -1,5 +1,13 @@
 package de.geihe.epk_orm.tabs;
 
+import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
+import com.sun.javafx.application.HostServicesDelegate;
+
+import de.geihe.epk_orm.R;
+import de.geihe.epk_orm.inout.PrintOptions;
+import de.geihe.epk_orm.manager.ExportManager;
+import de.geihe.epk_orm.pojo.Sos;
+import de.geihe.epk_orm.view.SelectSosView;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;
@@ -12,15 +20,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
-
-import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
-import com.sun.javafx.application.HostServicesDelegate;
-
-import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.inout.PrintOptions;
-import de.geihe.epk_orm.manager.ExportManager;
-import de.geihe.epk_orm.pojo.Sos;
-import de.geihe.epk_orm.view.SelectSosView;
 
 public class PrintTab extends Tab {
 
@@ -80,8 +79,7 @@ public class PrintTab extends Tab {
 
 		CheckBox grundschule = new CheckBox("Grundschule");
 		grundschule.setSelected(po.grundschule());
-		grundschule
-		.setOnAction(e -> po.setGrundschule(grundschule.isSelected()));
+		grundschule.setOnAction(e -> po.setGrundschule(grundschule.isSelected()));
 
 		CheckBox gutachten = new CheckBox("Gutachten");
 		gutachten.setSelected(po.gutachten());
@@ -96,8 +94,7 @@ public class PrintTab extends Tab {
 		RadioButton rbAlle = new RadioButton("Alle");
 		rbAlle.setToggleGroup(tg);
 		rbAlle.setSelected(po.alleEpk());
-		rbAlle.selectedProperty().addListener(
-				(e, alt, neu) -> po.setAlleEpk(neu));
+		rbAlle.selectedProperty().addListener((e, alt, neu) -> po.setAlleEpk(neu));
 
 		RadioButton rbAuswahl = new RadioButton("letzte ");
 		rbAuswahl.setToggleGroup(tg);
@@ -113,30 +110,25 @@ public class PrintTab extends Tab {
 			}
 		});
 
-		box.getChildren().addAll(ueberschrift, grundschule, gutachten, noten,
-				rbAlle, rbAuswahl);
+		box.getChildren().addAll(ueberschrift, grundschule, gutachten, noten, rbAlle, rbAuswahl);
 
 		borderPane.setRight(box);
 	}
 
 	private void createOutput() {
-		ExportManager em = new ExportManager(R.Options.printOptions,
-				selectSosView.getChecked());
+		ExportManager em = new ExportManager(R.Options.printOptions, selectSosView.getChecked());
 		em.writeHTMLtoFile();
-		HostServicesDelegate hostServices = HostServicesFactory
-				.getInstance(R.State.application);
+		HostServicesDelegate hostServices = HostServicesFactory.getInstance(R.State.application);
 		hostServices.showDocument(em.getPath());
 	}
 
 	private void print() {
-		ExportManager em = new ExportManager(R.Options.printOptions,
-				selectSosView.getChecked());
+		ExportManager em = new ExportManager(R.Options.printOptions, selectSosView.getChecked());
 		em.print();
 	}
 
 	private void show() {
-		ExportManager em = new ExportManager(R.Options.printOptions,
-				selectSosView.getChecked());
+		ExportManager em = new ExportManager(R.Options.printOptions, selectSosView.getChecked());
 		webView.getEngine().loadContent(em.getHTML());
 
 	}

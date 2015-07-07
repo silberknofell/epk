@@ -1,11 +1,15 @@
 package de.geihe.epk_orm.view;
 
+import de.geihe.epk_orm.Mode;
+import de.geihe.epk_orm.R;
+import de.geihe.epk_orm.controller.EpkBemEinzelController;
+import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
+import de.geihe.epk_orm.view.abstr_and_interf.EditView;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -14,14 +18,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import de.geihe.epk_orm.Mode;
-import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.controller.EpkBemEinzelController;
-import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
-import de.geihe.epk_orm.view.abstr_and_interf.EditView;
 
-public class EpkBemEinzelView extends
-AbstractControlledView<EpkBemEinzelController> implements EditView {
+public class EpkBemEinzelView extends AbstractControlledView<EpkBemEinzelController>implements EditView {
 
 	private static final String AKTUELL_IST_UNTERZEICHNER = "aktuell-ist-unterzeichner";
 	private static final String NEU_UNTERSCHRIEBEN = "neu-unterschrieben";
@@ -32,8 +30,8 @@ AbstractControlledView<EpkBemEinzelController> implements EditView {
 	private static final String BEM_EINZEL = "bem-einzel";
 	private static final String UNTERSCHRIFT = "unterschrift";
 	private HBox box;
-//	private TextField textField;
-	private MyTextArea textField;
+
+	private ScrollFreetextArea textField;
 	private HoverLabel lblLike;
 	private HoverLabel lblDelete;
 	private HoverLabel lblEnter;
@@ -48,7 +46,7 @@ AbstractControlledView<EpkBemEinzelController> implements EditView {
 	}
 
 	private void buildTextField() {
-		textField = new MyTextArea();
+		textField = new ScrollFreetextArea();
 
 		if (getController().isEditierbar()) {
 			textField.setEditable(true);
@@ -65,8 +63,8 @@ AbstractControlledView<EpkBemEinzelController> implements EditView {
 			tTip.setFont(ttFont);
 
 			textField.setOnMouseEntered(e -> {
-				Point2D p = textField.localToScreen(textField.getLayoutBounds()
-						.getMinX(), textField.getLayoutBounds().getMaxY());
+				Point2D p = textField.localToScreen(textField.getLayoutBounds().getMinX(),
+						textField.getLayoutBounds().getMaxY());
 				tTip.setFont(ttFont);
 				tTip.show(textField, p.getX(), p.getY() + 10);
 			});
@@ -82,36 +80,34 @@ AbstractControlledView<EpkBemEinzelController> implements EditView {
 		}
 		;
 
-		textField.textProperty().addListener(
-				(obs, alt, neu) -> getController().textChanged());
-		textField.focusedProperty().addListener(
-				(obs, alt, neu) -> focusChanged(neu));
+		textField.textProperty().addListener((obs, alt, neu) -> getController().textChanged());
+		textField.focusedProperty().addListener((obs, alt, neu) -> focusChanged(neu));
 		textField.setOnKeyPressed((e) -> keyTyped(e));
-				
+
 		box.minHeightProperty().bind(textField.heightProperty());
 		HBox.setHgrow(textField, Priority.ALWAYS);
 	}
 
 	private Object keyTyped(KeyEvent e) {
-		if (e.getCode() == KeyCode.ENTER && getController().isChanged()) {
+		if ((e.getCode() == KeyCode.ENTER) && getController().isChanged()) {
 			getController().writeToDB();
 		}
-//		if (R.mode == Mode.ADMIN && e.isControlDown() && e.isShiftDown()
-//				&& e.getCode() == KeyCode.N) {
-//			getController().updateInDBAdmin();
-//		}
-//		if (R.mode == Mode.ADMIN && e.isControlDown() && e.isShiftDown()
-//				&& e.getCode() == KeyCode.T) {
-//			int caretPos = textField.getCaretPosition();
-//			String teil1 = textField.getText(0, caretPos);
-//			String teil2 = textField.getText(caretPos, textField.getLength());
-//			getController().teile(teil1, teil2);
-//		}
+		// if (R.mode == Mode.ADMIN && e.isControlDown() && e.isShiftDown()
+		// && e.getCode() == KeyCode.N) {
+		// getController().updateInDBAdmin();
+		// }
+		// if (R.mode == Mode.ADMIN && e.isControlDown() && e.isShiftDown()
+		// && e.getCode() == KeyCode.T) {
+		// int caretPos = textField.getCaretPosition();
+		// String teil1 = textField.getText(0, caretPos);
+		// String teil2 = textField.getText(caretPos, textField.getLength());
+		// getController().teile(teil1, teil2);
+		// }
 		return null;
 	}
 
 	private void focusChanged(Boolean neu) {
-		if (neu == false && getController().isChanged()) {
+		if ((neu == false) && getController().isChanged()) {
 			getController().writeToDB();
 		}
 	}
@@ -131,10 +127,9 @@ AbstractControlledView<EpkBemEinzelController> implements EditView {
 
 		lblUnterschriften = new Label(getController().getUnterschriften());
 		lblUnterschriften.getStyleClass().add(UNTERSCHRIFT);
-		if (R.mode == Mode.EINGABE && getController().neuUnterschrieben()) {
+		if ((R.mode == Mode.EINGABE) && getController().neuUnterschrieben()) {
 			lblUnterschriften.getStyleClass().add(NEU_UNTERSCHRIEBEN);
-			ScaleTransition st = new ScaleTransition(Duration.millis(1000),
-					lblUnterschriften);
+			ScaleTransition st = new ScaleTransition(Duration.millis(1000), lblUnterschriften);
 			st.setFromX(3);
 			st.setFromY(3);
 			st.setToX(1);
@@ -142,7 +137,7 @@ AbstractControlledView<EpkBemEinzelController> implements EditView {
 			st.play();
 		}
 		;
-		if (R.mode == Mode.EINGABE && getController().aktuellIstUnterzeichner()) {
+		if ((R.mode == Mode.EINGABE) && getController().aktuellIstUnterzeichner()) {
 			lblUnterschriften.getStyleClass().add(AKTUELL_IST_UNTERZEICHNER);
 		}
 		;
@@ -189,8 +184,7 @@ AbstractControlledView<EpkBemEinzelController> implements EditView {
 			box.getChildren().add(new ImageView(R.Icons.BEM_ZITAT));
 		}
 		if (mehrAlsDrei) {
-			Tooltip t = new Tooltip(Integer.toString(getController()
-					.getAnzahlZitate()));
+			Tooltip t = new Tooltip(Integer.toString(getController().getAnzahlZitate()));
 			ImageView iv = new ImageView(R.Icons.DREI_PUNKTE);
 			Tooltip.install(iv, t);
 			box.getChildren().add(iv);

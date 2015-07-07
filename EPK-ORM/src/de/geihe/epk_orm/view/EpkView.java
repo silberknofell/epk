@@ -1,14 +1,14 @@
 package de.geihe.epk_orm.view;
 
-import javafx.scene.Node;
-import javafx.scene.control.SplitPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.EpkController;
 import de.geihe.epk_orm.controller.EpkNotenEinzelController;
 import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
+import javafx.scene.Node;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class EpkView extends AbstractControlledView<EpkController> {
 

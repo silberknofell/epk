@@ -13,18 +13,15 @@ public class HtmlBuilder {
 	private StringBuilder sb;
 
 	public static HtmlBuilder getTableBuilder(String klasse) {
-		return new HtmlBuilder("<table", "><tr>\n", "</tr></table>\n", "<td",
-				">", "</td>", klasse);
+		return new HtmlBuilder("<table", "><tr>\n", "</tr></table>\n", "<td", ">", "</td>", klasse);
 	}
 
 	public static HtmlBuilder getListBuilder(String klasse) {
-		return new HtmlBuilder("<ul", ">\n", "</ul>\n", "<li", ">", "</li>",
-				klasse);
+		return new HtmlBuilder("<ul", ">\n", "</ul>\n", "<li", ">", "</li>", klasse);
 	}
 
-	private HtmlBuilder(String start, String startClose, String end,
-			String elementStart, String elementStartClose, String elementEnd,
-			String klasse) {
+	private HtmlBuilder(String start, String startClose, String end, String elementStart, String elementStartClose,
+			String elementEnd, String klasse) {
 		super();
 		this.start = start;
 		this.startClose = startClose;
@@ -57,7 +54,7 @@ public class HtmlBuilder {
 	}
 
 	private void addKlasseFallsVorhanden(String klasse) {
-		if (klasse != null && klasse.length() > 0) {
+		if ((klasse != null) && (klasse.length() > 0)) {
 			sb.append(" class=\"").append(klasse).append("\"");
 		}
 	}

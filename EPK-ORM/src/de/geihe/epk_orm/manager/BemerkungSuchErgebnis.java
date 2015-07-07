@@ -17,7 +17,7 @@ public class BemerkungSuchErgebnis {
 	public BemerkungSuchErgebnis(Bemerkung ergebnis, int eigeneEpk_id) {
 		this.bem = ergebnis;
 		gefunden = (ergebnis != null);
-		inEigenerEpkGefunden = (gefunden && ergebnis.getEpk_id() == eigeneEpk_id);
+		inEigenerEpkGefunden = (gefunden && (ergebnis.getEpk_id() == eigeneEpk_id));
 	}
 
 	public boolean isGefunden() {

@@ -2,6 +2,8 @@ package de.geihe.epk_orm.view;
 
 import java.util.List;
 
+import de.geihe.epk_orm.model.SingleSelectionModel;
+import de.geihe.epk_orm.view.abstr_and_interf.View;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,8 +13,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import de.geihe.epk_orm.model.SingleSelectionModel;
-import de.geihe.epk_orm.view.abstr_and_interf.View;
 
 public class AnimSelectView<E> implements View, ObservableValue<E> {
 

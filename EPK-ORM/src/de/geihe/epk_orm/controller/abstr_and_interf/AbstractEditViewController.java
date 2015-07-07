@@ -2,8 +2,8 @@ package de.geihe.epk_orm.controller.abstr_and_interf;
 
 import de.geihe.epk_orm.view.abstr_and_interf.EditView;
 
-public abstract class AbstractEditViewController<V extends EditView> extends
-		AbstractController<V> implements EditViewController<V> {
+public abstract class AbstractEditViewController<V extends EditView> extends AbstractController<V>
+		implements EditViewController<V> {
 
 	private boolean changed;
 	private boolean neu;
@@ -45,7 +45,7 @@ public abstract class AbstractEditViewController<V extends EditView> extends
 	@Override
 	public void writeToDB() {
 		if (changed) {
-			boolean leer = getView().getText().trim().isEmpty(); 
+			boolean leer = getView().getText().trim().isEmpty();
 
 			if (neu && !leer) {
 				insertInDB();

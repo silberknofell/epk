@@ -4,6 +4,14 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
+
+import de.geihe.epk_orm.R;
+import de.geihe.epk_orm.pojo.Epk;
+import de.geihe.epk_orm.pojo.Klasse;
+import de.geihe.epk_orm.pojo.Schule;
+import de.geihe.epk_orm.pojo.Sos;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -14,15 +22,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import com.j256.ormlite.stmt.QueryBuilder;
-import com.j256.ormlite.stmt.Where;
-
-import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.pojo.Epk;
-import de.geihe.epk_orm.pojo.Klasse;
-import de.geihe.epk_orm.pojo.Schule;
-import de.geihe.epk_orm.pojo.Sos;
 
 public class FilterModel {
 	private SimpleObjectProperty<Epk> epkProperty = new SimpleObjectProperty<Epk>();
@@ -39,8 +38,8 @@ public class FilterModel {
 	public ObservableList<Sos> querySosList() {
 		int klasse_id = getKlasse().getId();
 		try {
-			Where<Sos, Integer> qb = R.DB.sosDao.queryBuilder().where()
-					.eq("klasse_id", klasse_id).and().eq("archiv", false);
+			Where<Sos, Integer> qb = R.DB.sosDao.queryBuilder().where().eq("klasse_id", klasse_id).and().eq("archiv",
+					false);
 			if (getSchule() != null) {
 				qb.and().eq("grundschule_id", getSchule().getId());
 			}
@@ -57,8 +56,7 @@ public class FilterModel {
 
 	public List<Epk> getEpkListe() {
 		try {
-			Where<Epk, Integer> qb = R.DB.epkDao.queryBuilder().where()
-					.eq("archiv", false).and().eq("aktiv", true);
+			Where<Epk, Integer> qb = R.DB.epkDao.queryBuilder().where().eq("archiv", false).and().eq("aktiv", true);
 
 			List<Epk> list = qb.query();
 			Collections.sort(list);
@@ -74,10 +72,8 @@ public class FilterModel {
 
 		try {
 			QueryBuilder<Sos, Integer> sosQb = R.DB.sosDao.queryBuilder();
-			sosQb.selectColumns("grundschule_id").where()
-					.eq("klasse_id", getKlasse().getId());
-			QueryBuilder<Schule, Integer> schuleQb = R.DB.schuleDao
-					.queryBuilder();
+			sosQb.selectColumns("grundschule_id").where().eq("klasse_id", getKlasse().getId());
+			QueryBuilder<Schule, Integer> schuleQb = R.DB.schuleDao.queryBuilder();
 			schuleQb.where().in("id", sosQb);
 
 			return schuleQb.query();

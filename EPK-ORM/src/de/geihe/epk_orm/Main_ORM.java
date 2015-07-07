@@ -2,13 +2,6 @@ package de.geihe.epk_orm;
 
 import java.util.Optional;
 
-import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-
 import org.controlsfx.dialog.Dialogs;
 
 import com.sun.javafx.css.StyleManager;
@@ -16,6 +9,12 @@ import com.sun.javafx.css.StyleManager;
 import de.geihe.epk_orm.manager.SceneManager;
 import de.geihe.epk_orm.scenes.SelectLehrerScene;
 import de.geihe.epk_orm.scenes.frames.MainMenuBar;
+import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 public class Main_ORM extends Application {
 
@@ -61,8 +60,7 @@ public class Main_ORM extends Application {
 	}
 
 	private static String readMode() {
-		Optional<String> resonse = Dialogs.create()
-				.title("Start-Parameter eingeben").showTextInput("-a");
+		Optional<String> resonse = Dialogs.create().title("Start-Parameter eingeben").showTextInput("-a");
 		if (resonse.isPresent()) {
 			return resonse.get();
 		} else {
@@ -79,9 +77,8 @@ public class Main_ORM extends Application {
 		R.State.application = this;
 		setMode();
 		R.DB.initDaos();
-		
-		String path = getClass().getResource("/css/application.css")
-				.toExternalForm();
+
+		String path = getClass().getResource("/css/application.css").toExternalForm();
 
 		Application.setUserAgentStylesheet(Application.STYLESHEET_CASPIAN);
 		StyleManager.getInstance().addUserAgentStylesheet(path);
@@ -97,7 +94,6 @@ public class Main_ORM extends Application {
 			alert.setContentText("Das Programm befindet sich im Nur-Lesen-Modus,\n"
 					+ "weil Herr Geihe gerade etwas wichtiges an der Datenbank macht :-)");
 			alert.showAndWait();
-
 
 		case KONFERENZ:
 		case ADMIN:

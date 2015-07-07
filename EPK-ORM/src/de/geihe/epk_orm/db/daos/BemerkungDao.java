@@ -8,10 +8,9 @@ import de.geihe.epk_orm.pojo.Bemerkung;
 
 public class BemerkungDao extends EntityMitEpkDao<Bemerkung> {
 
-	public BemerkungDao(ConnectionSource connectionSource,
-			Class<Bemerkung> dataClass) throws SQLException {
+	public BemerkungDao(ConnectionSource connectionSource, Class<Bemerkung> dataClass) throws SQLException {
 		super(connectionSource, dataClass);
-		
+
 	}
 
 }

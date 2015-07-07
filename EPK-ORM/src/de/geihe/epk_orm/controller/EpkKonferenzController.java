@@ -1,7 +1,5 @@
 package de.geihe.epk_orm.controller;
 
-import java.sql.SQLException;
-
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
@@ -27,7 +25,7 @@ public class EpkKonferenzController extends EditWebController<Konferenz> {
 
 	@Override
 	public boolean isEditierbar() {
-		return R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ;
+		return (R.mode == Mode.ADMIN) || (R.mode == Mode.KONFERENZ);
 	}
 
 	@Override

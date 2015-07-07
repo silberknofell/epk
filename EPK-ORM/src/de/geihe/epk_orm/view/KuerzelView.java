@@ -1,13 +1,13 @@
 package de.geihe.epk_orm.view;
 
+import de.geihe.epk_orm.controller.SelectLehrerController;
+import de.geihe.epk_orm.pojo.Lehrer;
+import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
-import de.geihe.epk_orm.controller.SelectLehrerController;
-import de.geihe.epk_orm.pojo.Lehrer;
-import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 
 public class KuerzelView extends AbstractControlledView<SelectLehrerController> {
 	private Lehrer lehrer;

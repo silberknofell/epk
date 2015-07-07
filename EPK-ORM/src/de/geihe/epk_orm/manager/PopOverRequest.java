@@ -1,8 +1,8 @@
 package de.geihe.epk_orm.manager;
 
-import javafx.scene.Node;
-
 import org.controlsfx.control.PopOver;
+
+import javafx.scene.Node;
 
 public class PopOverRequest {
 	private PopOver pop;
@@ -27,7 +27,7 @@ public class PopOverRequest {
 	}
 
 	public void show() {
-		if (pop != null && hoverNode != null) {
+		if ((pop != null) && (hoverNode != null)) {
 			pop.show(hoverNode, 0, 0);
 		}
 		pop = null;

@@ -1,5 +1,8 @@
 package de.geihe.epk_orm.scenes.frames;
 
+import de.geihe.epk_orm.R;
+import de.geihe.epk_orm.pojo.Sos;
+import de.geihe.epk_orm.view.abstr_and_interf.View;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -10,9 +13,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.pojo.Sos;
-import de.geihe.epk_orm.view.abstr_and_interf.View;
 
 public abstract class SosListSceneFrame extends MenuSceneFrame {
 	public static final String STYLE_LISTE = "liste";
@@ -36,8 +36,7 @@ public abstract class SosListSceneFrame extends MenuSceneFrame {
 		root.getItems().addAll(liste, box);
 		SplitPane.setResizableWithParent(root, Boolean.FALSE);
 		setCenter(root);
-		Platform.runLater(() -> root
-				.setDividerPositions(R.Display.EINGABE_SCENE_DIVIDER_POSITION));
+		Platform.runLater(() -> root.setDividerPositions(R.Display.EINGABE_SCENE_DIVIDER_POSITION));
 	}
 
 	public void setStatus(Node node) {

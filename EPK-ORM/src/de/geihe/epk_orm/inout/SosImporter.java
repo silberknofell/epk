@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-
 import com.csvreader.CsvReader;
 
 import de.geihe.epk_orm.Logger;
@@ -20,6 +17,8 @@ import de.geihe.epk_orm.pojo.Empfehlung;
 import de.geihe.epk_orm.pojo.Klasse;
 import de.geihe.epk_orm.pojo.Schule;
 import de.geihe.epk_orm.pojo.Sos;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class SosImporter {
 	public enum AnzeigeMode {
@@ -67,8 +66,7 @@ public class SosImporter {
 	public void selectFile() {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("CSV-Datei mit Schülerdaten bestimmen");
-		fc.getExtensionFilters().add(
-				new ExtensionFilter("Import-Datei", "*.csv"));
+		fc.getExtensionFilters().add(new ExtensionFilter("Import-Datei", "*.csv"));
 		fc.getExtensionFilters().add(new ExtensionFilter("alle", "*.*"));
 		inputFile = fc.showOpenDialog(null);
 	}
@@ -88,8 +86,7 @@ public class SosImporter {
 	private void importSosFromFile() throws SQLException {
 		try {
 
-			schild = new CsvReader(inputFile.getAbsolutePath(), ';',
-					StandardCharsets.UTF_8);
+			schild = new CsvReader(inputFile.getAbsolutePath(), ';', StandardCharsets.UTF_8);
 
 			schild.readHeaders();
 			while (schild.readRecord()) {
@@ -97,8 +94,8 @@ public class SosImporter {
 				if (klasse != null) {
 					importOneSos(klasse);
 				} else {
-					l.log("Klasse " + schild.get(KLASSE) + " existiert nicht: "
-							+ schild.get(NACHNAME) + ", " + schild.get(VORNAME));
+					l.log("Klasse " + schild.get(KLASSE) + " existiert nicht: " + schild.get(NACHNAME) + ", "
+							+ schild.get(VORNAME));
 				}
 			}
 
@@ -116,26 +113,22 @@ public class SosImporter {
 		Klasse klasse = null;
 		String schildKlasse = schild.get(KLASSE);
 		String abcde = schildKlasse.substring(schildKlasse.length() - 1);
-		String jahrgangString = schildKlasse.substring(0,
-				schildKlasse.length() - 1);
+		String jahrgangString = schildKlasse.substring(0, schildKlasse.length() - 1);
 		Integer.parseInt(jahrgangString);
 		String abschlussdatumString = schild.get(ABSCHLUSSDATUM);
-		String abschlussjahrString = abschlussdatumString
-				.substring(abschlussdatumString.length() - 4);
+		String abschlussjahrString = abschlussdatumString.substring(abschlussdatumString.length() - 4);
 		int abschlussjahr = Integer.parseInt(abschlussjahrString);
 		schild.get(AKT_HALBJAHR);
 
 		int einschulungsJahr = abschlussjahr - 5;
 
-		klasse = R.DB.klasseDao.queryBuilder().where()
-				.eq("einschulungsjahr", einschulungsJahr).and()
-				.eq("abcde", abcde).queryForFirst();
+		klasse = R.DB.klasseDao.queryBuilder().where().eq("einschulungsjahr", einschulungsJahr).and().eq("abcde", abcde)
+				.queryForFirst();
 
 		if (klasse == null) {
 			l.hr();
 			l.log("Schildklasse " + schildKlasse + " existiert nicht. ");
-			l.log("Abschlussdatum : " + abschlussdatumString
-					+ " / Einschulungsjahr: " + einschulungsJahr);
+			l.log("Abschlussdatum : " + abschlussdatumString + " / Einschulungsjahr: " + einschulungsJahr);
 		}
 		return klasse;
 	}
@@ -143,8 +136,8 @@ public class SosImporter {
 	private void importOneSos(Klasse klasse) throws IOException {
 		int id = Integer.parseInt(schild.get(0));
 		if (!sosNeu(id)) {
-			l.log("Klasse: " + klasse.toString() + "  " + schild.get(NACHNAME)
-					+ ", " + schild.get(VORNAME) + " schon vorhanden");
+			l.log("Klasse: " + klasse.toString() + "  " + schild.get(NACHNAME) + ", " + schild.get(VORNAME)
+					+ " schon vorhanden");
 		} else {
 
 			Schule grundschule = getGrundschuleVonSchild();
@@ -156,16 +149,14 @@ public class SosImporter {
 			sos.setGrundschule(grundschule);
 			sos.setGeb(schild.get(GEBURTSDATUM));
 			R.DB.sosDao.create(sos);
-			l.log(sos.toString() + " wurde angelegt. Klasse: "
-					+ sos.getKlasse().toString());
+			l.log(sos.toString() + " wurde angelegt. Klasse: " + sos.getKlasse().toString());
 		}
 	}
 
 	public List<Sos> readSosList() {
 		sosSchildList.clear();
 		try {
-			schild = new CsvReader(getFilePath(), ';',
-					StandardCharsets.UTF_8);
+			schild = new CsvReader(getFilePath(), ';', StandardCharsets.UTF_8);
 			schild.readHeaders();
 			while (schild.readRecord()) {
 				Sos sos = readOneSos();
@@ -209,8 +200,7 @@ public class SosImporter {
 			String nachname = schild.get(NACHNAME);
 			String vorname = schild.get(VORNAME);
 			if (klasse != null) {
-				int empfehlung = Empfehlung.schildStrToEmpf(schild
-						.get(EMPFEHLUNG));
+				int empfehlung = Empfehlung.schildStrToEmpf(schild.get(EMPFEHLUNG));
 				sos = new Sos();
 				sos.setId(id);
 				sos.setNachname(nachname);

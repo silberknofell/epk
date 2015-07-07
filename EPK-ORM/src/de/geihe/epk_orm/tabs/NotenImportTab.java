@@ -1,11 +1,11 @@
 package de.geihe.epk_orm.tabs;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.layout.BorderPane;
 import de.geihe.epk_orm.Logger;
 import de.geihe.epk_orm.inout.Importer;
 import de.geihe.epk_orm.scenes.frames.LogSceneFrame;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.layout.BorderPane;
 
 public class NotenImportTab extends Tab {
 	private BorderPane borderPane = new BorderPane();

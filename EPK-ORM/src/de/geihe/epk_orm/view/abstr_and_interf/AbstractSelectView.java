@@ -2,8 +2,7 @@ package de.geihe.epk_orm.view.abstr_and_interf;
 
 import javafx.collections.ObservableList;
 
-public abstract class AbstractSelectView<E, C> extends
-		AbstractControlledView<C> implements SelectView<E> {
+public abstract class AbstractSelectView<E, C> extends AbstractControlledView<C>implements SelectView<E> {
 
 	private ObservableList<E> list;
 

@@ -7,15 +7,12 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.db.daos.EpkDao;
-import de.geihe.epk_orm.db.daos.SosDao;
 
 @DatabaseTable(daoClass = EpkDao.class)
 public class Epk extends EntityMitArchiv {
 
-	public final static String[] EPKBEZ = { "Extra", "5.1",
-		"Halbjahreskonferenz 5.1", "5.2", "Zeugniskonferenz 5", "6.1",
-		"Halbjahreskonferenz 6.1", "6.2", "Monita",
-	"Versetzungskonferenz 6" };
+	public final static String[] EPKBEZ = { "Extra", "5.1", "Halbjahreskonferenz 5.1", "5.2", "Zeugniskonferenz 5",
+			"6.1", "Halbjahreskonferenz 6.1", "6.2", "Monita", "Versetzungskonferenz 6" };
 
 	@DatabaseField(canBeNull = false, foreign = true, foreignAutoRefresh = true)
 	Klasse klasse;
@@ -78,43 +75,38 @@ public class Epk extends EntityMitArchiv {
 	}
 
 	public String toLangString() {
-		return klasse.toString() + " EPK " + Integer.toString(nr) + " ("
-				+ EPKBEZ[nr] + ")   --- " + getDatum();
+		return klasse.toString() + " EPK " + Integer.toString(nr) + " (" + EPKBEZ[nr] + ")   --- " + getDatum();
 	}
 
 	public static Epk getEpk(String schildHalbjahr, String schildKlasse) {
 
-		int halbjahr = Integer.parseInt(schildHalbjahr.substring(schildHalbjahr
-				.length() - 1));
+		int halbjahr = Integer.parseInt(schildHalbjahr.substring(schildHalbjahr.length() - 1));
 
-		int stufe = Integer.parseInt(schildKlasse.substring(0,
-				schildKlasse.length() - 1));
+		int stufe = Integer.parseInt(schildKlasse.substring(0, schildKlasse.length() - 1));
 
-		int jahr = Integer.parseInt(schildHalbjahr.substring(0,
-				schildHalbjahr.length() - 1));
+		int jahr = Integer.parseInt(schildHalbjahr.substring(0, schildHalbjahr.length() - 1));
 
-		int einschulungsjahr = jahr - stufe + 5;
+		int einschulungsjahr = (jahr - stufe) + 5;
 		String abcde = schildKlasse.substring(schildKlasse.length() - 1);
 
-		int nr = (stufe - 5) * 4 + halbjahr * 2;
+		int nr = ((stufe - 5) * 4) + (halbjahr * 2);
 		if (nr == 8) {
 			nr = 9;
 		}
-		if (nr < 1 || nr > 9) {
+		if ((nr < 1) || (nr > 9)) {
 			nr = -1;
 		}
 
 		try {
-			Klasse klasse = R.DB.klasseDao.queryBuilder().where()
-					.eq("einschulungsjahr", einschulungsjahr).and()
+			Klasse klasse = R.DB.klasseDao.queryBuilder().where().eq("einschulungsjahr", einschulungsjahr).and()
 					.eq("abcde", abcde).queryForFirst();
 
 			if (klasse == null) {
 				return null;
 			}
 
-			return R.DB.epkDao.queryBuilder().where().eq("nr", nr).and()
-					.eq("klasse_id", klasse.getId()).queryForFirst();
+			return R.DB.epkDao.queryBuilder().where().eq("nr", nr).and().eq("klasse_id", klasse.getId())
+					.queryForFirst();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

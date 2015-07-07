@@ -2,7 +2,6 @@ package de.geihe.epk_orm.controller;
 
 import java.util.List;
 
-import javafx.scene.control.Tooltip;
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.abstr_and_interf.AbstractEditViewController;
@@ -11,6 +10,7 @@ import de.geihe.epk_orm.manager.BemerkungUtils;
 import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.Lehrer;
 import de.geihe.epk_orm.view.EpkBemEinzelView;
+import javafx.scene.control.Tooltip;
 
 public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEinzelView> {
 
@@ -27,7 +27,7 @@ public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEin
 	}
 
 	private boolean aktuellIstEinzigerUnterzeichner() {
-		return bem.getAnzahlUnterzeichner() == 1 && aktuellIstUnterzeichner();
+		return (bem.getAnzahlUnterzeichner() == 1) && aktuellIstUnterzeichner();
 	}
 
 	public boolean aktuellIstUnterzeichner() {
@@ -35,7 +35,7 @@ public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEin
 	}
 
 	public void delete() {
-		if (R.mode == Mode.ADMIN || aktuellIstEinzigerUnterzeichner()) {
+		if ((R.mode == Mode.ADMIN) || aktuellIstEinzigerUnterzeichner()) {
 			bem.removeAlleUnterschriften();
 			R.DB.bemerkungDao.delete(bem);
 			epkContr.getBemerkungen().remove(bem);
@@ -109,16 +109,16 @@ public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEin
 	}
 
 	public boolean isDeletable() {
-		return R.mode == Mode.EINGABE && isAktuelleEPK() && !isNeu() && aktuellIstUnterzeichner();
+		return (R.mode == Mode.EINGABE) && isAktuelleEPK() && !isNeu() && aktuellIstUnterzeichner();
 	}
 
 	@Override
 	public boolean isEditierbar() {
-		return R.mode == Mode.EINGABE && isAktuelleEPK() && keinAndererUnterzeichner() || R.mode == Mode.ADMIN;
+		return ((R.mode == Mode.EINGABE) && isAktuelleEPK() && keinAndererUnterzeichner()) || (R.mode == Mode.ADMIN);
 	}
 
 	public boolean isLikable() {
-		return R.mode == Mode.EINGABE && !isNeu() && !(aktuellIstUnterzeichner() && isAktuelleEPK());
+		return (R.mode == Mode.EINGABE) && !isNeu() && !(aktuellIstUnterzeichner() && isAktuelleEPK());
 	}
 
 	public boolean isOKbar() {
@@ -187,11 +187,11 @@ public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEin
 	}
 
 	public void updateInDBAdmin() {
-System.out.println("de.geihe.epk_orm.controller.EpkBemEinzelController.updateInDBAdmin()");
+		System.out.println("de.geihe.epk_orm.controller.EpkBemEinzelController.updateInDBAdmin()");
 		List<Lehrer> lehrerListe;
 		lehrerListe = bem.getUnterzeichner();
 		String neuText = getView().getText();
-System.out.println(neuText);			
+		System.out.println(neuText);
 		int epk_id = bem.getEpk_id();
 		delete();
 		if (neuText.trim().isEmpty()) {

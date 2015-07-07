@@ -39,8 +39,7 @@ public class HtmlPage {
 
 	public HtmlPage addElement(String klasse, String content) {
 
-		sb.append("\n     <div class=\"").append(klasse).append("\">\n     ")
-		.append(content).append("\n     </div>\n");
+		sb.append("\n     <div class=\"").append(klasse).append("\">\n     ").append(content).append("\n     </div>\n");
 		return this;
 	}
 
@@ -82,8 +81,7 @@ public class HtmlPage {
 	}
 
 	public String getHTML() {
-		return "<html>\n" + "<head>\n" + getHead() + "\n</head>\n" + "<body>\n"
-				+ getBody() + "\n</body>\n" + "</html>";
+		return "<html>\n" + "<head>\n" + getHead() + "\n</head>\n" + "<body>\n" + getBody() + "\n</body>\n" + "</html>";
 	}
 
 	public String getTitle() {

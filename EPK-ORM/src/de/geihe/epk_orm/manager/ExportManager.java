@@ -6,10 +6,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+import de.geihe.epk_orm.R;
+import de.geihe.epk_orm.inout.HtmlBuilder;
+import de.geihe.epk_orm.inout.HtmlPage;
+import de.geihe.epk_orm.inout.PrintOptions;
+import de.geihe.epk_orm.pojo.Bemerkung;
+import de.geihe.epk_orm.pojo.Epk;
+import de.geihe.epk_orm.pojo.Konferenz;
+import de.geihe.epk_orm.pojo.Note;
+import de.geihe.epk_orm.pojo.Sos;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Worker.State;
 import javafx.print.PageLayout;
@@ -19,16 +27,6 @@ import javafx.print.PrintSides;
 import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.web.WebEngine;
-import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.inout.HtmlBuilder;
-import de.geihe.epk_orm.inout.HtmlPage;
-import de.geihe.epk_orm.inout.PrintOptions;
-import de.geihe.epk_orm.pojo.Bemerkung;
-import de.geihe.epk_orm.pojo.Epk;
-import de.geihe.epk_orm.pojo.Fach;
-import de.geihe.epk_orm.pojo.Konferenz;
-import de.geihe.epk_orm.pojo.Note;
-import de.geihe.epk_orm.pojo.Sos;
 
 public class ExportManager {
 	public static String STYLE = "";
@@ -76,8 +74,7 @@ public class ExportManager {
 			}
 
 			HtmlBuilder tableBuilder = HtmlBuilder.getTableBuilder("table-row");
-			tableBuilder.add("bemerkungen", getCellBemerkungen(epk_id)).add(
-					"konferenz", getCellKonferenz(epk_id));
+			tableBuilder.add("bemerkungen", getCellBemerkungen(epk_id)).add("konferenz", getCellKonferenz(epk_id));
 			htmlOut.addElement("table-div", tableBuilder.getHtml());
 
 			// htmlOut.addElement("konferenz", getCellKonferenz(epk_id))
@@ -103,8 +100,7 @@ public class ExportManager {
 	}
 
 	private void addSosName(Sos sos) {
-		String sosInfo = sos.getNachname() + ", " + sos.getVorname() + "  * "
-				+ sos.getGeb();
+		String sosInfo = sos.getNachname() + ", " + sos.getVorname() + "  * " + sos.getGeb();
 		htmlOut.addElement("sos-name", sosInfo);
 	}
 
@@ -138,9 +134,7 @@ public class ExportManager {
 			ende = " </span>";
 		}
 
-		
-		text.append(start).append(note.getFachString()).append(" ")
-		.append(note.toString()).append("  ").append(ende);
+		text.append(start).append(note.getFachString()).append(" ").append(note.toString()).append("  ").append(ende);
 
 		listBuilder.add("einzel-note", text.toString());
 	}
@@ -188,7 +182,7 @@ public class ExportManager {
 	private String getRowNoten(int epk_id) {
 		HtmlBuilder listBuilder = HtmlBuilder.getListBuilder("note-liste");
 		for (Note note : epkGruppenManager.getNoten(epk_id)) {
-			if (note != null && note.hatEintrag()) {
+			if ((note != null) && note.hatEintrag()) {
 				fuegeNoteHinzu(listBuilder, note);
 			}
 		}
@@ -201,26 +195,24 @@ public class ExportManager {
 		if (printer == null) {
 			return;
 		}
-		PageLayout pageLayout = printer.createPageLayout(Paper.A4,
-				PageOrientation.PORTRAIT, Printer.MarginType.DEFAULT);
+		PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT,
+				Printer.MarginType.DEFAULT);
 		PrinterJob job = PrinterJob.createPrinterJob(printer);
 		if (job == null) {
 			return;
 		}
-		if (printer.getPrinterAttributes().getSupportedPrintSides()
-				.contains(PrintSides.DUPLEX)) {
+		if (printer.getPrinterAttributes().getSupportedPrintSides().contains(PrintSides.DUPLEX)) {
 			job.getJobSettings().setPrintSides(PrintSides.DUPLEX);
 			job.getJobSettings().setPageLayout(pageLayout);
 		}
 		job.showPrintDialog(null);
 		WebEngine engine = new WebEngine();
-		engine.getLoadWorker().stateProperty()
-		.addListener((ov, oldState, newState) -> {
-					if (newState == State.SUCCEEDED) {
-						engine.print(job);
-						job.endJob();
-					}
-				});
+		engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
+			if (newState == State.SUCCEEDED) {
+				engine.print(job);
+				job.endJob();
+			}
+		});
 		engine.loadContent(getHTML());
 	}
 
@@ -228,8 +220,7 @@ public class ExportManager {
 		Writer writer = null;
 
 		try {
-			writer = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(getPath()), "utf-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(getPath()), "utf-8"));
 			writer.write(getHTML());
 		} catch (IOException ex) {
 			System.out.println("IOException file" + getPath());

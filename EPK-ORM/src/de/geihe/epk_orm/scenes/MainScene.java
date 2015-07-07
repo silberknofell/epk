@@ -1,7 +1,5 @@
 package de.geihe.epk_orm.scenes;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.SosVerwController;
@@ -14,6 +12,8 @@ import de.geihe.epk_orm.tabs.NotenImportTab;
 import de.geihe.epk_orm.tabs.NotenTab;
 import de.geihe.epk_orm.tabs.PrintTab;
 import de.geihe.epk_orm.tabs.SosVerwTab;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 
 public class MainScene extends SosListScene {
 
@@ -23,7 +23,6 @@ public class MainScene extends SosListScene {
 	private NotenTab notenTab;
 	private SosVerwTab verwTab;
 	private NotenImportTab importTab;
-	
 
 	public MainScene() {
 		super();
@@ -40,7 +39,7 @@ public class MainScene extends SosListScene {
 	}
 
 	private void createStatusLine() {
-		if (R.mode == Mode.ADMIN || R.mode == Mode.EINGABE) {
+		if ((R.mode == Mode.ADMIN) || (R.mode == Mode.EINGABE)) {
 			statMan = new StatistikManager();
 			updateStatus();
 		}
@@ -56,10 +55,8 @@ public class MainScene extends SosListScene {
 			if (bem != null) {
 				Sos sos = statMan.letzterSos();
 				if (sos != null) {
-					sb.append(sos.toString()).append(" (")
-					.append(sos.getKlasse().toString()).append(") : ")
-					.append(bem.toString()).append(" / ")
-					.append(bem.getZeitString());
+					sb.append(sos.toString()).append(" (").append(sos.getKlasse().toString()).append(") : ")
+							.append(bem.toString()).append(" / ").append(bem.getZeitString());
 				}
 			}
 		}

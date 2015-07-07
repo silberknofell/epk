@@ -1,7 +1,5 @@
 package de.geihe.epk_orm.controller;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.model.FilterModel;
 import de.geihe.epk_orm.pojo.Epk;
@@ -9,6 +7,8 @@ import de.geihe.epk_orm.pojo.Schule;
 import de.geihe.epk_orm.pojo.Sos;
 import de.geihe.epk_orm.scenes.frames.SosListScene;
 import de.geihe.epk_orm.view.FilterView;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 
 public class FilterController {
 

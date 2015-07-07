@@ -14,8 +14,7 @@ public class StatistikManager {
 	private Bemerkung letzteBemerkung;
 
 	public Bemerkung letzteBemerkung() {
-		QueryBuilder<Unterschrift, Integer> query = R.DB.unterschriftDao
-				.queryBuilder();
+		QueryBuilder<Unterschrift, Integer> query = R.DB.unterschriftDao.queryBuilder();
 		Unterschrift unterschrift;
 		try {
 			unterschrift = query.orderBy("timestamp", false).queryForFirst();
@@ -24,8 +23,7 @@ public class StatistikManager {
 				return null;
 			}
 
-			letzteBemerkung = R.DB.bemerkungDao.queryForId(unterschrift
-					.getBemerkung().getId());
+			letzteBemerkung = R.DB.bemerkungDao.queryForId(unterschrift.getBemerkung().getId());
 			return letzteBemerkung;
 
 		} catch (SQLException e) {

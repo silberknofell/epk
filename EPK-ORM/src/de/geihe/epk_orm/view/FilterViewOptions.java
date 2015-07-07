@@ -7,8 +7,7 @@ public class FilterViewOptions {
 	private final BooleanProperty showSchulen = new SimpleBooleanProperty(false);
 	private final BooleanProperty showText = new SimpleBooleanProperty(false);
 	private final BooleanProperty showDefizit = new SimpleBooleanProperty(false);
-	private final BooleanProperty showAlleKlassen = new SimpleBooleanProperty(
-			false);
+	private final BooleanProperty showAlleKlassen = new SimpleBooleanProperty(false);
 
 	public BooleanProperty showSchulenProperty() {
 		return showSchulen;

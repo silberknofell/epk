@@ -4,7 +4,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.db.daos.EpkDao;
 import de.geihe.epk_orm.db.daos.NoteDao;
 
 @DatabaseTable(daoClass = NoteDao.class)
@@ -13,7 +12,7 @@ public class Note extends EntityMitEpk {
 		Note note = new Note();
 		note.setSos(sos);
 		note.setEpk_id(epk.getId());
-		note.setFachId(fach_id);		
+		note.setFachId(fach_id);
 		return note;
 	}
 
@@ -33,7 +32,7 @@ public class Note extends EntityMitEpk {
 
 	@DatabaseField
 	private int note_s;
-	
+
 	private Fach fach;
 
 	// Bei falscher Eingabe wird -1 zurückgegeben
@@ -45,7 +44,7 @@ public class Note extends EntityMitEpk {
 			}
 			String zahl = n.substring(0, 1);
 			char plusminus = n.charAt(n.length() - 1);
-			int punkte = 17 - Integer.parseInt(zahl) * 3;
+			int punkte = 17 - (Integer.parseInt(zahl) * 3);
 			if (punkte == -1) {
 				return 0;
 			}
@@ -90,16 +89,16 @@ public class Note extends EntityMitEpk {
 	}
 
 	public Fach getFach() {
-		if (fach==null) {
+		if (fach == null) {
 			fach = R.getFachManager().getFach(fach_id);
 		}
 		return fach;
 	}
-	
+
 	public String getFachString() {
 		return getFach().getFachString();
 	}
-	
+
 	public Lehrer getLehrer() {
 		return lehrer;
 	}
@@ -157,11 +156,11 @@ public class Note extends EntityMitEpk {
 		}
 
 		String ausgabe = "" + ((18 - punkte) / 3);
-		if (punkte % 3 == 1) {
+		if ((punkte % 3) == 1) {
 			ausgabe += "-";
 		}
 		;
-		if (punkte % 3 == 0 && punkte > 0) {
+		if (((punkte % 3) == 0) && (punkte > 0)) {
 			ausgabe += "+";
 		}
 		;

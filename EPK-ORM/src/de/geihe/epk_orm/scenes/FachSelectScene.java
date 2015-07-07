@@ -1,18 +1,16 @@
 package de.geihe.epk_orm.scenes;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import de.geihe.epk_orm.R;
+import de.geihe.epk_orm.pojo.Fach;
+import de.geihe.epk_orm.view.AnimSelectView;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.pojo.Fach;
-import de.geihe.epk_orm.view.AnimSelectView;
 
 public class FachSelectScene extends Scene {
 

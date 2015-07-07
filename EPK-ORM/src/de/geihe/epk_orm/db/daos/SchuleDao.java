@@ -8,8 +8,7 @@ import de.geihe.epk_orm.pojo.Schule;
 
 public class SchuleDao extends EntityDao<Schule> {
 
-	public SchuleDao(ConnectionSource connectionSource,
-			Class<Schule> dataClass) throws SQLException {
+	public SchuleDao(ConnectionSource connectionSource, Class<Schule> dataClass) throws SQLException {
 		super(connectionSource, dataClass);
 	}
 

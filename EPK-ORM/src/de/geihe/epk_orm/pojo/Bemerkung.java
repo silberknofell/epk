@@ -14,8 +14,6 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import de.geihe.epk_orm.db.daos.BemerkungDao;
-import de.geihe.epk_orm.db.daos.EpkDao;
-import de.geihe.epk_orm.manager.BemerkungSuchErgebnis;
 
 @DatabaseTable(daoClass = BemerkungDao.class)
 public class Bemerkung extends EntityMitEpk {
@@ -61,8 +59,7 @@ public class Bemerkung extends EntityMitEpk {
 	public int compareTo(Entity o) {
 		if (o instanceof Bemerkung) {
 			Bemerkung bem = (Bemerkung) o;
-			int mehrBems = bem.getAnzahlUnterzeichner()
-					- this.getAnzahlUnterzeichner();
+			int mehrBems = bem.getAnzahlUnterzeichner() - this.getAnzahlUnterzeichner();
 			if (mehrBems != 0) {
 				return mehrBems;
 			}
@@ -89,8 +86,7 @@ public class Bemerkung extends EntityMitEpk {
 	}
 
 	public List<Lehrer> getUnterzeichner() {
-		return unterschriften.stream().map(Unterschrift::getLehrer)
-				.collect(Collectors.toList());
+		return unterschriften.stream().map(Unterschrift::getLehrer).collect(Collectors.toList());
 	}
 
 	public String getUnterschriftenString() {
@@ -125,14 +121,14 @@ public class Bemerkung extends EntityMitEpk {
 		if (tage == 1) {
 			result = "gestern";
 		}
-		if (tage > 1 && tage < 14) {
+		if ((tage > 1) && (tage < 14)) {
 			result = "vor " + tage + " Tagen";
 		}
-		if (tage >= 14 && tage < 60) {
-			result = "vor " + tage / 7 + " Wochen";
+		if ((tage >= 14) && (tage < 60)) {
+			result = "vor " + (tage / 7) + " Wochen";
 		}
-		if (tage >= 60 && tage < 180) {
-			result = "vor " + tage / 30 + " Monaten";
+		if ((tage >= 60) && (tage < 180)) {
+			result = "vor " + (tage / 30) + " Monaten";
 		}
 		if (tage >= 180) {
 			result = "älter als ein halbes Jahr";
@@ -159,8 +155,7 @@ public class Bemerkung extends EntityMitEpk {
 		if (unterschriften.size() == 0) {
 			return false;
 		}
-		return unterschriften.stream().map(u -> u.getLehrer())
-				.anyMatch(lehrer::equals);
+		return unterschriften.stream().map(u -> u.getLehrer()).anyMatch(lehrer::equals);
 	}
 
 	public boolean ohneUnterzeichner() {
@@ -172,8 +167,7 @@ public class Bemerkung extends EntityMitEpk {
 	}
 
 	public void removeUnterschriftenVon(Lehrer lehrer) {
-		Unterschrift[] unterschrLehrer = unterschriften.stream()
-				.filter((u) -> u.getLehrer().equals(lehrer))
+		Unterschrift[] unterschrLehrer = unterschriften.stream().filter((u) -> u.getLehrer().equals(lehrer))
 				.toArray(Unterschrift[]::new);
 
 		unterschriften.removeAll(Arrays.asList(unterschrLehrer));
@@ -189,8 +183,7 @@ public class Bemerkung extends EntityMitEpk {
 
 	private long timeStampLetzteUnterschrift() {
 
-		Optional<Long> time = unterschriften.stream()
-				.map((u) -> u.getTimestamp()).max(Long::compareTo);
+		Optional<Long> time = unterschriften.stream().map((u) -> u.getTimestamp()).max(Long::compareTo);
 		if (time.isPresent()) {
 			return time.get();
 		}

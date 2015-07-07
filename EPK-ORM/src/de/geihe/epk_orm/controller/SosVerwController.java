@@ -17,18 +17,17 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
 public class SosVerwController {
-	private ObservableList<Klasse> klassenList=null;
-	
+	private ObservableList<Klasse> klassenList = null;
+
 	public SosVerwController() {
 
 	}
 
 	public void changeGsLehrer(Sos sos, String text) {
-		if (sos == null || sos.getGslehrer().equals(text)) {
+		if ((sos == null) || sos.getGslehrer().equals(text)) {
 			return;
 		}
-		System.out.println("Ändere Lehrer von " + sos.toString() + " --> "
-				+ text);
+		System.out.println("Ändere Lehrer von " + sos.toString() + " --> " + text);
 		sos.setGslehrer(text);
 		updateSosInDB(sos);
 	}
@@ -36,28 +35,28 @@ public class SosVerwController {
 	private void updateSosInDB(Sos sos) {
 		R.DB.sosDao.update(sos);
 	}
+
 	public void changeKlasse(Sos sos, Klasse newKlasse) {
-		if (sos == null || newKlasse == null
-				|| newKlasse.equals(sos.getKlasse())) {
+		if ((sos == null) || (newKlasse == null) || newKlasse.equals(sos.getKlasse())) {
 			return;
 		}
 		String vonString = sos.getKlasse().toString();
 		String zuString = newKlasse.toString();
 		String sosString = sos.toString();
-		System.out.println("Ändere Klasse von " + sosString + " --> "
-				+ newKlasse.toString());
-		
+		System.out.println("Ändere Klasse von " + sosString + " --> " + newKlasse.toString());
+
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Klassenwechsel");
 		alert.setHeaderText("Klassenwechsel bestätigen");
-		alert.setContentText("Soll " + sosString + " von der Klasse " + vonString
-				+ " in die Klasse " + zuString + " wechseln ?");
+		alert.setContentText(
+				"Soll " + sosString + " von der Klasse " + vonString + " in die Klasse " + zuString + " wechseln ?");
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK){
+		if (result.get() == ButtonType.OK) {
 			sos.setKlasse(newKlasse);
 			updateSosInDB(sos);
-		};
+		}
+		;
 	}
 
 	public void insArchiv(Sos sos) {
@@ -65,34 +64,35 @@ public class SosVerwController {
 			return;
 		}
 		System.out.println("Verschiebe " + sos.toString() + " --> Archiv");
-		
+
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Archiv");
 		alert.setHeaderText("Verschiebung ins Archiv bestätigen");
-		alert.setContentText("Soll " + sos.toString()
-								+ " ins Archiv verschoben werden ?");
+		alert.setContentText("Soll " + sos.toString() + " ins Archiv verschoben werden ?");
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK){
+		if (result.get() == ButtonType.OK) {
 			sos.setArchiv(true);
 			updateSosInDB(sos);
-		};
+		}
+		;
 	}
 
 	public ObservableList<Klasse> getKlassenList() {
-		if (klassenList==null) {
-		List<Klasse> list = R.DB.epkDao.queryForEq("aktiv", true).stream()
-				.map(e -> e.getKlasse()).collect(Collectors.toList());
-		Collections.sort(list);
-		klassenList = FXCollections.observableList(list);
-		};
+		if (klassenList == null) {
+			List<Klasse> list = R.DB.epkDao.queryForEq("aktiv", true).stream().map(e -> e.getKlasse())
+					.collect(Collectors.toList());
+			Collections.sort(list);
+			klassenList = FXCollections.observableList(list);
+		}
+		;
 		return klassenList;
 	}
 
-	public void resetKlassenList() {		
+	public void resetKlassenList() {
 		klassenList = null;
 	}
-	
+
 	public SosVerwTab getTab() {
 		return new SosVerwTab(this);
 	}

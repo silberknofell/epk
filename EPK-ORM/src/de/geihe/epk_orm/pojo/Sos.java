@@ -12,8 +12,7 @@ import de.geihe.epk_orm.db.daos.SosDao;
 import de.geihe.epk_orm.view.abstr_and_interf.WebViewSource;
 
 @DatabaseTable(daoClass = SosDao.class)
-public class Sos extends EntityMitArchiv implements Comparable<Entity>,
-		WebViewSource {
+public class Sos extends EntityMitArchiv implements Comparable<Entity>, WebViewSource {
 
 	public static Sos getNullschueler() {
 		Sos sos = new Sos();

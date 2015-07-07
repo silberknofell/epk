@@ -1,5 +1,7 @@
 package de.geihe.epk_orm.scenes;
 
+import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
+import de.geihe.epk_orm.pojo.Sos;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,8 +12,6 @@ import javafx.scene.web.HTMLEditor;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
-import de.geihe.epk_orm.pojo.Sos;
 
 public class EditWebViewPopUpStage extends Stage {
 	private BorderPane pane;

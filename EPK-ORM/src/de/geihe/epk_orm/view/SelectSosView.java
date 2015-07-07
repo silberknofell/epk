@@ -2,10 +2,6 @@ package de.geihe.epk_orm.view;
 
 import java.util.List;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.control.ListView;
-
 import org.controlsfx.control.CheckListView;
 
 import de.geihe.epk_orm.Mode;
@@ -13,6 +9,9 @@ import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.SelectSosController;
 import de.geihe.epk_orm.pojo.Sos;
 import de.geihe.epk_orm.view.abstr_and_interf.AbstractSelectView;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.ListView;
 
 public class SelectSosView extends AbstractSelectView<Sos, SelectSosController> {
 
@@ -42,7 +41,7 @@ public class SelectSosView extends AbstractSelectView<Sos, SelectSosController> 
 			listView = new ListView<Sos>(list);
 		}
 		listView.getSelectionModel().selectedItemProperty().addListener((ov, alt, neu) -> {
-			if (neu != null && alt != neu) {
+			if ((neu != null) && (alt != neu)) {
 				controller.newSelection(neu);
 			}
 		});

@@ -4,8 +4,7 @@ import de.geihe.epk_orm.pojo.Sos;
 import de.geihe.epk_orm.view.EditWebView;
 import de.geihe.epk_orm.view.abstr_and_interf.WebViewSource;
 
-public abstract class EditWebController<E extends WebViewSource> extends
-AbstractEditViewController<EditWebView> {
+public abstract class EditWebController<E extends WebViewSource> extends AbstractEditViewController<EditWebView> {
 
 	private E element;
 

@@ -1,9 +1,9 @@
 package de.geihe.epk_orm.scenes.frames;
 
+import de.geihe.epk_orm.Logger;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
-import de.geihe.epk_orm.Logger;
 
 public class LogSceneFrame extends MenuSceneFrame implements Logger {
 

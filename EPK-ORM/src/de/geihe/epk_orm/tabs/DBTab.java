@@ -2,11 +2,6 @@ package de.geihe.epk_orm.tabs;
 
 import java.sql.SQLException;
 
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.layout.GridPane;
-
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 
@@ -15,6 +10,10 @@ import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.pojo.Sos;
 import de.geihe.epk_orm.scenes.DBScene;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.layout.GridPane;
 
 public class DBTab extends Tab {
 	private GridPane gridPane;

@@ -2,15 +2,15 @@ package de.geihe.epk_orm.manager;
 
 import java.io.File;
 
-import javafx.scene.Scene;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.scenes.DBScene;
 import de.geihe.epk_orm.scenes.MainScene;
 import de.geihe.epk_orm.scenes.SosImportScene;
 import de.geihe.epk_orm.scenes.SosScene;
+import javafx.scene.Scene;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 public class SceneManager {
 
@@ -93,8 +93,7 @@ public class SceneManager {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Datenbank auswählen");
 
-		fileChooser.getExtensionFilters().add(
-				new ExtensionFilter("Datenbank", "*.db"));
+		fileChooser.getExtensionFilters().add(new ExtensionFilter("Datenbank", "*.db"));
 		fileChooser.setInitialFileName("epk.db");
 		File selectedFile = fileChooser.showOpenDialog(null);
 		if (selectedFile != null) {

@@ -29,7 +29,7 @@ public class EpkGruppenManager {
 	}
 
 	public void addAktuelleEpk() {
-		addEpk_id(R.State.epk.getId()); 
+		addEpk_id(R.State.epk.getId());
 	}
 
 	public void addCollectionBemerkungen(Collection<Bemerkung> list) {
@@ -97,8 +97,7 @@ public class EpkGruppenManager {
 			bemerkungenMap.put(epk_id, new TreeSet<Bemerkung>());
 		}
 		if (!konferenzenMap.containsKey(epk_id)) {
-			konferenzenMap.put(epk_id,
-					Konferenz.neueKonferenz(R.State.sos, epk_id));
+			konferenzenMap.put(epk_id, Konferenz.neueKonferenz(R.State.sos, epk_id));
 		}
 
 	}
@@ -153,8 +152,7 @@ public class EpkGruppenManager {
 		return sorset;
 	}
 
-	public BemerkungSuchErgebnis sucheErsteBemerkungInGruppenBis(
-			String suchText, int eigeneEpk_id) {
+	public BemerkungSuchErgebnis sucheErsteBemerkungInGruppenBis(String suchText, int eigeneEpk_id) {
 		NavigableSet<Integer> epkIds = getEpk_ids();
 		if (epkIds == null) {
 			return new BemerkungSuchErgebnis();
@@ -164,7 +162,7 @@ public class EpkGruppenManager {
 		Bemerkung gefunden = null;
 		Iterator<Integer> it = epkIds.descendingIterator();
 
-		while (gefunden == null && it.hasNext()) {
+		while ((gefunden == null) && it.hasNext()) {
 			int epkid = it.next();
 			if (epkid <= eigeneEpk_id) {
 				bems = getBemerkungen(epkid);

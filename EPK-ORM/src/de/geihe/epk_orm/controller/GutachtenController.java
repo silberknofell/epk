@@ -1,7 +1,5 @@
 package de.geihe.epk_orm.controller;
 
-import java.sql.SQLException;
-
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
 import de.geihe.epk_orm.pojo.Sos;

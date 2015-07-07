@@ -3,7 +3,6 @@ package de.geihe.epk_orm.pojo;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import de.geihe.epk_orm.db.daos.EpkDao;
 import de.geihe.epk_orm.db.daos.LehrerDao;
 
 @DatabaseTable(daoClass = LehrerDao.class)
@@ -38,7 +37,7 @@ public class Lehrer extends EntityMitArchiv implements Comparable<Entity> {
 	}
 
 	public String getName() {
-		return name == null || name.length() == 0 ? kuerzel : name;
+		return (name == null) || (name.length() == 0) ? kuerzel : name;
 	}
 
 	public void setName(String name) {

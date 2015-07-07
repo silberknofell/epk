@@ -8,8 +8,7 @@ import de.geihe.epk_orm.pojo.Note;
 
 public class NoteDao extends EntityMitEpkDao<Note> {
 
-	public NoteDao(ConnectionSource connectionSource, Class<Note> dataClass)
-			throws SQLException {
+	public NoteDao(ConnectionSource connectionSource, Class<Note> dataClass) throws SQLException {
 		super(connectionSource, dataClass);
 	}
 }

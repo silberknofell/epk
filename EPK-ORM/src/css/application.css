@@ -124,7 +124,7 @@
 
 .bemerkung {
 	-fx-background-color: lightgrey;
-	-fx-padding: -2 0.0 -2 6;
+	-fx-padding: -2 0.0 -1 6;
 }
 
 .junge-bemerkung {
@@ -142,7 +142,6 @@
 .text-area .scroll-pane .viewport{
     -fx-background-color: transparent;
 }
-
 
 .text-area .scroll-pane .content{
     -fx-background-color: transparent;

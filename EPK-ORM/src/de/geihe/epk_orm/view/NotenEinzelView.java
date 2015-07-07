@@ -1,16 +1,15 @@
 package de.geihe.epk_orm.view;
 
+import de.geihe.epk_orm.controller.NotenEinzelController;
+import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import de.geihe.epk_orm.controller.NotenEinzelController;
-import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 
-public class NotenEinzelView extends
-AbstractControlledView<NotenEinzelController> {
+public class NotenEinzelView extends AbstractControlledView<NotenEinzelController> {
 	private Pane box;
 	private Label sosLabel;
 	private TextField textField;
