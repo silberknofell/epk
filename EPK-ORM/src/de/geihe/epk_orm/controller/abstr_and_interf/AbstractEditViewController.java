@@ -45,7 +45,7 @@ public abstract class AbstractEditViewController<V extends EditView> extends
 	@Override
 	public void writeToDB() {
 		if (changed) {
-			boolean leer = getView().getText().length() == 0;
+			boolean leer = getView().getText().trim().isEmpty(); 
 
 			if (neu && !leer) {
 				insertInDB();

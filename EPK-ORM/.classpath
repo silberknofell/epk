@@ -13,6 +13,5 @@
 	<classpathentry kind="lib" path="lib/controlsfx-8.40.9.jar"/>
 	<classpathentry kind="lib" path="lib/javacsv.jar"/>
 	<classpathentry kind="lib" path="lib/jericho-html-3.3.jar"/>
-	<classpathentry kind="lib" path="lib/pdfclown.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

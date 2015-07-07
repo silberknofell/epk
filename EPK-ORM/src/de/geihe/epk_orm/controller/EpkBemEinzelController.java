@@ -1,4 +1,4 @@
- package de.geihe.epk_orm.controller;
+package de.geihe.epk_orm.controller;
 
 import java.util.List;
 
@@ -12,8 +12,7 @@ import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.Lehrer;
 import de.geihe.epk_orm.view.EpkBemEinzelView;
 
-public class EpkBemEinzelController extends
-AbstractEditViewController<EpkBemEinzelView> {
+public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEinzelView> {
 
 	private Bemerkung bem;
 	private EpkController epkContr;
@@ -83,16 +82,14 @@ AbstractEditViewController<EpkBemEinzelView> {
 	}
 
 	private void insertInDB(Bemerkung bem) {
-		BemerkungSuchErgebnis ergebnis = epkContr.sucheErsteBemerkungInGruppen(
-				bem.getText(), bem.getEpk_id());
+		BemerkungSuchErgebnis ergebnis = epkContr.sucheErsteBemerkungInGruppen(bem.getText(), bem.getEpk_id());
 
 		Bemerkung neueBemerkung = BemerkungUtils.insertBemerkung(bem, ergebnis);
 
 		if (neueBemerkung != null) {
 			EpkController aktEpkCtrl = R.State.aktuellerEpkController;
 			if (aktEpkCtrl != null) {
-				R.State.aktuellerEpkController.getBemerkungen().add(
-						neueBemerkung);
+				R.State.aktuellerEpkController.getBemerkungen().add(neueBemerkung);
 			}
 		}
 		updateEpkBox();
@@ -112,19 +109,16 @@ AbstractEditViewController<EpkBemEinzelView> {
 	}
 
 	public boolean isDeletable() {
-		return R.mode == Mode.EINGABE && isAktuelleEPK() && !isNeu()
-				&& aktuellIstUnterzeichner();
+		return R.mode == Mode.EINGABE && isAktuelleEPK() && !isNeu() && aktuellIstUnterzeichner();
 	}
 
 	@Override
 	public boolean isEditierbar() {
-		return R.mode == Mode.EINGABE && isAktuelleEPK()
-				&& keinAndererUnterzeichner() || R.mode == Mode.ADMIN;
+		return R.mode == Mode.EINGABE && isAktuelleEPK() && keinAndererUnterzeichner() || R.mode == Mode.ADMIN;
 	}
 
 	public boolean isLikable() {
-		return R.mode == Mode.EINGABE && !isNeu()
-				&& !(aktuellIstUnterzeichner() && isAktuelleEPK());
+		return R.mode == Mode.EINGABE && !isNeu() && !(aktuellIstUnterzeichner() && isAktuelleEPK());
 	}
 
 	public boolean isOKbar() {
@@ -145,8 +139,7 @@ AbstractEditViewController<EpkBemEinzelView> {
 			bem.addUnterschrift(R.State.lehrer);
 			updateEpkBox();
 		} else {
-			Bemerkung neuBem = BemerkungUtils.bemAusText(bem.getText(),
-					bem.getSos(), R.State.epk.getId());
+			Bemerkung neuBem = BemerkungUtils.bemAusText(bem.getText(), bem.getSos(), R.State.epk.getId());
 			insertInDB(neuBem);
 		}
 
@@ -165,7 +158,8 @@ AbstractEditViewController<EpkBemEinzelView> {
 			if (laenge >= 70) {
 				// Dialogs.create()
 				// .title("Langer Text")
-				// .message("DerText wird sehr lang. Bitte teilen Sie - falls möglich - Ihr Bemerkung in zwei kürzere auf.")
+				// .message("DerText wird sehr lang. Bitte teilen Sie - falls
+				// möglich - Ihr Bemerkung in zwei kürzere auf.")
 				// .showConfirm();
 			}
 		}
@@ -179,36 +173,40 @@ AbstractEditViewController<EpkBemEinzelView> {
 
 	@Override
 	public void updateInDB() {
-		String text = getView().getText();
-		Bemerkung neuBem = BemerkungUtils.bemAusText(text, bem.getSos(),
-				bem.getEpk_id());
-		delete();
+		if (R.isAdminMode()) {
+			updateInDBAdmin();
+		} else {
+			String text = getView().getText();
+			Bemerkung neuBem = BemerkungUtils.bemAusText(text, bem.getSos(), bem.getEpk_id());
+			delete();
 
-		if (text.length() > 0) {
-			insertInDB(neuBem);
+			if (text.length() > 0) {
+				insertInDB(neuBem);
+			}
 		}
 	}
 
 	public void updateInDBAdmin() {
-
+System.out.println("de.geihe.epk_orm.controller.EpkBemEinzelController.updateInDBAdmin()");
 		List<Lehrer> lehrerListe;
 		lehrerListe = bem.getUnterzeichner();
 		String neuText = getView().getText();
+System.out.println(neuText);			
 		int epk_id = bem.getEpk_id();
 		delete();
-
-		insertInDbAdmin(lehrerListe, neuText, epk_id);
+		if (neuText.trim().isEmpty()) {
+			// gelöscht lassen
+		} else {
+			insertInDbAdmin(lehrerListe, neuText, epk_id);
+		}
 	}
 
-	private void insertInDbAdmin(List<Lehrer> lehrerListe, String neuText,
-			int epk_id) {
-		BemerkungSuchErgebnis ergebnis = epkContr.sucheErsteBemerkungInGruppen(
-				neuText, epk_id);
+	private void insertInDbAdmin(List<Lehrer> lehrerListe, String neuText, int epk_id) {
+		BemerkungSuchErgebnis ergebnis = epkContr.sucheErsteBemerkungInGruppen(neuText, epk_id);
 
 		if (ergebnis.inEigenerEpkGefunden()) {
 			System.out.println("Unterschreibe");
-			System.out.println(ergebnis.getBem().getText() + " ->"
-					+ ergebnis.getBem().getUnterschriftenString());
+			System.out.println(ergebnis.getBem().getText() + " ->" + ergebnis.getBem().getUnterschriftenString());
 			System.out.println("mit neuen Unterschriften");
 			lehrerListe.forEach(System.out::println);
 			System.out.println();
@@ -216,15 +214,13 @@ AbstractEditViewController<EpkBemEinzelView> {
 		}
 
 		if (ergebnis.nurInAndererEpkGefunden()) {
-			Bemerkung neuBem = BemerkungUtils.bemAusText(neuText, R.State.sos,
-					epk_id);
+			Bemerkung neuBem = BemerkungUtils.bemAusText(neuText, R.State.sos, epk_id);
 			neuBem.setZitate(ergebnis.getBem().getZitate() + 1);
 			R.DB.bemerkungDao.create(neuBem);
 			BemerkungUtils.unterschreibe(neuBem, lehrerListe);
 
 			System.out.println("Füge als Zitat ein");
-			System.out.println(ergebnis.getBem().getText() + " ->"
-					+ ergebnis.getBem().getUnterschriftenString());
+			System.out.println(ergebnis.getBem().getText() + " ->" + ergebnis.getBem().getUnterschriftenString());
 			System.out.println("mit neuen Unterschriften");
 			lehrerListe.forEach(System.out::println);
 		}
@@ -232,18 +228,17 @@ AbstractEditViewController<EpkBemEinzelView> {
 		if (!ergebnis.isGefunden()) {
 			System.out.println("Nicht gefunden");
 			System.out.println("Füge wieder ein:");
-			Bemerkung neuBem = BemerkungUtils.bemAusText(neuText, R.State.sos,
-					epk_id);
+			Bemerkung neuBem = BemerkungUtils.bemAusText(neuText, R.State.sos, epk_id);
 			R.DB.bemerkungDao.create(neuBem);
 			BemerkungUtils.unterschreibe(neuBem, lehrerListe);
-
 		}
+		setNeuUndChangedFalse();
 
 		R.State.bemerkungUndKonferenzTab.update(R.State.sos);
+
 	}
 
 	public boolean neuUnterschrieben() {
-		// TODO Auto-generated method stub
 		return bem.geradeUnterschrieben();
 	}
 
