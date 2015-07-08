@@ -41,6 +41,10 @@ public class Fach extends Entity {
 		return fachstringlang;
 	}
 
+	public int getSortierung() {
+		return sortierung;
+	}
+
 	public String schildString() {
 		return schildstring;
 	}
@@ -55,4 +59,9 @@ public class Fach extends Entity {
 		return getFachString();
 	}
 
+	@Override
+	public int compareTo(Entity o) {
+		Fach fach = (Fach) o;
+		return getSortierung() - fach.getSortierung();
+	}	
 }
