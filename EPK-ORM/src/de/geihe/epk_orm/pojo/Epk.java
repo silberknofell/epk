@@ -28,6 +28,9 @@ public class Epk extends EntityMitArchiv {
 
 	@DatabaseField
 	String datum;
+	
+	@DatabaseField
+	String klassenstring;
 
 	public Klasse getKlasse() {
 		return klasse;
@@ -75,7 +78,9 @@ public class Epk extends EntityMitArchiv {
 	}
 
 	public String toLangString() {
-		return klasse.toString() + " EPK " + Integer.toString(nr) + " (" + EPKBEZ[nr] + ")   --- " + getDatum();
+		return    klassenstring 
+				+ " (" + EPKBEZ[nr] + ")   --- " 
+				+ getDatum();
 	}
 
 	public boolean isZeugniskonferenz() {

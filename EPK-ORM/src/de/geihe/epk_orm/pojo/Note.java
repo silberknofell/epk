@@ -197,16 +197,6 @@ public class Note extends EntityMitEpk {
 	public String getPunkte_schriftlichString() {
 		return notenString(note_s);
 	}
-	
-//	 @Override
-//	 public int compareTo(Entity o) {
-//	 Note note = (Note) o;
-//	 int dif = note.getNote_g() - note_g;
-//	 if (dif != 0) {
-//	 return dif;
-//	 }
-//	 return super.compareTo(o);
-//	 }
 
 	@Override
 	public int compareTo(Entity o) {
