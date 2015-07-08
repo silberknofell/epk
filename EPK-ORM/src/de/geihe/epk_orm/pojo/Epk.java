@@ -78,6 +78,17 @@ public class Epk extends EntityMitArchiv {
 		return klasse.toString() + " EPK " + Integer.toString(nr) + " (" + EPKBEZ[nr] + ")   --- " + getDatum();
 	}
 
+	public boolean isZeugniskonferenz() {
+		switch (nr) {
+		case 2:
+		case 4:
+		case 6:
+		case 9: 
+			return true;
+		default: return false;
+		}
+	}
+	
 	public static Epk getEpk(String schildHalbjahr, String schildKlasse) {
 
 		int halbjahr = Integer.parseInt(schildHalbjahr.substring(schildHalbjahr.length() - 1));

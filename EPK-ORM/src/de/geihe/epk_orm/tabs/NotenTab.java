@@ -3,6 +3,7 @@ package de.geihe.epk_orm.tabs;
 import java.util.List;
 
 import de.geihe.epk_orm.Main_ORM;
+import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.NotenEinzelController;
 import de.geihe.epk_orm.pojo.Epk;
@@ -32,17 +33,16 @@ public class NotenTab extends Tab {
 		super("Noteneingabe");
 		update(R.State.sosList);
 		selectedProperty().addListener((ov, oldSel, newSel) -> {
-			if (newSel) {
+			if (newSel) {				
 				selectFach();
 			}
-		});
-
+		});		
+		
 		epk = R.State.epk;
 		vbox = new VBox(5);
 	}
 
 	public void update(ObservableList<Sos> list) {
-
 		sosList = list;
 		updateView();
 	}
@@ -67,7 +67,11 @@ public class NotenTab extends Tab {
 	public void update() {
 		epk = R.State.epk;
 		sosList = R.State.sosList;
-		updateView();
+		if (epk.isZeugniskonferenz() && R.mode == Mode.EINGABE) {
+			setDisable(true);
+		} else {
+			updateView();
+		}
 	}
 
 	private void updateView() {
