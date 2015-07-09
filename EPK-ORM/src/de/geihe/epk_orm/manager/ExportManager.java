@@ -68,7 +68,7 @@ public class ExportManager {
 		epkGruppenManager.addData(sos);
 
 		for (int epk_id : epkGruppenManager.getEpk_ids(po.getAnzEPKsForLoop())) {
-			htmlOut.addElement("epk", getRowEpk(epk_id));
+			htmlOut.addElement("epk", getRowEpk(epk_id, sos));
 			if (po.noten()) {
 				htmlOut.addElement("noten", getRowNoten(epk_id));
 			}
@@ -174,9 +174,9 @@ public class ExportManager {
 		return FOLDER + htmlOut.getTitle() + ".html";
 	}
 
-	private String getRowEpk(int epk_id) {
+	private String getRowEpk(int epk_id, Sos sos) {
 		Epk epk = R.DB.epkDao.queryForId(epk_id);
-		return epk.toString();
+		return sos.getNachname() + ": " + epk.toLangString();
 	}
 
 	private String getRowNoten(int epk_id) {

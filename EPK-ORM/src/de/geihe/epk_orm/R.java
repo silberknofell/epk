@@ -42,7 +42,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 
 public final class R {
-	public static final String version = "2.4";
+	public static final String version = "2.5";
 
 	public static final Mode STARTMODE = Mode.EINGABE;
 	public static Mode mode = STARTMODE;

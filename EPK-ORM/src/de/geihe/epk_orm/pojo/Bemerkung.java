@@ -192,6 +192,6 @@ public class Bemerkung extends EntityMitEpk {
 
 	@Override
 	public String toString() {
-		return text + getUnterschriftenString();
+		return text + " " + getUnterschriftenString();
 	}
 }

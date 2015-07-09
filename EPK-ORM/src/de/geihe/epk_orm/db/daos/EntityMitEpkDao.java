@@ -22,6 +22,6 @@ public class EntityMitEpkDao<T extends EntityMitEpk> extends EntityDao<T> {
 	@Override
 	public int update(T data) {
 		data.setTimestamp();
-		return super.create(data);
+		return super.update(data);
 	}
 }

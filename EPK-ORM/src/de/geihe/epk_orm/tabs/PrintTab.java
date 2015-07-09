@@ -40,14 +40,14 @@ public class PrintTab extends Tab {
 		htmlButton = new Button("Export als HTML");
 		htmlButton.setOnAction(e -> createOutput());
 
-		druckButton = new Button("Drucken");
-		druckButton.setOnAction(e -> print());
+//		druckButton = new Button("Drucken");
+//		druckButton.setOnAction(e -> print());
 
 		showButton = new Button("Vorschau");
 		showButton.setOnAction(e -> show());
 
 		lbox = new VBox(5);
-		lbox.getChildren().addAll(htmlButton, druckButton, showButton);
+		lbox.getChildren().addAll(htmlButton, showButton);
 
 		Button btAlle = new Button("Alle");
 		Button btKeiner = new Button("Keine(r)");
@@ -55,24 +55,20 @@ public class PrintTab extends Tab {
 		btKeiner.setOnAction(e -> selectSosView.uncheckAll());
 
 		lbox.getChildren().addAll(btAlle, btKeiner);
-
+		appendOptionstionsBox(lbox);
+		
 		borderPane.setLeft(lbox);
 
 		webView = new WebView();
-		// webView.setPrefHeight(100);
-		// webView.setPrefWidth(500);
-		// webView.getEngine().loadContent("<html><body>TESTESTETSTSTS</body></html>");
 		borderPane.setCenter(webView);
-
-		buildOptionsBox();
 
 		ScrollPane scrollPane = new ScrollPane(borderPane);
 		scrollPane.setFitToWidth(true);
 		setContent(scrollPane);
 	}
 
-	private void buildOptionsBox() {
-		VBox box = new VBox(10);
+	private void appendOptionstionsBox(VBox box) {
+		
 		box.getStyleClass().add("print-options");
 
 		Label ueberschrift = new Label("Ausdrucken:");
@@ -112,7 +108,6 @@ public class PrintTab extends Tab {
 
 		box.getChildren().addAll(ueberschrift, grundschule, gutachten, noten, rbAlle, rbAuswahl);
 
-		borderPane.setRight(box);
 	}
 
 	private void createOutput() {
