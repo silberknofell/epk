@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.abstr_and_interf.AbstractController;
@@ -18,12 +21,20 @@ import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.view.EpkBemEinzelView;
 import de.geihe.epk_orm.view.EpkView;
 import de.geihe.epk_orm.view.abstr_and_interf.View;
+import javafx.scene.Node;
+import javafx.scene.control.TitledPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
+import jdk.management.resource.internal.inst.NetRMHooks;
 
 public class EpkController extends AbstractController<EpkView> {
 	private Epk epk;
 	private int epk_id;
 	private EpkGruppenManager epkGgruppenManager;
 	private boolean isAktuelleEpk;
+	private PopOver epkPopOver;
 
 	public EpkController(Epk epk, EpkGruppenManager epkGruppenManager) {
 		super();
@@ -34,7 +45,26 @@ public class EpkController extends AbstractController<EpkView> {
 		if (isAktuelleEpk) {
 			R.State.aktuellerEpkController = this;
 		}
+		epkPopOver = new PopOver(getPopOverNode());
+		epkPopOver.setArrowLocation(ArrowLocation.TOP_LEFT);
 		setView(new EpkView(this));
+	}
+
+	private Node getPopOverNode() {
+		
+		StringBuilder sb = new StringBuilder();
+		for (Bemerkung bem : getBemerkungen()) {
+			sb.append(bem.toString());
+			sb.append("\n");
+		};
+		
+		Text t = new Text(sb.toString());	
+		t.setFont(new Font(14));
+		return t;
+	}
+	
+	public PopOver getPopOver() {
+		return epkPopOver;
 	}
 
 	public BemerkungSuchErgebnis sucheErsteBemerkungInGruppen(String text, int epk_id) {
@@ -97,6 +127,16 @@ public class EpkController extends AbstractController<EpkView> {
 
 	public boolean isAktuelleEpk() {
 		return isAktuelleEpk;
+	}
+
+	public void showPopUp(TitledPane tp) {
+		if (!tp.isExpanded()) {
+			epkPopOver.show(tp);
+		}
+	}
+
+	public void hidePopUp() {
+		epkPopOver.hide(new Duration(300));
 	}
 
 }

@@ -85,7 +85,11 @@ public class BemsTab extends Tab {
 
 		EpkController contr = new EpkController(epk, epkGruppenManager);
 		Node node = contr.getView().getNode();
+		
 		TitledPane tp = new TitledPane(epk.toLangString(), node);
+		tp.setOnMouseEntered(e -> contr.showPopUp(tp));
+		tp.setOnMouseExited(e -> contr.hidePopUp());
+				
 		box.getChildren().add(tp);
 	}
 }

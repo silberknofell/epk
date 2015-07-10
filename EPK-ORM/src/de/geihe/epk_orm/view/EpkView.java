@@ -25,7 +25,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		hauptBox = new VBox();
 		notenZeile = new HBox(4);
 		notenZeile.getStyleClass().add(EPKBOX_NOTENZEILE);
-		bemsBox = new VBox(3);
+		createBemsBox();
 		konfBox = new HBox();
 		konfBox.getStyleClass().add(KONFERENZ_BOX);
 		splitPane = new SplitPane();
@@ -33,6 +33,10 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		splitPane.setDividerPositions(0.66f);
 		hauptBox.getChildren().addAll(notenZeile, splitPane);
 		update();
+	}
+
+	private void createBemsBox() {
+		bemsBox = new VBox(3);
 	}
 
 	@Override
