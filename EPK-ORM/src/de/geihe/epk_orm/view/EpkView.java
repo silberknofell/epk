@@ -11,7 +11,6 @@ import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -31,6 +30,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	private VBox activeNode;
 	private Node inactiveNode;
 	private PopOver epkPopOver;
+	private HBox titelZeile;
 
 	public EpkView(EpkController controller) {
 		super(controller);
@@ -45,25 +45,34 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	private void addEinzelNote(Note note) {
 		if (note.hatEintrag()) {
 			Node node = new EpkNotenEinzelController(note).getView().getNode();
-			notenZeile.getChildren().add(node);
+			notenZeile.getChildren().add(node);			
 		}
 	}
 
+	
+	
 	private void click() {
 		getController().toggleActive();
 	}
 
-	private void createActiveNode() {
-		activeNode = new VBox();
+	private void createActiveNode() {		
+		titelZeile = new HBox();
+		titelZeile.setStyle("-fx-padding: 2px 20px;	-fx-background-radius: 4.0; -fx-background-color:" + getEpkFarbe());
+				
 		notenZeile = new HBox(4);
 		notenZeile.getStyleClass().add(EPKBOX_NOTENZEILE);
+	
 		createBemsBox();
+		
 		konfBox = new HBox();
 		konfBox.getStyleClass().add(KONFERENZ_BOX);
+		
 		splitPane = new SplitPane();
 		splitPane.getItems().addAll(bemsBox, konfBox);
 		splitPane.setDividerPositions(0.66f);
-		activeNode.getChildren().addAll(notenZeile, splitPane);
+		
+		activeNode = new VBox();		
+		activeNode.getChildren().addAll(titelZeile, notenZeile, splitPane);
 		activeNode.setOnMouseClicked(e -> click());
 	}
 
@@ -72,11 +81,12 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	}
 
 	private void createInactiveNode() {
-		Button button = new Button("Test " + getController().getEpk_id());
-		button.setStyle("-fx-background-color: red");
+		
+		Button button = new Button(getController().getButtonString());
+		button.setStyle("-fx-background-color:"+getEpkFarbe());
 		inactiveNode = button;
-		inactiveNode.setOnMouseEntered(e -> {showPopUp(); e.consume();});
-		inactiveNode.setOnMouseExited(e -> {hidePopUp(); e.consume();});
+		inactiveNode.setOnMouseEntered(e -> showPopUp());
+		inactiveNode.setOnMouseExited(e -> hidePopUp());
 		inactiveNode.setOnMouseClicked(e -> click());
 	}
 
@@ -85,17 +95,31 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		return getController().isActive() ? activeNode : inactiveNode;
 	}
 
-	private Node getPopOverNode() {
+	private Node getPopOverNode() {		
+		VBox box = new VBox(3);
+		box.setStyle("-fx-padding: 10; -fx-background-color:" + getEpkPopupFarbe()); 
+		
+		Text header = new Text(getController().getEpkString());
+		header.setFont(new Font(18));
+		
 		StringBuilder sb = new StringBuilder();
 		for (Bemerkung bem : getController().getBemerkungen()) {
 			sb.append(bem.toString());
 			sb.append("\n");
 		}
-		;
 
-		Text t = new Text(sb.toString());
-		t.setFont(new Font(14));
-		return t;
+		Text text = new Text(sb.toString());
+		text.setFont(new Font(14));
+		box.getChildren().addAll(header, text);
+		return box;
+	}
+
+	private String getEpkFarbe() {		
+		return !getController().isAktuelleEpk() ? "cadetBlue" : "darkseagreen";
+	}
+	
+	private String getEpkPopupFarbe() {		
+		return !getController().isAktuelleEpk() ? "#90eff2" : "#bcf7bc";
 	}
 
 	public void hidePopUp() {
@@ -110,10 +134,19 @@ public class EpkView extends AbstractControlledView<EpkController> {
 
 	@Override
 	public void update() {
+		updateTitelZeile();
 		updateNotenZeile();
 		updateKonfView();
 		updateBemBox();
 		R.State.setzeFocus();
+	}
+
+	private void updateTitelZeile() {
+		titelZeile.getChildren().clear();
+		Text text = new Text(getController().getEpkString());
+		text.setFont(new Font(20));
+		titelZeile.getChildren().add(text);
+		
 	}
 
 	public void updateBemBox() {
@@ -132,7 +165,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	public void updateNotenZeile() {
 		notenZeile.getChildren().clear();
 		getController().getNoten().forEach(this::addEinzelNote);
-
 	}
 
 	public Node getActiveNode() {

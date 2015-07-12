@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
+
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.EpkController;
@@ -51,9 +54,15 @@ public class BemsTab extends Tab {
 
 		WebView gaNode = gutachtenController.getView().getNode();
 		gaNode.setPrefHeight(160);
+		
+		WebView gaPopOverNode = new WebView();
+		gaPopOverNode.getEngine().loadContent(getGutachtenPopOverText(sos));
 
 		tpGutachten = new TitledPane("Grundschulgutachten", gaNode);
-
+		PopOver gaPopOver = new PopOver(gaPopOverNode);
+		gaPopOver.setArrowLocation(ArrowLocation.LEFT_CENTER);
+		tpGutachten.setOnMouseEntered(e -> gaPopOver.show(tpGutachten));
+		tpGutachten.setOnMouseExited(e -> gaPopOver.hide());
 		box.getChildren().add(tpGutachten);
 
 		epkGruppenManager = new EpkGruppenManager();
@@ -68,6 +77,10 @@ public class BemsTab extends Tab {
 		box.getChildren().addAll(boxManager.getInactiveBox(), boxManager.getActiveBox());
 		
 		setContent(scrollPane);
+	}
+
+	private String getGutachtenPopOverText(Sos sos) {
+		return sos.getGutachten();
 	}
 
 	private void createEpkBoxManager(Set<Integer> epk_ids) {

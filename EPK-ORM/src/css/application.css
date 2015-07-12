@@ -36,6 +36,12 @@
 	-fx-padding: 1.0 5.0 0.0 10.0;
 }
 
+.bemerkung-tab {
+	-fx-padding: 10.0 0.0 0.0 0.0;
+} 
+	
+
+
 .anim-label {
 	-fx-font-size: 20.0;
 	-fx-font-weight: bold;
