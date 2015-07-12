@@ -1,5 +1,8 @@
 package de.geihe.epk_orm.tabs;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import de.geihe.epk_orm.Mode;
@@ -7,13 +10,16 @@ import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.EpkController;
 import de.geihe.epk_orm.controller.GutachtenController;
 import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
+import de.geihe.epk_orm.manager.EpkBoxManager;
 import de.geihe.epk_orm.manager.EpkGruppenManager;
 import de.geihe.epk_orm.pojo.Epk;
 import de.geihe.epk_orm.pojo.Sos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
@@ -25,12 +31,15 @@ public class BemsTab extends Tab {
 	private VBox box = new VBox(5);
 	private ScrollPane scrollPane;
 	private EpkGruppenManager epkGruppenManager;
+	private EpkBoxManager boxManager;
+	private TitledPane tpGutachten;
 
 	public BemsTab() {
 		super(BEMERKUNGEN);
 		box.getStyleClass().add(BEMERKUNG_TAB);
 		scrollPane = new ScrollPane(box);
 		scrollPane.setFitToWidth(true);
+		
 		R.State.bemerkungUndKonferenzTab = this;
 	}
 
@@ -43,7 +52,7 @@ public class BemsTab extends Tab {
 		WebView gaNode = gutachtenController.getView().getNode();
 		gaNode.setPrefHeight(160);
 
-		TitledPane tpGutachten = new TitledPane("Grundschulgutachten", gaNode);
+		tpGutachten = new TitledPane("Grundschulgutachten", gaNode);
 
 		box.getChildren().add(tpGutachten);
 
@@ -51,22 +60,29 @@ public class BemsTab extends Tab {
 		epkGruppenManager.addData(sos);
 		epkGruppenManager.addAktuelleEpk();
 		Set<Integer> epk_ids = epkGruppenManager.getEpk_ids();
-		epk_ids.add(R.State.epk.getId());
-
-		for (int epk_id : epk_ids) {
-			addEpkBox(epk_id);
-		}
-
-		klappeEin();
+		epk_ids.add(R.State.epk.getId());		
+		
+		createEpkBoxManager(epk_ids);
+		klappeEin();		
+		
+		box.getChildren().addAll(boxManager.getInactiveBox(), boxManager.getActiveBox());
+		
 		setContent(scrollPane);
 	}
 
-	private void klappeEin() {
-		int anzahl = box.getChildren().size();
-		for (int i = 0; i < (anzahl - anzahlAusklappen()); i++) {
-			TitledPane tp = (TitledPane) box.getChildren().get(i);
-			tp.setExpanded(false);
+	private void createEpkBoxManager(Set<Integer> epk_ids) {
+		boxManager = new EpkBoxManager();
+		List<EpkController> controller = new ArrayList<EpkController>();
+		for (int epk_id: epk_ids) {
+			Epk epk = R.DB.epkDao.queryForId(epk_id);
+			controller.add(new EpkController(epk, epkGruppenManager, boxManager));			
 		}
+		boxManager.setController(controller);
+	}
+
+	private void klappeEin() {
+		boxManager.setActive(anzahlAusklappen());
+		tpGutachten.setExpanded(boxManager.getSize() < 3);
 	}
 
 	private int anzahlAusklappen() {
@@ -79,17 +95,4 @@ public class BemsTab extends Tab {
 		return 2;
 	}
 
-	private void addEpkBox(int epk_id) {
-		Epk epk;
-		epk = R.DB.epkDao.queryForId(epk_id);
-
-		EpkController contr = new EpkController(epk, epkGruppenManager);
-		Node node = contr.getView().getNode();
-		
-		TitledPane tp = new TitledPane(epk.toLangString(), node);
-		tp.setOnMouseEntered(e -> contr.showPopUp(tp));
-		tp.setOnMouseExited(e -> contr.hidePopUp());
-				
-		box.getChildren().add(tp);
-	}
 }

@@ -16,7 +16,7 @@ public class ScrollFreetextArea extends TextArea {
 		textHolder.fontProperty().bind(this.fontProperty());
 		textHolder.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
 			if (oldHeight != newValue.getHeight()) {
-				System.out.println("newValue = " + newValue.getHeight());
+//				System.out.println("newValue = " + newValue.getHeight());
 				oldHeight = newValue.getHeight();
 				setPrefHeight(textHolder.getLayoutBounds().getHeight() + 12); // +20
 																				// is
