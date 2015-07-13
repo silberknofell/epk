@@ -86,7 +86,7 @@ public class MainScene extends SosListScene {
 
 	private void updateBemsTab(Sos sos) {
 		if (bemsTab != null) {
-			bemsTab.update(sos);
+			bemsTab.update();
 		}
 	}
 

@@ -234,7 +234,7 @@ public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEin
 		}
 		setNeuUndChangedFalse();
 
-		R.State.bemerkungUndKonferenzTab.update(R.State.sos);
+		R.State.bemerkungUndKonferenzTab.update();
 
 	}
 

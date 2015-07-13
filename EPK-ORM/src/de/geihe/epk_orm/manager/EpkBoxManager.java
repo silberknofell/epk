@@ -117,7 +117,6 @@ public class EpkBoxManager {
 			stshow.setToY(1.0);
 			stshow.play();
 		}
-
 	}
 
 	private int getPosition(EpkController ctrl) {
