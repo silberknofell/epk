@@ -9,7 +9,6 @@ public class EpkKonferenzController extends EditWebController<Konferenz> {
 
 	public EpkKonferenzController(Konferenz element) {
 		super(element);
-
 	}
 
 	public EpkKonferenzController(int epk_id) {
@@ -40,5 +39,4 @@ public class EpkKonferenzController extends EditWebController<Konferenz> {
 		getElement().setTimestamp(System.currentTimeMillis());
 		R.DB.konferenzDao.update(getElement());
 	}
-
 }

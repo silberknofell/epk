@@ -51,7 +51,7 @@ public class EpkNoteEinzelView extends AbstractControlledView<EpkNotenEinzelCont
 
 	@Override
 	public String getText() {
-		return lblNote.getText();
+		return lblFach.getText() + ": " + lblNote.getText();
 	}
 
 }

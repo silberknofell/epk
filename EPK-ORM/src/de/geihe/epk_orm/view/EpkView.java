@@ -36,9 +36,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		super(controller);
 		createActiveNode();
 		createInactiveNode();
-		epkPopOver = new PopOver(getPopOverNode());
-		epkPopOver.setArrowLocation(ArrowLocation.LEFT_CENTER);
-		epkPopOver.setDetachable(false);
+		createPopOver();
 		update();
 	}
 
@@ -49,12 +47,12 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		}
 	}
 
-	
-	
 	private void click() {
 		getController().toggleActive();
 	}
 
+	
+	
 	private void createActiveNode() {		
 		titelZeile = new HBox();
 		titelZeile.setStyle("-fx-padding: 2px 20px;	-fx-background-radius: 4.0; -fx-background-color:" + getEpkFarbe());
@@ -82,12 +80,34 @@ public class EpkView extends AbstractControlledView<EpkController> {
 
 	private void createInactiveNode() {
 		
-		Button button = new Button(getController().getButtonString());
+		Button button = new Button(getController().getInactiveNodeText());
 		button.setStyle("-fx-background-color:"+getEpkFarbe());
 		inactiveNode = button;
 		inactiveNode.setOnMouseEntered(e -> showPopUp());
 		inactiveNode.setOnMouseExited(e -> hidePopUp());
 		inactiveNode.setOnMouseClicked(e -> click());
+	}
+
+	private void createPopOver() {
+		epkPopOver = new PopOver(getPopOverNode());
+		epkPopOver.setArrowLocation(ArrowLocation.LEFT_CENTER);
+		epkPopOver.setDetachable(false);
+	}
+
+	public Node getActiveNode() {
+		return activeNode;
+	}
+
+	private String getEpkFarbe() {		
+		return !getController().isAktuelleEpk() ? "cadetBlue" : "darkseagreen";
+	}
+
+	private String getEpkPopupFarbe() {		
+		return !getController().isAktuelleEpk() ? "#90eff2" : "#bcf7bc";
+	}
+	
+	public Node getInactiveNode() {
+		return inactiveNode;
 	}
 
 	@Override
@@ -101,7 +121,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		
 		Text header = new Text(getController().getEpkString());
 		header.setFont(new Font(18));
-		
+
 		StringBuilder sb = new StringBuilder();
 		for (Bemerkung bem : getController().getBemerkungen()) {
 			sb.append(bem.toString());
@@ -112,14 +132,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		text.setFont(new Font(14));
 		box.getChildren().addAll(header, text);
 		return box;
-	}
-
-	private String getEpkFarbe() {		
-		return !getController().isAktuelleEpk() ? "cadetBlue" : "darkseagreen";
-	}
-	
-	private String getEpkPopupFarbe() {		
-		return !getController().isAktuelleEpk() ? "#90eff2" : "#bcf7bc";
 	}
 
 	public void hidePopUp() {
@@ -141,14 +153,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		R.State.setzeFocus();
 	}
 
-	private void updateTitelZeile() {
-		titelZeile.getChildren().clear();
-		Text text = new Text(getController().getEpkString());
-		text.setFont(new Font(20));
-		titelZeile.getChildren().add(text);
-		
-	}
-
 	public void updateBemBox() {
 		bemsBox.getChildren().clear();
 
@@ -159,7 +163,8 @@ public class EpkView extends AbstractControlledView<EpkController> {
 
 	public void updateKonfView() {
 		konfBox.getChildren().clear();
-		konfBox.getChildren().add(getController().getKonferenzView().getNode());
+		Node konfNode = getController().getKonferenzView().getNode();
+		konfBox.getChildren().add(konfNode);
 	}
 
 	public void updateNotenZeile() {
@@ -167,12 +172,10 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		getController().getNoten().forEach(this::addEinzelNote);
 	}
 
-	public Node getActiveNode() {
-		return activeNode;
+	private void updateTitelZeile() {
+		titelZeile.getChildren().clear();
+		Text text = new Text(getController().getEpkString());
+		text.setFont(new Font(20));
+		titelZeile.getChildren().add(text);		
 	}
-
-	public Node getInactiveNode() {
-		return inactiveNode;
-	}
-
 }

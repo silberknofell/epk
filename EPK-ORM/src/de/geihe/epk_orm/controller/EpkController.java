@@ -132,7 +132,7 @@ public class EpkController extends AbstractController<EpkView> {
 		setActive(! active);
 	}
 
-	public String getButtonString() {
+	public String getInactiveNodeText() {
 		return "EPK " + epk.getNr();
 	}
 }
