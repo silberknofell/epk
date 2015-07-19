@@ -17,10 +17,12 @@ import de.geihe.epk_orm.manager.EpkBoxManager;
 import de.geihe.epk_orm.manager.EpkGruppenManager;
 import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.Epk;
+import de.geihe.epk_orm.pojo.KonfBemerkung;
 import de.geihe.epk_orm.pojo.Konferenz;
 import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.tabs.BemsTab;
 import de.geihe.epk_orm.view.EpkBemEinzelView;
+import de.geihe.epk_orm.view.EpkKonfBemEinzelView;
 import de.geihe.epk_orm.view.EpkView;
 import de.geihe.epk_orm.view.abstr_and_interf.View;
 import javafx.scene.Node;
@@ -83,6 +85,19 @@ public class EpkController extends AbstractController<EpkView> {
 		}
 		return list;
 	}
+	
+	public List<EpkKonfBemEinzelView> getKonfBemViewList() {
+		List<EpkKonfBemEinzelView> list = new ArrayList<EpkKonfBemEinzelView>();
+
+		for (KonfBemerkung konfBem : epkGgruppenManager.getKonferenzBemerkungen(epk_id)) {
+			EpkKonfBemEinzelController contr = new EpkKonfBemEinzelController(konfBem, this);
+			list.add(contr.getView());
+		}
+		if ((R.mode == Mode.EINGABE) && isAktuelleEpk) {
+//			addLeereBemerkung(list);
+		}
+		return list;
+	}	
 
 	public int getEpk_id() {
 		return epk_id;
@@ -95,13 +110,15 @@ public class EpkController extends AbstractController<EpkView> {
 	public View getKonferenzView() {
 		Konferenz konf = epkGgruppenManager.getKonferenz(epk_id);
 		EpkKonferenzController ctrl;
+		
+		System.out.println("EpkController.getKonferenzView");
 		System.out.println(konf == null ? konf : konf.getId());
+		
 		if ((konf == null) || (konf.getId() == 0)) {
 			ctrl = new EpkKonferenzController(getEpk_id());
 		} else {
 			ctrl = new EpkKonferenzController(konf);
 		}
-
 		return ctrl.getView();
 	}
 

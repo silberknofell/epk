@@ -20,6 +20,7 @@ import de.geihe.epk_orm.pojo.Sos;
 
 public class EpkGruppenManager {
 	private TreeMap<Integer, SortedSet<Bemerkung>> bemerkungenMap;
+	private TreeMap<Integer, SortedSet<KonfBemerkung>> konfBemMap;
 	private NavigableSet<Integer> epks;
 	private TreeMap<Integer, Konferenz> konferenzenMap;
 	private TreeMap<Integer, SortedSet<Note>> notenMap;
@@ -27,6 +28,7 @@ public class EpkGruppenManager {
 	public EpkGruppenManager() {
 		notenMap = new TreeMap<Integer, SortedSet<Note>>();
 		bemerkungenMap = new TreeMap<Integer, SortedSet<Bemerkung>>();
+		konfBemMap = new TreeMap<Integer, SortedSet<KonfBemerkung>>();
 		konferenzenMap = new TreeMap<Integer, Konferenz>();
 		epks = new TreeSet<Integer>();
 	}
@@ -83,7 +85,16 @@ public class EpkGruppenManager {
 	}
 	
 	public void addElement(KonfBemerkung konfBem) {
-System.out.println("************************"+konfBem.getText());
+		int epk_id = konfBem.getEpk_id();
+		SortedSet<KonfBemerkung> sorset;
+		if (konfBemMap.containsKey(epk_id)) {
+			sorset = konfBemMap.get(epk_id);
+		} else {
+			sorset = new TreeSet<KonfBemerkung>();
+			konfBemMap.put(konfBem.getEpk_id(), sorset);
+			epks.add(epk_id);
+		}
+		sorset.add(konfBem);
 	}
 
 	public void addElement(Konferenz konf) {
@@ -135,6 +146,14 @@ System.out.println("************************"+konfBem.getText());
 		SortedSet<Bemerkung> sorset = bemerkungenMap.get(epk_id);
 		if (sorset == null) {
 			sorset = new TreeSet<Bemerkung>();
+		}
+		return sorset;
+	}
+	
+	public SortedSet<KonfBemerkung> getKonferenzBemerkungen(int epk_id) {
+		SortedSet<KonfBemerkung> sorset = konfBemMap.get(epk_id);
+		if (sorset == null) {
+			sorset = new TreeSet<KonfBemerkung>();
 		}
 		return sorset;
 	}

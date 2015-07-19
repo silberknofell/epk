@@ -19,7 +19,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-public class EpkBemEinzelView extends AbstractControlledView<EpkBemEinzelController>implements EditView {
+public class EpkBemEinzelView extends AbstractControlledView<EpkBemEinzelController> implements EditView {
 
 	private static final String AKTUELL_IST_UNTERZEICHNER = "aktuell-ist-unterzeichner";
 	private static final String NEU_UNTERSCHRIEBEN = "neu-unterschrieben";

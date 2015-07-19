@@ -29,7 +29,7 @@ public class KonfBemerkung extends EntityMitEpk {
 		this.text = text.trim();
 	}
 
-	public boolean getStrong() {
+	public boolean isStrong() {
 		return strong > 0;
 	}
 
@@ -37,7 +37,7 @@ public class KonfBemerkung extends EntityMitEpk {
 		this.strong = strong ? 1 : 0;
 	}
 
-	public boolean getPinned() {
+	public boolean isPinned() {
 		return pinned > 0;
 	}
 

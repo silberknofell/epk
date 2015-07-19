@@ -15,12 +15,14 @@ import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
 import de.geihe.epk_orm.manager.EpkBoxManager;
 import de.geihe.epk_orm.manager.EpkGruppenManager;
 import de.geihe.epk_orm.pojo.Sos;
+import de.geihe.epk_orm.view.EpkKonfBemEinzelView;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 
 public class BemsTab extends Tab {
@@ -101,8 +103,15 @@ public class BemsTab extends Tab {
 
 	private void fillBox2() {
 		box2.getChildren().clear();
-		for (EpkController ctrl : epkControllerList) {
-			box2.getChildren().add(ctrl.getKonferenzView().getNode());
+		for (EpkController ctrl : epkControllerList) {			
+			Text titel = new Text(ctrl.getEpkString());
+			Node konferenz = ctrl.getKonferenzView().getNode();
+			VBox konfBem = new VBox(2);
+			for (EpkKonfBemEinzelView view : ctrl.getKonfBemViewList()) {
+				konfBem.getChildren().add(view.getNode());
+			}
+					
+			box2.getChildren().addAll(titel, konferenz, konfBem);
 		}		
 	}
 
