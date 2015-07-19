@@ -26,7 +26,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	private HBox notenZeile;
 	private VBox bemsBox;
 	private HBox konfBox;;
-	private SplitPane splitPane;
 	private VBox activeNode;
 	private Node inactiveNode;
 	private PopOver epkPopOver;
@@ -50,8 +49,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	private void click() {
 		getController().toggleActive();
 	}
-
-	
 	
 	private void createActiveNode() {		
 		titelZeile = new HBox();
@@ -65,12 +62,8 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		konfBox = new HBox();
 		konfBox.getStyleClass().add(KONFERENZ_BOX);
 		
-		splitPane = new SplitPane();
-		splitPane.getItems().addAll(bemsBox, konfBox);
-		splitPane.setDividerPositions(0.66f);
-		
 		activeNode = new VBox();		
-		activeNode.getChildren().addAll(titelZeile, notenZeile, splitPane);
+		activeNode.getChildren().addAll(titelZeile, notenZeile, bemsBox);
 		activeNode.setOnMouseClicked(e -> click());
 	}
 
@@ -83,8 +76,8 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		Button button = new Button(getController().getInactiveNodeText());
 		button.setStyle("-fx-background-color:"+getEpkFarbe());
 		inactiveNode = button;
-		inactiveNode.setOnMouseEntered(e -> showPopUp());
-		inactiveNode.setOnMouseExited(e -> hidePopUp());
+		inactiveNode.setOnMouseEntered(e -> showPopOver());
+		inactiveNode.setOnMouseExited(e -> hidePopOver());
 		inactiveNode.setOnMouseClicked(e -> click());
 	}
 
@@ -134,12 +127,12 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		return box;
 	}
 
-	public void hidePopUp() {
+	public void hidePopOver() {
 		System.out.println("hidePopup");
 		epkPopOver.hide(new Duration(300));
 	}
 
-	public void showPopUp() {
+	public void showPopOver() {
 		System.out.println("showPopup");
 		epkPopOver.show(getNode());
 	}
@@ -148,7 +141,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	public void update() {
 		updateTitelZeile();
 		updateNotenZeile();
-		updateKonfView();
 		updateBemBox();
 		R.State.setzeFocus();
 	}
@@ -161,11 +153,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		}
 	}
 
-	public void updateKonfView() {
-		konfBox.getChildren().clear();
-		Node konfNode = getController().getKonferenzView().getNode();
-		konfBox.getChildren().add(konfNode);
-	}
 
 	public void updateNotenZeile() {
 		notenZeile.getChildren().clear();

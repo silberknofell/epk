@@ -12,6 +12,7 @@ import de.geihe.epk_orm.db.daos.BemerkungDao;
 import de.geihe.epk_orm.db.daos.EpkDao;
 import de.geihe.epk_orm.db.daos.FachDao;
 import de.geihe.epk_orm.db.daos.KlasseDao;
+import de.geihe.epk_orm.db.daos.KonfBemerkungDao;
 import de.geihe.epk_orm.db.daos.KonferenzDao;
 import de.geihe.epk_orm.db.daos.LehrerDao;
 import de.geihe.epk_orm.db.daos.NoteDao;
@@ -26,6 +27,7 @@ import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.Epk;
 import de.geihe.epk_orm.pojo.Fach;
 import de.geihe.epk_orm.pojo.Klasse;
+import de.geihe.epk_orm.pojo.KonfBemerkung;
 import de.geihe.epk_orm.pojo.Konferenz;
 import de.geihe.epk_orm.pojo.Lehrer;
 import de.geihe.epk_orm.pojo.Note;
@@ -79,6 +81,7 @@ public final class R {
 		public static EpkDao epkDao;
 		public static KlasseDao klasseDao;
 		public static KonferenzDao konferenzDao;
+		public static KonfBemerkungDao konfBemerkungDao;
 		public static LehrerDao lehrerDao;
 		public static NoteDao noteDao;
 		public static SchuleDao schuleDao;
@@ -127,6 +130,11 @@ public final class R {
 				konferenzDao = DaoManager.createDao(connectionSource, Konferenz.class);
 				if (mode != Mode.ADMIN) {
 					konferenzDao.setObjectCache(cache);
+				}
+				
+				konfBemerkungDao = DaoManager.createDao(connectionSource, KonfBemerkung.class);
+				if (mode != Mode.ADMIN) {
+					konfBemerkungDao.setObjectCache(cache);
 				}
 
 				noteDao = DaoManager.createDao(connectionSource, Note.class);

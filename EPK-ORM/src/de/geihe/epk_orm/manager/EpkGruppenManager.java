@@ -9,8 +9,11 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.j256.ormlite.dao.ForeignCollection;
+
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.pojo.Bemerkung;
+import de.geihe.epk_orm.pojo.KonfBemerkung;
 import de.geihe.epk_orm.pojo.Konferenz;
 import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.pojo.Sos;
@@ -49,11 +52,21 @@ public class EpkGruppenManager {
 			list.forEach(this::addElement);
 		}
 	}
+	
+	public void addCollectionKonfBemerkungen(ForeignCollection<KonfBemerkung> list) {
+		if (list != null) {
+			list.forEach(this::addElement);
+		}
+	}
 
+
+	
+	
 	public void addData(Sos sos) {
 		addCollectionKonferenz(sos.getKonferenzeintraege());
 		addCollectionNoten(sos.getNoten());
 		addCollectionBemerkungen(sos.getBemerkungen());
+		addCollectionKonfBemerkungen(sos.getKonfBemerkungen());
 	}
 
 	public void addElement(Bemerkung bem) {
@@ -67,6 +80,10 @@ public class EpkGruppenManager {
 			epks.add(epk_id);
 		}
 		sorset.add(bem);
+	}
+	
+	public void addElement(KonfBemerkung konfBem) {
+System.out.println("************************"+konfBem.getText());
 	}
 
 	public void addElement(Konferenz konf) {
