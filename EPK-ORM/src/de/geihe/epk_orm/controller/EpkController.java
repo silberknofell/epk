@@ -17,12 +17,12 @@ import de.geihe.epk_orm.manager.EpkBoxManager;
 import de.geihe.epk_orm.manager.EpkGruppenManager;
 import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.Epk;
-import de.geihe.epk_orm.pojo.KonfBemerkung;
+import de.geihe.epk_orm.pojo.KonfBem;
 import de.geihe.epk_orm.pojo.Konferenz;
 import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.tabs.BemsTab;
 import de.geihe.epk_orm.view.EpkBemEinzelView;
-import de.geihe.epk_orm.view.EpkKonfBemEinzelView;
+import de.geihe.epk_orm.view.KonfBemEinzelView;
 import de.geihe.epk_orm.view.EpkView;
 import de.geihe.epk_orm.view.abstr_and_interf.View;
 import javafx.scene.Node;
@@ -86,11 +86,11 @@ public class EpkController extends AbstractController<EpkView> {
 		return list;
 	}
 	
-	public List<EpkKonfBemEinzelView> getKonfBemViewList() {
-		List<EpkKonfBemEinzelView> list = new ArrayList<EpkKonfBemEinzelView>();
+	public List<KonfBemEinzelView> getKonfBemViewList() {
+		List<KonfBemEinzelView> list = new ArrayList<KonfBemEinzelView>();
 
-		for (KonfBemerkung konfBem : epkGgruppenManager.getKonferenzBemerkungen(epk_id)) {
-			EpkKonfBemEinzelController contr = new EpkKonfBemEinzelController(konfBem, this);
+		for (KonfBem konfBem : epkGgruppenManager.getKonfBems(epk_id)) {
+			KonfBemEinzelController contr = new KonfBemEinzelController(konfBem);
 			list.add(contr.getView());
 		}
 		if ((R.mode == Mode.EINGABE) && isAktuelleEpk) {

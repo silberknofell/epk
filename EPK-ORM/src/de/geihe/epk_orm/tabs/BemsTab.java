@@ -11,11 +11,14 @@ import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.EpkController;
 import de.geihe.epk_orm.controller.EpkGutachtenController;
+import de.geihe.epk_orm.controller.KonfBemEinzelController;
 import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
 import de.geihe.epk_orm.manager.EpkBoxManager;
 import de.geihe.epk_orm.manager.EpkGruppenManager;
+import de.geihe.epk_orm.pojo.KonfBem;
 import de.geihe.epk_orm.pojo.Sos;
-import de.geihe.epk_orm.view.EpkKonfBemEinzelView;
+import de.geihe.epk_orm.view.KonfBemEinzelView;
+import de.geihe.epk_orm.view.abstr_and_interf.View;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -103,11 +106,18 @@ public class BemsTab extends Tab {
 
 	private void fillBox2() {
 		box2.getChildren().clear();
+		
+		for (KonfBem konfBem : epkGruppenManager.getPinnedKonfBems()) {
+			KonfBemEinzelController ctrl = new KonfBemEinzelController(konfBem);
+			Node node = ctrl.getView().getNode();
+			box2.getChildren().add(node);
+		}
+		
 		for (EpkController ctrl : epkControllerList) {			
 			Text titel = new Text(ctrl.getEpkString());
 			Node konferenz = ctrl.getKonferenzView().getNode();
 			VBox konfBem = new VBox(2);
-			for (EpkKonfBemEinzelView view : ctrl.getKonfBemViewList()) {
+			for (KonfBemEinzelView view : ctrl.getKonfBemViewList()) {
 				konfBem.getChildren().add(view.getNode());
 			}
 					

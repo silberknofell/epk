@@ -4,11 +4,11 @@ import java.sql.SQLException;
 
 import com.j256.ormlite.support.ConnectionSource;
 
-import de.geihe.epk_orm.pojo.KonfBemerkung;
+import de.geihe.epk_orm.pojo.KonfBem;
 
-public class KonfBemerkungDao extends EntityMitEpkDao<KonfBemerkung> {
+public class KonfBemerkungDao extends EntityMitEpkDao<KonfBem> {
 
-	public KonfBemerkungDao(ConnectionSource connectionSource, Class<KonfBemerkung> dataClass) throws SQLException {
+	public KonfBemerkungDao(ConnectionSource connectionSource, Class<KonfBem> dataClass) throws SQLException {
 		super(connectionSource, dataClass);
 	}
 

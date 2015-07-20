@@ -27,7 +27,7 @@ import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.Epk;
 import de.geihe.epk_orm.pojo.Fach;
 import de.geihe.epk_orm.pojo.Klasse;
-import de.geihe.epk_orm.pojo.KonfBemerkung;
+import de.geihe.epk_orm.pojo.KonfBem;
 import de.geihe.epk_orm.pojo.Konferenz;
 import de.geihe.epk_orm.pojo.Lehrer;
 import de.geihe.epk_orm.pojo.Note;
@@ -132,7 +132,7 @@ public final class R {
 					konferenzDao.setObjectCache(cache);
 				}
 				
-				konfBemerkungDao = DaoManager.createDao(connectionSource, KonfBemerkung.class);
+				konfBemerkungDao = DaoManager.createDao(connectionSource, KonfBem.class);
 				if (mode != Mode.ADMIN) {
 					konfBemerkungDao.setObjectCache(cache);
 				}

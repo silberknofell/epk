@@ -2,19 +2,18 @@ package de.geihe.epk_orm.controller;
 
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.abstr_and_interf.AbstractEditViewController;
-import de.geihe.epk_orm.pojo.KonfBemerkung;
-import de.geihe.epk_orm.view.EpkKonfBemEinzelView;
+import de.geihe.epk_orm.pojo.KonfBem;
+import de.geihe.epk_orm.view.KonfBemEinzelView;
 
-public class EpkKonfBemEinzelController extends AbstractEditViewController<EpkKonfBemEinzelView> {
+public class KonfBemEinzelController extends AbstractEditViewController<KonfBemEinzelView> {
 
-	private KonfBemerkung konfBem;
+	private KonfBem konfBem;
 	private EpkController epkContrl;
 
-	public EpkKonfBemEinzelController(KonfBemerkung konfBem, EpkController epkContr) {
+	public KonfBemEinzelController(KonfBem konfBem) {
 		super();
 		this.konfBem = konfBem;
-		this.epkContrl = epkContr;
-		setView(new EpkKonfBemEinzelView(this));
+		setView(new KonfBemEinzelView(this));
 	}
 
 	@Override

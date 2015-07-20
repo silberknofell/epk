@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import de.geihe.epk_orm.db.daos.KonfBemerkungDao;
 
 @DatabaseTable(daoClass = KonfBemerkungDao.class)
-public class KonfBemerkung extends EntityMitEpk {
+public class KonfBem extends EntityMitEpk {
 	
 	@DatabaseField
 	private String text;
@@ -17,7 +17,7 @@ public class KonfBemerkung extends EntityMitEpk {
 	@DatabaseField
 	private int pinned;
 	
-	public KonfBemerkung() {
+	public KonfBem() {
 		text = "";
 	}
 	

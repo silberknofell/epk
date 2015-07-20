@@ -13,14 +13,15 @@ import com.j256.ormlite.dao.ForeignCollection;
 
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.pojo.Bemerkung;
-import de.geihe.epk_orm.pojo.KonfBemerkung;
+import de.geihe.epk_orm.pojo.KonfBem;
 import de.geihe.epk_orm.pojo.Konferenz;
 import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.pojo.Sos;
 
 public class EpkGruppenManager {
 	private TreeMap<Integer, SortedSet<Bemerkung>> bemerkungenMap;
-	private TreeMap<Integer, SortedSet<KonfBemerkung>> konfBemMap;
+	private TreeMap<Integer, SortedSet<KonfBem>> konfBemMap;
+	private SortedSet<KonfBem> pinnedKonfBems;
 	private NavigableSet<Integer> epks;
 	private TreeMap<Integer, Konferenz> konferenzenMap;
 	private TreeMap<Integer, SortedSet<Note>> notenMap;
@@ -28,7 +29,8 @@ public class EpkGruppenManager {
 	public EpkGruppenManager() {
 		notenMap = new TreeMap<Integer, SortedSet<Note>>();
 		bemerkungenMap = new TreeMap<Integer, SortedSet<Bemerkung>>();
-		konfBemMap = new TreeMap<Integer, SortedSet<KonfBemerkung>>();
+		konfBemMap = new TreeMap<Integer, SortedSet<KonfBem>>();
+		pinnedKonfBems = new TreeSet<KonfBem>();
 		konferenzenMap = new TreeMap<Integer, Konferenz>();
 		epks = new TreeSet<Integer>();
 	}
@@ -54,21 +56,18 @@ public class EpkGruppenManager {
 			list.forEach(this::addElement);
 		}
 	}
-	
-	public void addCollectionKonfBemerkungen(ForeignCollection<KonfBemerkung> list) {
+
+	public void addCollectionKonfBem(ForeignCollection<KonfBem> list) {
 		if (list != null) {
 			list.forEach(this::addElement);
 		}
 	}
 
-
-	
-	
 	public void addData(Sos sos) {
 		addCollectionKonferenz(sos.getKonferenzeintraege());
 		addCollectionNoten(sos.getNoten());
 		addCollectionBemerkungen(sos.getBemerkungen());
-		addCollectionKonfBemerkungen(sos.getKonfBemerkungen());
+		addCollectionKonfBem(sos.getKonfBemerkungen());
 	}
 
 	public void addElement(Bemerkung bem) {
@@ -83,18 +82,22 @@ public class EpkGruppenManager {
 		}
 		sorset.add(bem);
 	}
-	
-	public void addElement(KonfBemerkung konfBem) {
-		int epk_id = konfBem.getEpk_id();
-		SortedSet<KonfBemerkung> sorset;
-		if (konfBemMap.containsKey(epk_id)) {
-			sorset = konfBemMap.get(epk_id);
+
+	public void addElement(KonfBem konfBem) {
+		if (konfBem.isPinned()) {
+			pinnedKonfBems.add(konfBem);
 		} else {
-			sorset = new TreeSet<KonfBemerkung>();
-			konfBemMap.put(konfBem.getEpk_id(), sorset);
-			epks.add(epk_id);
+			int epk_id = konfBem.getEpk_id();
+			SortedSet<KonfBem> sorset;
+			if (konfBemMap.containsKey(epk_id)) {
+				sorset = konfBemMap.get(epk_id);
+			} else {
+				sorset = new TreeSet<KonfBem>();
+				konfBemMap.put(konfBem.getEpk_id(), sorset);
+				epks.add(epk_id);
+			}
+			sorset.add(konfBem);
 		}
-		sorset.add(konfBem);
 	}
 
 	public void addElement(Konferenz konf) {
@@ -149,15 +152,19 @@ public class EpkGruppenManager {
 		}
 		return sorset;
 	}
-	
-	public SortedSet<KonfBemerkung> getKonferenzBemerkungen(int epk_id) {
-		SortedSet<KonfBemerkung> sorset = konfBemMap.get(epk_id);
+
+	public SortedSet<KonfBem> getKonfBems(int epk_id) {
+		SortedSet<KonfBem> sorset = konfBemMap.get(epk_id);
 		if (sorset == null) {
-			sorset = new TreeSet<KonfBemerkung>();
+			sorset = new TreeSet<KonfBem>();
 		}
 		return sorset;
 	}
 
+	public SortedSet<KonfBem> getPinnedKonfBems() {
+		return pinnedKonfBems;
+	}
+	
 	public NavigableSet<Integer> getEpk_ids() {
 		return epks;
 	}

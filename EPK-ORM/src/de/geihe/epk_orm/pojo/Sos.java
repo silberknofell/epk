@@ -32,7 +32,7 @@ public class Sos extends EntityMitArchiv implements Comparable<Entity>, WebViewS
 	private ForeignCollection<Bemerkung> bemerkungen;
 	
 	@ForeignCollectionField(orderColumnName = "timestamp")
-	private ForeignCollection<KonfBemerkung> konfBemerkung;
+	private ForeignCollection<KonfBem> konfBemerkung;
 
 	@DatabaseField
 	private int empfehlung_id;
@@ -91,7 +91,7 @@ public class Sos extends EntityMitArchiv implements Comparable<Entity>, WebViewS
 		return bemerkungen;
 	}
 	
-	public ForeignCollection<KonfBemerkung> getKonfBemerkungen() {
+	public ForeignCollection<KonfBem> getKonfBemerkungen() {
 		return konfBemerkung;
 	}
 
