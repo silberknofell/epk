@@ -11,7 +11,6 @@ import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -21,18 +20,25 @@ import javafx.util.Duration;
 public class EpkView extends AbstractControlledView<EpkController> {
 
 	private static final String EPKBOX_NOTENZEILE = "epkbox-notenzeile";
-	private static final String KONFERENZ_BOX = "konferenz-box";
+	private static final String EPKBOX_TITEL = "epkbox-titel";
+	private static final String EPKBOX_POPOVER = "epkbox-popover";
+	private static final String ACTIVE = "active";
+	private static final String INACTIVE = "inactive";
+	private static final String AKTUELL = "aktuell";
+	private static final String ALT = "alt";
+
 
 	private HBox notenZeile;
 	private VBox bemsBox;
-	private HBox konfBox;;
 	private VBox activeNode;
 	private Node inactiveNode;
 	private PopOver epkPopOver;
 	private HBox titelZeile;
+	private String classAktuell;
 
 	public EpkView(EpkController controller) {
 		super(controller);
+		classAktuell = getController().isAktuelleEpk() ? AKTUELL : ALT;
 		createActiveNode();
 		createInactiveNode();
 		createPopOver();
@@ -51,16 +57,13 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	}
 	
 	private void createActiveNode() {		
-		titelZeile = new HBox();
-		titelZeile.setStyle("-fx-padding: 2px 20px;	-fx-background-radius: 4.0; -fx-background-color:" + getEpkFarbe());
+		titelZeile = new HBox();	
+		titelZeile.getStyleClass().addAll(EPKBOX_TITEL, ACTIVE, classAktuell);			
 				
 		notenZeile = new HBox(4);
 		notenZeile.getStyleClass().add(EPKBOX_NOTENZEILE);
 	
 		createBemsBox();
-		
-		konfBox = new HBox();
-		konfBox.getStyleClass().add(KONFERENZ_BOX);
 		
 		activeNode = new VBox();		
 		activeNode.getChildren().addAll(titelZeile, notenZeile, bemsBox);
@@ -74,7 +77,8 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	private void createInactiveNode() {
 		
 		Button button = new Button(getController().getInactiveNodeText());
-		button.setStyle("-fx-background-color:"+getEpkFarbe());
+		button.getStyleClass().addAll(EPKBOX_TITEL, INACTIVE, classAktuell);	
+		
 		inactiveNode = button;
 		inactiveNode.setOnMouseEntered(e -> showPopOver());
 		inactiveNode.setOnMouseExited(e -> hidePopOver());
@@ -90,14 +94,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	public Node getActiveNode() {
 		return activeNode;
 	}
-
-	private String getEpkFarbe() {		
-		return !getController().isAktuelleEpk() ? "cadetBlue" : "darkseagreen";
-	}
-
-	private String getEpkPopupFarbe() {		
-		return !getController().isAktuelleEpk() ? "#90eff2" : "#bcf7bc";
-	}
 	
 	public Node getInactiveNode() {
 		return inactiveNode;
@@ -110,7 +106,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 
 	private Node getPopOverNode() {		
 		VBox box = new VBox(3);
-		box.setStyle("-fx-padding: 10; -fx-background-color:" + getEpkPopupFarbe()); 
+		box.getStyleClass().addAll(EPKBOX_POPOVER, classAktuell);
 		
 		Text header = new Text(getController().getEpkString());
 		header.setFont(new Font(18));

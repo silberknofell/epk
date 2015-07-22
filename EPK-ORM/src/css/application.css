@@ -32,16 +32,12 @@
 	-fx-background-color: lightskyblue;
 }
 
+
 .tab-pane {
 	-fx-padding: 1.0 5.0 0.0 10.0;
 }
 
-.bemerkung-tab {
-	-fx-padding: 10.0 0.0 0.0 0.0;
-} 
 	
-
-
 .anim-label {
 	-fx-font-size: 20.0;
 	-fx-font-weight: bold;
@@ -93,13 +89,38 @@
 .titled-pane>.title {
 	-fx-background-color: lightblue;
 	-fx-background-radius: 4.0;
-	-fx-padding: -2 0.0 -2 20;
+	-fx-padding: -2.0 0.0 -2.0 20.0;
+}
+
+.epkbox-titel {
+	-fx-padding: 2.0px 20.0px;
+	-fx-background-radius: 4.0;
+}
+
+.epkbox-titel.alt {
+	-fx-background-color: cadetBlue;	
+}
+
+.epkbox-titel.aktuell {
+	-fx-background-color: darkseagreen;	
+}
+
+.epkbox-popover {
+	-fx-padding: 10.0px;
+}
+
+.epkbox-popover.alt {
+	-fx-background-color: #90eff2;	
+}
+.epkbox-popover.aktuell {
+	-fx-background-color: #bcf7bc;	
 }
 
 .epkbox-notenzeile {
-	-fx-background-color: white;
+	-fx-background-color: rgb(219.0,217.0,242.0);
+	-fx-background-radius: 5.0;
 	-fx-background-insets: 0.0 0.0 5.0 0.0;
-	-fx-padding: 12.0 2.0 2.0 10.0;
+	-fx-padding: 8.0 2.0 5.0 8.0;
 	-fx-font-weight: bold;
 	-fx-font-size: 14.0pt;
 }
@@ -112,7 +133,7 @@
 	-fx-padding: -7.0 5.0 0.0 20.0;
 }
 
-.note-gut .label {
+ .note-gut .label{
 	-fx-text-fill: green;
 }
 
@@ -120,17 +141,15 @@
 	-fx-text-fill: red;
 }
 
-.konferenz-box {
-	
-}
 
 .bemerkung-tab {
-	-fx-font-size: 12pt;
+	-fx-padding: 10.0 0.0 0.0 0.0;	
+	-fx-font-size: 12.0pt;
 }
 
 .bemerkung {
 	-fx-background-color: lightgrey;
-	-fx-padding: -2 0.0 -1 6;
+	-fx-padding: -2.0 0.0 -1.0 6.0;
 }
 
 .junge-bemerkung {
@@ -167,5 +186,5 @@
 }
 
 .aktuell-ist-unterzeichner {
-	
+		-fx-text-fill: red;
 }
