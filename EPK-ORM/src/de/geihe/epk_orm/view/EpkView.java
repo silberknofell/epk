@@ -24,9 +24,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	private static final String EPKBOX_POPOVER = "epkbox-popover";
 	private static final String ACTIVE = "active";
 	private static final String INACTIVE = "inactive";
-	private static final String AKTUELL = "aktuell";
-	private static final String ALT = "alt";
-
 
 	private HBox notenZeile;
 	private VBox bemsBox;
@@ -34,11 +31,10 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	private Node inactiveNode;
 	private PopOver epkPopOver;
 	private HBox titelZeile;
-	private String classAktuell;
 
 	public EpkView(EpkController controller) {
 		super(controller);
-		classAktuell = getController().isAktuelleEpk() ? AKTUELL : ALT;
+
 		createActiveNode();
 		createInactiveNode();
 		createPopOver();
@@ -48,26 +44,29 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	private void addEinzelNote(Note note) {
 		if (note.hatEintrag()) {
 			Node node = new EpkNotenEinzelController(note).getView().getNode();
-			notenZeile.getChildren().add(node);			
+			notenZeile.getChildren().add(node);
 		}
 	}
 
 	private void click() {
 		getController().toggleActive();
 	}
-	
-	private void createActiveNode() {		
-		titelZeile = new HBox();	
-		titelZeile.getStyleClass().addAll(EPKBOX_TITEL, ACTIVE, classAktuell);			
-				
+
+	private void createActiveNode() {
+		titelZeile = new HBox();
+		titelZeile.getStyleClass().addAll(EPKBOX_TITEL, ACTIVE, getController().getClassAktuell());
+		if (!getController().isAktuelleEpk()) {
+			titelZeile.setOnMouseClicked(e -> click());
+		}
+
 		notenZeile = new HBox(4);
 		notenZeile.getStyleClass().add(EPKBOX_NOTENZEILE);
-	
+
 		createBemsBox();
-		
-		activeNode = new VBox();		
+
+		activeNode = new VBox();
 		activeNode.getChildren().addAll(titelZeile, notenZeile, bemsBox);
-		activeNode.setOnMouseClicked(e -> click());
+
 	}
 
 	private void createBemsBox() {
@@ -75,10 +74,10 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	}
 
 	private void createInactiveNode() {
-		
+
 		Button button = new Button(getController().getInactiveNodeText());
-		button.getStyleClass().addAll(EPKBOX_TITEL, INACTIVE, classAktuell);	
-		
+		button.getStyleClass().addAll(EPKBOX_TITEL, INACTIVE, getController().getClassAktuell());
+
 		inactiveNode = button;
 		inactiveNode.setOnMouseEntered(e -> showPopOver());
 		inactiveNode.setOnMouseExited(e -> hidePopOver());
@@ -94,7 +93,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	public Node getActiveNode() {
 		return activeNode;
 	}
-	
+
 	public Node getInactiveNode() {
 		return inactiveNode;
 	}
@@ -104,10 +103,10 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		return getController().isActive() ? activeNode : inactiveNode;
 	}
 
-	private Node getPopOverNode() {		
+	private Node getPopOverNode() {
 		VBox box = new VBox(3);
-		box.getStyleClass().addAll(EPKBOX_POPOVER, classAktuell);
-		
+		box.getStyleClass().addAll(EPKBOX_POPOVER, getController().getClassAktuell());
+
 		Text header = new Text(getController().getEpkString());
 		header.setFont(new Font(18));
 
@@ -149,7 +148,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		}
 	}
 
-
 	public void updateNotenZeile() {
 		notenZeile.getChildren().clear();
 		getController().getNoten().forEach(this::addEinzelNote);
@@ -158,7 +156,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	private void updateTitelZeile() {
 		titelZeile.getChildren().clear();
 		Text text = new Text(getController().getEpkString());
-		text.setFont(new Font(20));
-		titelZeile.getChildren().add(text);		
+		titelZeile.getChildren().add(text);
 	}
 }

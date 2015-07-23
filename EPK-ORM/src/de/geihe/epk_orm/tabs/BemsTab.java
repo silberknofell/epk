@@ -17,6 +17,7 @@ import de.geihe.epk_orm.manager.EpkBoxManager;
 import de.geihe.epk_orm.manager.EpkGruppenManager;
 import de.geihe.epk_orm.pojo.KonfBem;
 import de.geihe.epk_orm.pojo.Sos;
+import de.geihe.epk_orm.view.EditWebView;
 import de.geihe.epk_orm.view.KonfBemEinzelView;
 import de.geihe.epk_orm.view.abstr_and_interf.View;
 import javafx.scene.Node;
@@ -24,14 +25,20 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.scene.web.WebView;
 
 public class BemsTab extends Tab {
 
 	private static final String BEMERKUNG_TAB = "bemerkung-tab";
 	private static final String BEMERKUNGEN = "Bemerkungen";
+	private static final String EPKBOX_TITEL = "epkbox-titel";
+	private static final String KONFERENZ = "konferenz";
+	private static final String KONFERENZSPALTE = "konferenzspalte";
+	private static final String GUTACHTEN_POPOVER = "gutachten-popover";
 
 	private VBox box1;
 	private VBox box2;
@@ -46,11 +53,12 @@ public class BemsTab extends Tab {
 		super(BEMERKUNGEN);
 		box1 = new VBox(5);
 		box1.getStyleClass().add(BEMERKUNG_TAB);
-		
+
 		box2 = new VBox(5);
-		
+		box2.getStyleClass().add(BEMERKUNG_TAB);
+
 		SplitPane sp = new SplitPane(box1, box2);
-		
+
 		scrollPane = new ScrollPane(sp);
 		scrollPane.setFitToWidth(true);
 
@@ -68,17 +76,15 @@ public class BemsTab extends Tab {
 	}
 
 	private void createManager() {
-		epkBoxManager = new EpkBoxManager();		
-		
+		epkBoxManager = new EpkBoxManager();
+
 		epkGruppenManager = new EpkGruppenManager();
 		epkGruppenManager.addData(sos);
 		epkGruppenManager.addAktuelleEpk();
 		Set<Integer> epk_ids = epkGruppenManager.getEpk_ids();
-		epk_ids.add(R.State.epk.getId());	
-		epkControllerList = epk_ids.stream()
-					.map(epk_id -> R.DB.epkDao.queryForId(epk_id))
-					.map(epk -> new EpkController(epk, epkGruppenManager, epkBoxManager))
-					.collect(Collectors.toList());		
+		epk_ids.add(R.State.epk.getId());
+		epkControllerList = epk_ids.stream().map(epk_id -> R.DB.epkDao.queryForId(epk_id))
+				.map(epk -> new EpkController(epk, epkGruppenManager, epkBoxManager)).collect(Collectors.toList());
 
 		epkBoxManager.setController(epkControllerList);
 	}
@@ -88,41 +94,48 @@ public class BemsTab extends Tab {
 
 		EditWebController<Sos> gutachtenController = new EpkGutachtenController(sos);
 		gutachtenController.getView().setPrefHeight(160);
-		Node gaNode = gutachtenController.getView().getNode();		
-		tpGutachten = new TitledPane("Grundschulgutachten", gaNode);
 		
+		Node gaNode = gutachtenController.getView().getNode();
+		tpGutachten = new TitledPane("Grundschulgutachten", gaNode);
+
 		Node gaPopOverNode = gutachtenController.getView().getPopOverNode();
+		gaPopOverNode.getStyleClass().add(GUTACHTEN_POPOVER);
 		PopOver gaPopOver = new PopOver(gaPopOverNode);
 		gaPopOver.setArrowLocation(ArrowLocation.LEFT_CENTER);
 		tpGutachten.setOnMouseEntered(e -> gaPopOver.show(tpGutachten));
-		tpGutachten.setOnMouseExited(e -> gaPopOver.hide());	
-		
-		klappeEin();		
-		box1.getChildren().addAll(
-				tpGutachten,
-				epkBoxManager.getInactiveBox(), 
-				epkBoxManager.getActiveBox());
+		tpGutachten.setOnMouseExited(e -> gaPopOver.hide());
+
+		klappeEin();
+		box1.getChildren().addAll(tpGutachten, epkBoxManager.getInactiveBox(), epkBoxManager.getActiveBox());
 	}
 
 	private void fillBox2() {
 		box2.getChildren().clear();
-		
+
 		for (KonfBem konfBem : epkGruppenManager.getPinnedKonfBems()) {
 			KonfBemEinzelController ctrl = new KonfBemEinzelController(konfBem);
 			Node node = ctrl.getView().getNode();
 			box2.getChildren().add(node);
 		}
-		
-		for (EpkController ctrl : epkControllerList) {			
+
+		for (EpkController ctrl : epkControllerList) {
 			Text titel = new Text(ctrl.getEpkString());
-			Node konferenz = ctrl.getKonferenzView().getNode();
-			VBox konfBem = new VBox(2);
-			for (KonfBemEinzelView view : ctrl.getKonfBemViewList()) {
-				konfBem.getChildren().add(view.getNode());
+			HBox titelBox = new HBox(titel);
+			titelBox.getStyleClass().addAll(EPKBOX_TITEL, ctrl.getClassAktuell());
+			EditWebView v = (EditWebView) ctrl.getKonferenzView();
+			Text text = (Text) v.getTextNode();
+			if (!text.getText().isEmpty()) {
+				TextFlow konferenz = new TextFlow(v.getTextNode());
+				konferenz.getStyleClass().add(KONFERENZ);
+				VBox konfBem = new VBox(2);
+
+				for (KonfBemEinzelView view : ctrl.getKonfBemViewList()) {
+					konfBem.getChildren().add(view.getNode());
+				}
+
+				box2.getChildren().addAll(titelBox, konferenz, konfBem);
 			}
-					
-			box2.getChildren().addAll(titel, konferenz, konfBem);
-		}		
+		}
 	}
 
 	private void klappeEin() {
@@ -135,7 +148,7 @@ public class BemsTab extends Tab {
 		createManager();
 		fillBox1();
 		fillBox2();
-		
+
 		setContent(scrollPane);
 	}
 

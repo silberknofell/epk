@@ -3,6 +3,7 @@ package de.geihe.epk_orm.view;
 import de.geihe.epk_orm.controller.KonfBemEinzelController;
 import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 import de.geihe.epk_orm.view.abstr_and_interf.EditView;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -46,7 +47,8 @@ public class KonfBemEinzelView  extends AbstractControlledView<KonfBemEinzelCont
 
 	@Override
 	public void setText(String text) {
-		textField.setText(text);		
+		textField.setTextAndHeight(text);		
+	
 	}
 
 	@Override

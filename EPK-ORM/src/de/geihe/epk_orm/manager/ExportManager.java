@@ -113,10 +113,16 @@ public class ExportManager {
 	}
 
 	public void createHTML(List<Sos> sosListe) {
-		InputStream is = getClass().getResourceAsStream("/css/print.css");
-		Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
-		STYLE = s.hasNext() ? s.next() : "";
-
+		try {
+			InputStream is = getClass().getResourceAsStream("/css/print.css");
+			Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+			STYLE = s.hasNext() ? s.next() : "";
+			s.close();
+			is.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		htmlOut = new HtmlPage(R.State.getKlasse().toString());
 		addStyles();
 		addContent(sosListe);

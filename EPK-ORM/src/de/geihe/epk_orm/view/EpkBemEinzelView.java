@@ -199,7 +199,7 @@ public class EpkBemEinzelView extends AbstractControlledView<EpkBemEinzelControl
 
 	@Override
 	public void setText(String text) {
-		textField.setText(text);
+		textField.setTextAndHeight(text);
 	}
 
 	@Override

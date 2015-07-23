@@ -35,6 +35,10 @@ import javafx.util.Duration;
 import jdk.management.resource.internal.inst.NetRMHooks;
 
 public class EpkController extends AbstractController<EpkView> {
+	
+	private static final String AKTUELL = "aktuell";
+	private static final String ALT = "alt";
+	
 	private Epk epk;
 	private int epk_id;
 	private EpkGruppenManager epkGgruppenManager;
@@ -151,5 +155,9 @@ public class EpkController extends AbstractController<EpkView> {
 
 	public String getInactiveNodeText() {
 		return "EPK " + epk.getNr();
+	}
+
+	public String getClassAktuell() {
+		return isAktuelleEpk() ? AKTUELL : ALT;
 	}
 }

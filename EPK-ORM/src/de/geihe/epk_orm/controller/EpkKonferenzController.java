@@ -4,6 +4,7 @@ import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
 import de.geihe.epk_orm.pojo.Konferenz;
+import javafx.scene.Node;
 
 public class EpkKonferenzController extends EditWebController<Konferenz> {
 
@@ -19,7 +20,6 @@ public class EpkKonferenzController extends EditWebController<Konferenz> {
 	@Override
 	public void updateFromDB() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -32,12 +32,12 @@ public class EpkKonferenzController extends EditWebController<Konferenz> {
 	protected void insertInDB() {
 		getElement().setTimestamp(System.currentTimeMillis());
 		R.DB.konferenzDao.create(getElement());
-
 	}
 
 	@Override
 	protected void updateInDB() {
 		getElement().setTimestamp(System.currentTimeMillis());
 		R.DB.konferenzDao.update(getElement());
-	}
+	}	
+
 }
