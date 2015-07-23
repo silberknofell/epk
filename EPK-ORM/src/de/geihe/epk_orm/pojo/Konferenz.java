@@ -4,6 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import de.geihe.epk_orm.db.daos.KonferenzDao;
+import de.geihe.epk_orm.inout.HtmlPage;
 import de.geihe.epk_orm.view.abstr_and_interf.WebViewSource;
 
 @DatabaseTable(daoClass = KonferenzDao.class)
@@ -24,7 +25,7 @@ public class Konferenz extends EntityMitEpk implements WebViewSource {
 	String text;
 
 	public String getText() {
-		return text;
+		return HtmlPage.getPlainText(text);
 	}
 
 	public void setText(String text) {

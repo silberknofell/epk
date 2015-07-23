@@ -40,13 +40,17 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 	}
 
 	public String getText() {
-		return konfBem.getText();
+		if (konfBem.isPinned()) {
+			return "EPK: " + konfBem.getText();
+		} else {
+			return konfBem.getText();
+		}
 	}
-	
+
 	public boolean isPinned() {
 		return konfBem.isPinned();
 	}
-	
+
 	public boolean isStrong() {
 		return konfBem.isStrong();
 	}

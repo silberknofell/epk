@@ -5,6 +5,7 @@ import de.geihe.epk_orm.inout.HtmlPage;
 import de.geihe.epk_orm.scenes.EditWebViewPopUpStage;
 import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 import de.geihe.epk_orm.view.abstr_and_interf.EditView;
+import javafx.application.Platform;
 import javafx.concurrent.Worker.State;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
@@ -23,6 +24,7 @@ public class EditWebView extends AbstractControlledView<EditWebController>implem
 		webView.setPrefWidth(500);
 		webView.setOnMouseClicked((e) -> callHTMLEditor());
 		setText(controller.getHTML());
+//		setJSColor(null);
 //		WebEngine engine = webView.getEngine();
 //		engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
 //			if (newState == State.SUCCEEDED) {
@@ -53,8 +55,13 @@ public class EditWebView extends AbstractControlledView<EditWebController>implem
  
 	@Override
 	public void setText(String text) {
-		webView.getEngine().loadContent(text);
+		webView.getEngine().loadContent(text);		
 	}
+	
+//	public void setJSColor(String color) {
+//		String js = "document.body.style.backgroundColor = 'red'";
+//		Platform.runLater(() -> webView.getEngine().executeScript(js));
+//	}
 
 	@Override
 	public String getText() {

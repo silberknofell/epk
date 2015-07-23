@@ -174,6 +174,12 @@ public class EpkBemEinzelView extends AbstractControlledView<EpkBemEinzelControl
 		if (getController().isOKbar()) {
 			box.getChildren().add(lblEnter);
 		}
+		
+		updateHeight();
+	}
+
+	public void updateHeight() {
+		textField.setHeight();
 	}
 
 	private void addZitatLabel() {

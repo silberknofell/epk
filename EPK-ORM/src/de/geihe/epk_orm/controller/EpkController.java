@@ -21,6 +21,7 @@ import de.geihe.epk_orm.pojo.KonfBem;
 import de.geihe.epk_orm.pojo.Konferenz;
 import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.tabs.BemsTab;
+import de.geihe.epk_orm.view.EditWebView;
 import de.geihe.epk_orm.view.EpkBemEinzelView;
 import de.geihe.epk_orm.view.KonfBemEinzelView;
 import de.geihe.epk_orm.view.EpkView;
@@ -159,5 +160,15 @@ public class EpkController extends AbstractController<EpkView> {
 
 	public String getClassAktuell() {
 		return isAktuelleEpk() ? AKTUELL : ALT;
+	}
+
+	public Boolean hatKonferenzText() {
+		Konferenz konf = epkGgruppenManager.getKonferenz(epk_id);
+
+		return  konf!=null && !konf.getText().trim().isEmpty();
+	}
+
+	public Boolean konfBemVorhanden() {
+		return getKonfBemViewList().size() > 0;
 	}
 }

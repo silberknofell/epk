@@ -25,16 +25,10 @@ public class KonfBemEinzelView  extends AbstractControlledView<KonfBemEinzelCont
 		baueBoxAuf();
 		textField = new ScrollFreetextArea();
 		textField.setEditable(true);
-		
-		setText(getController().getText());
-		
-//		box.minHeightProperty().bind(textField.heightProperty());
-//		HBox.setHgrow(textField, Priority.ALWAYS);
 	}
 
 	private void baueBoxAuf() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
 
 	@Override
@@ -47,8 +41,7 @@ public class KonfBemEinzelView  extends AbstractControlledView<KonfBemEinzelCont
 
 	@Override
 	public void setText(String text) {
-		textField.setTextAndHeight(text);		
-	
+		textField.setTextAndHeight(text);
 	}
 
 	@Override

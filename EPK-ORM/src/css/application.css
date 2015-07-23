@@ -196,11 +196,42 @@
 }
 
 .konferenzspalte {
-	-fx-padding: 10.0 0.0 0.0 0.0;	
+	-fx-padding: 10.0;
+	-fx-font-size: 17.0;
 }
 
 .konferenz {
-	-fx-font-size: 16px;
-	-fx-padding: 0.0 1.0 0.0 5.0;
-	
+	-fx-padding: 0.0 1.0 0.0 5.0;	
 }
+
+.konfbem-box {
+
+}
+
+.pinned-box {
+	-fx-font-weight: bold;
+	-fx-background-color: rgb(244,166,168);	
+	-fx-background-radius: 5px;
+	-fx-padding: 0.0 0.0 0.0 10.0;	
+}
+
+.pinned-konfbem {
+
+}
+
+.konf-bem {
+	-fx-background-color: lightgrey;
+	-fx-background-radius: 5px;
+	-fx-padding: -2.0 0.0 0.0 6.0;
+}
+
+.konf-bem.strong {
+	-fx-font-weight: bold;
+	-fx-text-fill: red;
+	-fx-fill: red;
+	-fx-stroke: red;
+}
+
+
+
+

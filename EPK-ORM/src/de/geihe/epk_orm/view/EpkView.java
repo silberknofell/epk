@@ -145,6 +145,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 
 		for (EpkBemEinzelView view : getController().getBemerkungViewList()) {
 			bemsBox.getChildren().add(view.getNode());
+			view.updateHeight();
 		}
 	}
 
