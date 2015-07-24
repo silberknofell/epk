@@ -141,4 +141,13 @@ public class Epk extends EntityMitArchiv {
 		Epk andere = (Epk) o;
 		return this.getKlasse().compareTo(andere.getKlasse());
 	}
+
+	public String getNrString() {
+		switch (nr) {
+		case 9: return "8";
+		case 8: return "M";
+		default: return Integer.toString(nr);
+			
+		}
+	}
 }

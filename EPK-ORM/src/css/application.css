@@ -204,8 +204,18 @@
 	-fx-padding: 0.0 1.0 0.0 5.0;	
 }
 
-.konfbem-box {
+.rahmen-unsichtbar {
+	-fx-border-color:  rgba(0,0,0,0);
+	-fx-border-radius: 5.0;
+	-fx-border-width: 2.0;
 
+}
+
+.rahmen-rot {
+	-fx-border-color: red;
+	-fx-border-radius: 5.0;
+	-fx-border-width: 2.0;
+	-fx-border-style: solid;
 }
 
 .pinned-box {
@@ -225,13 +235,6 @@
 	-fx-padding: -2.0 0.0 0.0 6.0;
 }
 
-.konf-bem.strong {
-	-fx-font-weight: bold;
-	-fx-text-fill: red;
+.konf-bem .strong  {
 	-fx-fill: red;
-	-fx-stroke: red;
 }
-
-
-
-

@@ -91,6 +91,26 @@ public class EpkController extends AbstractController<EpkView> {
 		return list;
 	}
 	
+	public String getClassAktuell() {
+		return isAktuelleEpk() ? AKTUELL : ALT;
+	}	
+
+	public int getEpk_id() {
+		return epk_id;
+	}
+
+	public String getEpkKurztitel() {
+		return epk.getNrString();
+	}
+
+	public String getEpkString() {
+		return epk.toLangString();
+	}
+
+	public String getInactiveNodeText() {
+		return "EPK " + epk.getNrString();
+	}
+
 	public List<KonfBemEinzelView> getKonfBemViewList() {
 		List<KonfBemEinzelView> list = new ArrayList<KonfBemEinzelView>();
 
@@ -102,14 +122,6 @@ public class EpkController extends AbstractController<EpkView> {
 //			addLeereBemerkung(list);
 		}
 		return list;
-	}	
-
-	public int getEpk_id() {
-		return epk_id;
-	}
-
-	public String getEpkString() {
-		return epk.toLangString();
 	}
 
 	public View getKonferenzView() {
@@ -132,12 +144,22 @@ public class EpkController extends AbstractController<EpkView> {
 		return noten == null ? new TreeSet<Note>() : noten;
 	}
 
+	public Boolean hatKonferenzText() {
+		Konferenz konf = epkGgruppenManager.getKonferenz(epk_id);
+
+		return  konf!=null && !konf.getText().trim().isEmpty();
+	}
+
 	public boolean isActive() {
 		return active;
 	}
 
 	public boolean isAktuelleEpk() {
 		return isAktuelleEpk;
+	}
+
+	public Boolean konfBemVorhanden() {
+		return getKonfBemViewList().size() > 0;
 	}
 
 	public void setActive(boolean active) {		
@@ -152,23 +174,5 @@ public class EpkController extends AbstractController<EpkView> {
 
 	public void toggleActive() {
 		setActive(! active);
-	}
-
-	public String getInactiveNodeText() {
-		return "EPK " + epk.getNr();
-	}
-
-	public String getClassAktuell() {
-		return isAktuelleEpk() ? AKTUELL : ALT;
-	}
-
-	public Boolean hatKonferenzText() {
-		Konferenz konf = epkGgruppenManager.getKonferenz(epk_id);
-
-		return  konf!=null && !konf.getText().trim().isEmpty();
-	}
-
-	public Boolean konfBemVorhanden() {
-		return getKonfBemViewList().size() > 0;
 	}
 }

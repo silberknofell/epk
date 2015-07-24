@@ -158,6 +158,7 @@ public class EpkBemEinzelView extends AbstractControlledView<EpkBemEinzelControl
 	public void update() {
 		buildLabel();
 		baueBoxAuf();
+		updateHeight();			
 	}
 
 	private void baueBoxAuf() {

@@ -24,6 +24,7 @@ import de.geihe.epk_orm.view.KonfBemEinzelView;
 import de.geihe.epk_orm.view.KonferenzView;
 import de.geihe.epk_orm.view.abstr_and_interf.View;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
@@ -36,7 +37,6 @@ import javafx.scene.web.WebView;
 
 public class BemsTab extends Tab {
 
-	private static final String STRONG = "strong";
 	private static final String KONF_BEM = "konf-bem";
 	private static final String PINNED_BOX = "pinned-box";
 	private static final String KONFBEM_BOX = "konfbem-box";
@@ -47,6 +47,7 @@ public class BemsTab extends Tab {
 	private static final String KONFERENZSPALTE = "konferenzspalte";
 	private static final String GUTACHTEN_POPOVER = "gutachten-popover";
 	private static final String PINNED_KONFBEM = "pinned-konfbem";
+	private static final String KONFERENZ_BOX = "konferenz-box";
 
 	private VBox box1;
 	private VBox box2;
@@ -56,7 +57,6 @@ public class BemsTab extends Tab {
 	private TitledPane tpGutachten;
 	private Sos sos;
 	private List<EpkController> epkControllerList;
-	private VBox konferenzBox;
 
 	public BemsTab() {
 		super(BEMERKUNGEN);
@@ -98,7 +98,7 @@ public class BemsTab extends Tab {
 		epkBoxManager.setController(epkControllerList);
 	}
 
-	private void fillBox1() {
+	private void buildBemerkungSpalte() {
 		box1.getChildren().clear();
 
 		EditWebController<Sos> gutachtenController = new EpkGutachtenController(sos);
@@ -118,60 +118,62 @@ public class BemsTab extends Tab {
 		box1.getChildren().addAll(tpGutachten, epkBoxManager.getInactiveBox(), epkBoxManager.getActiveBox());
 	}
 
-	private void fillBox2() {
+	public void buildKonferenzSpalte() {
 		box2.getChildren().clear();
-		VBox pinnedBox = buildPinnedBox();
-		VBox konferenzBox = buildKonferenzBox();
-		box2.getChildren().addAll(pinnedBox, konferenzBox);
+		box2.getChildren().add(buildPinnedBox());
+		addKonferenzBox();
+
 	}
 
-	private VBox buildKonferenzBox() {
-		konferenzBox = new VBox();
-		for (EpkController ctrl : epkControllerList) {
+	private void addKonferenzBox() {
 
+		for (EpkController ctrl : epkControllerList) {
+			
+			VBox konferenzBox = new VBox();
+			konferenzBox.getStyleClass().add(KONFERENZ_BOX);
+			
 			Boolean hatKonferenzText = ctrl.hatKonferenzText();
 			Boolean konfBemVorhanden = ctrl.konfBemVorhanden();
 
 			if (hatKonferenzText || konfBemVorhanden) {
-				addTitelBox(ctrl);
+				konferenzBox.getChildren().add(buildTitelBox(ctrl));
 			}
 
 			if (hatKonferenzText) {
-				addKonferenz(ctrl);
+				konferenzBox.getChildren().add(buildKonferenz(ctrl));
 			}
 
 			if (konfBemVorhanden) {
-				addKonfBemBox(ctrl);
+				konferenzBox.getChildren().add(buildKonfBemBox(ctrl));
 			}
+			box2.getChildren().add(konferenzBox);
 		}
-		return konferenzBox;
 	}
 
-	private void addKonferenz(EpkController ctrl) {
+	private Node buildKonferenz(EpkController ctrl) {
 		EditWebView kv = (EditWebView) ctrl.getKonferenzView();
 		TextFlow konferenz = new TextFlow(kv.getTextNode());
 		konferenz.getStyleClass().add(KONFERENZ);
-		konferenzBox.getChildren().add(konferenz);
+		return konferenz;
 	}
 
-	public void addKonfBemBox(EpkController ctrl) {
+	public Node buildKonfBemBox(EpkController ctrl) {
 		VBox konfBemBox = new VBox(2);
 		for (KonfBemEinzelView view : ctrl.getKonfBemViewList()) {
 			Node node = view.getNode();
 			node.getStyleClass().add(KONF_BEM);
-			if (view.getController().isStrong()) {
-				node.getStyleClass().add(STRONG);
-			}
+
 			konfBemBox.getChildren().add(node);
 		}
-		konferenzBox.getChildren().add(konfBemBox);
+		return konfBemBox;
 	}
 
-	public void addTitelBox(EpkController ctrl) {
-		Text titel = new Text(ctrl.getEpkString());
-		HBox titelBox = new HBox(titel);
-		titelBox.getStyleClass().addAll(EPKBOX_TITEL, ctrl.getClassAktuell());
-		konferenzBox.getChildren().add(titelBox);
+	public Node buildTitelBox(EpkController ctrl) {
+		HBox titelBox = new HBox();
+		Label titel = new Label(ctrl.getEpkKurztitel());
+		
+		titel.getStyleClass().addAll(EPKBOX_TITEL, ctrl.getClassAktuell());
+		return titel;
 	}
 
 	public VBox buildPinnedBox() {
@@ -194,10 +196,11 @@ public class BemsTab extends Tab {
 	public void update() {
 		sos = R.State.sos;
 		createManager();
-		fillBox1();
-		fillBox2();
+		buildBemerkungSpalte();		
+		buildKonferenzSpalte();
 
 		setContent(scrollPane);
 	}
+
 
 }

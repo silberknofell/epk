@@ -209,6 +209,10 @@ public final class R {
 		public static final Image OK_INACTIVE = new Image("/raw/ok_normal.png");
 		public static final Image BEM_ZITAT = new Image("/raw/uebernahme.png");
 		public static final Image DREI_PUNKTE = new Image("/raw/drei_punkte.png");
+		public static final Image BT_ATTENTION = new Image("/raw/bt_attention.png");
+		public static final Image BT_ATTENTION_GRAY = new Image("/raw/bt_attention_gray.png");
+		public static final Image PIN_RED = new Image("/raw/pin_red.png");
+		public static final Image PIN_GRAY = new Image("/raw/pin_gray.png");
 	}
 
 }

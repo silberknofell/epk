@@ -1,5 +1,6 @@
 package de.geihe.epk_orm.controller;
 
+import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.abstr_and_interf.AbstractEditViewController;
 import de.geihe.epk_orm.pojo.KonfBem;
@@ -19,12 +20,12 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 	@Override
 	public void updateFromDB() {
 		R.DB.konfBemerkungDao.refresh(konfBem);
+		getView().update();
 	}
 
 	@Override
 	public boolean isEditierbar() {
-		// TODO Auto-generated method stub
-		return false;
+		return (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ);
 	}
 
 	@Override
@@ -35,8 +36,7 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 
 	@Override
 	protected void updateInDB() {
-		// TODO Auto-generated method stub
-
+		R.DB.konfBemerkungDao.update(konfBem);
 	}
 
 	public String getText() {
@@ -55,4 +55,35 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 		return konfBem.isStrong();
 	}
 
+	public boolean isStrongable() {
+		return (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ);
+	}
+	
+	public boolean isPinnable() {
+		return (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ);
+	}
+
+	public boolean isOKbar() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void strongClicked() {
+		Boolean strong = konfBem.isStrong();
+		konfBem.setStrong(! strong);
+		updateInDB();
+		getView().update();		
+	}
+
+	public void pinClicked() {
+		Boolean pinned = konfBem.isPinned();
+		konfBem.setPinned(! pinned);
+		konfBem.setStrong(true);
+		updateInDB();
+		R.State.bemerkungUndKonferenzTab.update();	
+	}
+
+	public void okClicked() {
+
+	}
 }
