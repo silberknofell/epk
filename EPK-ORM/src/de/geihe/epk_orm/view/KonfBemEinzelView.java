@@ -10,7 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 
-public class KonfBemEinzelView extends AbstractControlledView<KonfBemEinzelController>implements EditView {
+public class KonfBemEinzelView 
+	extends AbstractControlledView<KonfBemEinzelController>
+	implements EditView	{
 
 	private ScrollFreetextArea textField;
 	private HBox box;
@@ -25,13 +27,11 @@ public class KonfBemEinzelView extends AbstractControlledView<KonfBemEinzelContr
 	@Override
 	public void update() {
 		baueBoxAuf();
-		textField = new ScrollFreetextArea();
-		textField.setEditable(true);
 	}
 
 	private void baueBoxAuf() {
 		box.getChildren().clear();
-		addText();
+		addTextBox();
 		if (getController().isStrongable()) {
 			addStrongLabel();
 		}
@@ -75,15 +75,32 @@ public class KonfBemEinzelView extends AbstractControlledView<KonfBemEinzelContr
 		}
 	}
 
-	public void addText() {
+	private void addTextBox() {
+		Node textNode;
+		if (getController().isEditierbar()) {
+			textNode = getEditTextBox();
+		} else {
+			textNode = getReadOnlyTextBox();
+		}		
+
+		HBox textBox = new HBox(textNode);
+		HBox.setHgrow(textBox, Priority.ALWAYS);
+		box.getChildren().add(textBox);
+	}
+
+	private Node getReadOnlyTextBox() {
 		Text text = new Text(getController().getText());
 		text.prefWidth(Double.MAX_VALUE);
 		if (getController().isStrong()) {
 			text.getStyleClass().add(STRONG);
 		}
-		HBox textBox = new HBox(text);
-		HBox.setHgrow(textBox, Priority.ALWAYS);
-		box.getChildren().add(textBox);
+		return text;
+	}
+
+	private Node getEditTextBox() {
+		textField = new ScrollFreetextArea();
+		textField.setTextAndHeight(getController().getText());
+		return textField;
 	}
 
 	@Override
@@ -93,12 +110,13 @@ public class KonfBemEinzelView extends AbstractControlledView<KonfBemEinzelContr
 
 	@Override
 	public void setText(String text) {
-		textField.setTextAndHeight(text);
+//		textField.setTextAndHeight(text);
 	}
 
 	@Override
 	public String getText() {
-		return textField.getText();
+//		return textField.getText();
+		return null;
 	}
 
 }

@@ -6,14 +6,16 @@ import de.geihe.epk_orm.controller.abstr_and_interf.AbstractEditViewController;
 import de.geihe.epk_orm.pojo.KonfBem;
 import de.geihe.epk_orm.view.KonfBemEinzelView;
 
-public class KonfBemEinzelController extends AbstractEditViewController<KonfBemEinzelView> {
+public class KonfBemEinzelController 	
+	extends AbstractEditViewController<KonfBemEinzelView> {
 
-	private KonfBem konfBem;
-	private EpkController epkContrl;
+ 	private KonfBem konfBem;
+	private EpkController epkCtrl;
 
-	public KonfBemEinzelController(KonfBem konfBem) {
+	public KonfBemEinzelController(KonfBem konfBem, EpkController epkCtrl) {
 		super();
 		this.konfBem = konfBem;
+		this.epkCtrl = epkCtrl;
 		setView(new KonfBemEinzelView(this));
 	}
 
@@ -25,7 +27,10 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 
 	@Override
 	public boolean isEditierbar() {
-		return (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ);
+		boolean b1 = (R.mode == Mode.ADMIN) ||  (R.mode == Mode.KONFERENZ);
+		boolean b2 = (konfBem.isPinned() == false) ;
+		boolean b3 = epkCtrl.isAktuelleEpk(); 
+		return b1 && b2 && b3;
 	}
 
 	@Override
@@ -56,7 +61,8 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 	}
 
 	public boolean isStrongable() {
-		return (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ);
+		boolean s = (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ);
+		return s && ! isPinned();
 	}
 	
 	public boolean isPinnable() {
@@ -72,7 +78,7 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 		Boolean strong = konfBem.isStrong();
 		konfBem.setStrong(! strong);
 		updateInDB();
-		getView().update();		
+		getView().update();
 	}
 
 	public void pinClicked() {
@@ -80,7 +86,7 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 		konfBem.setPinned(! pinned);
 		konfBem.setStrong(true);
 		updateInDB();
-		R.State.bemerkungUndKonferenzTab.update();	
+		R.State.bemerkungUndKonferenzTab.buildKonferenzSpalte();
 	}
 
 	public void okClicked() {

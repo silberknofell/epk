@@ -21,7 +21,6 @@ import de.geihe.epk_orm.pojo.Sos;
 public class EpkGruppenManager {
 	private TreeMap<Integer, SortedSet<Bemerkung>> bemerkungenMap;
 	private TreeMap<Integer, SortedSet<KonfBem>> konfBemMap;
-	private SortedSet<KonfBem> pinnedKonfBems;
 	private NavigableSet<Integer> epks;
 	private TreeMap<Integer, Konferenz> konferenzenMap;
 	private TreeMap<Integer, SortedSet<Note>> notenMap;
@@ -30,7 +29,6 @@ public class EpkGruppenManager {
 		notenMap = new TreeMap<Integer, SortedSet<Note>>();
 		bemerkungenMap = new TreeMap<Integer, SortedSet<Bemerkung>>();
 		konfBemMap = new TreeMap<Integer, SortedSet<KonfBem>>();
-		pinnedKonfBems = new TreeSet<KonfBem>();
 		konferenzenMap = new TreeMap<Integer, Konferenz>();
 		epks = new TreeSet<Integer>();
 	}
@@ -84,20 +82,16 @@ public class EpkGruppenManager {
 	}
 
 	public void addElement(KonfBem konfBem) {
-		if (konfBem.isPinned()) {
-			pinnedKonfBems.add(konfBem);
+		int epk_id = konfBem.getEpk_id();
+		SortedSet<KonfBem> sorset;
+		if (konfBemMap.containsKey(epk_id)) {
+			sorset = konfBemMap.get(epk_id);
 		} else {
-			int epk_id = konfBem.getEpk_id();
-			SortedSet<KonfBem> sorset;
-			if (konfBemMap.containsKey(epk_id)) {
-				sorset = konfBemMap.get(epk_id);
-			} else {
-				sorset = new TreeSet<KonfBem>();
-				konfBemMap.put(konfBem.getEpk_id(), sorset);
-				epks.add(epk_id);
-			}
-			sorset.add(konfBem);
+			sorset = new TreeSet<KonfBem>();
+			konfBemMap.put(konfBem.getEpk_id(), sorset);
+			epks.add(epk_id);
 		}
+		sorset.add(konfBem);
 	}
 
 	public void addElement(Konferenz konf) {
@@ -161,10 +155,15 @@ public class EpkGruppenManager {
 		return sorset;
 	}
 
-	public SortedSet<KonfBem> getPinnedKonfBems() {
+	public SortedSet<KonfBem> getPinnedKonfBems(int epk_id) {
+		TreeSet<KonfBem> pinnedKonfBems = new TreeSet<KonfBem>();
+		SortedSet<KonfBem> konfBems = getKonfBems(epk_id);
+		konfBems.stream()
+				.filter(konfBem -> konfBem.isPinned())
+				.map(konfBem -> pinnedKonfBems.add(konfBem));
 		return pinnedKonfBems;
 	}
-	
+
 	public NavigableSet<Integer> getEpk_ids() {
 		return epks;
 	}

@@ -115,7 +115,7 @@ public class EpkController extends AbstractController<EpkView> {
 		List<KonfBemEinzelView> list = new ArrayList<KonfBemEinzelView>();
 
 		for (KonfBem konfBem : epkGgruppenManager.getKonfBems(epk_id)) {
-			KonfBemEinzelController contr = new KonfBemEinzelController(konfBem);
+			KonfBemEinzelController contr = new KonfBemEinzelController(konfBem, this);
 			list.add(contr.getView());
 		}
 		if ((R.mode == Mode.EINGABE) && isAktuelleEpk) {

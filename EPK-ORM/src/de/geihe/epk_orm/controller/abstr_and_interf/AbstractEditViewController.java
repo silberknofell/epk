@@ -4,7 +4,7 @@ import de.geihe.epk_orm.view.abstr_and_interf.EditView;
 
 public abstract class AbstractEditViewController<V extends EditView> extends AbstractController<V>
 		implements EditViewController<V> {
-
+ 
 	private boolean changed;
 	private boolean neu;
 
