@@ -48,7 +48,7 @@ public class EpkBemEinzelView extends AbstractControlledView<EpkBemEinzelControl
 	private void buildTextField() {
 		textField = new ScrollFreetextArea();
 
-		if (getController().isEditierbar()) {
+		if (getController().ggfEditierbar()) {
 			textField.setEditable(true);
 			textField.getStyleClass().add(EDITIERBAR);
 		} else {
@@ -88,22 +88,10 @@ public class EpkBemEinzelView extends AbstractControlledView<EpkBemEinzelControl
 		HBox.setHgrow(textField, Priority.ALWAYS);
 	}
 
-	private Object keyTyped(KeyEvent e) {
+	private void keyTyped(KeyEvent e) {
 		if ((e.getCode() == KeyCode.ENTER) && getController().isChanged()) {
 			getController().writeToDB();
 		}
-		// if (R.mode == Mode.ADMIN && e.isControlDown() && e.isShiftDown()
-		// && e.getCode() == KeyCode.N) {
-		// getController().updateInDBAdmin();
-		// }
-		// if (R.mode == Mode.ADMIN && e.isControlDown() && e.isShiftDown()
-		// && e.getCode() == KeyCode.T) {
-		// int caretPos = textField.getCaretPosition();
-		// String teil1 = textField.getText(0, caretPos);
-		// String teil2 = textField.getText(caretPos, textField.getLength());
-		// getController().teile(teil1, teil2);
-		// }
-		return null;
 	}
 
 	private void focusChanged(Boolean neu) {

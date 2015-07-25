@@ -36,7 +36,7 @@ public class EditWebView extends AbstractControlledView<EditWebController>implem
 	}
 
 	private void callHTMLEditor() {
-		if (getController().isEditierbar()) {
+		if (getController().ggfEditierbar()) {
 			Stage stage = new EditWebViewPopUpStage(getController());
 			stage.showAndWait();
 		}

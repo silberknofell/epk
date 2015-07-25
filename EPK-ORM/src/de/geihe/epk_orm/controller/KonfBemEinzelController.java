@@ -6,17 +6,38 @@ import de.geihe.epk_orm.controller.abstr_and_interf.AbstractEditViewController;
 import de.geihe.epk_orm.pojo.KonfBem;
 import de.geihe.epk_orm.view.KonfBemEinzelView;
 
-public class KonfBemEinzelController 	
-	extends AbstractEditViewController<KonfBemEinzelView> {
+public class KonfBemEinzelController extends AbstractEditViewController<KonfBemEinzelView> {
 
- 	private KonfBem konfBem;
+	private KonfBem konfBem;
 	private EpkController epkCtrl;
+	private boolean editierbar;
 
 	public KonfBemEinzelController(KonfBem konfBem, EpkController epkCtrl) {
 		super();
 		this.konfBem = konfBem;
 		this.epkCtrl = epkCtrl;
+		this.editierbar = false;
 		setView(new KonfBemEinzelView(this));
+	}
+
+	public void setEditierbar() {
+		setEditierbar(true);
+	}
+
+	public void setReadOnly() {
+		setEditierbar(false);
+	}
+
+	public void setEditierbar(boolean b) {
+
+		if ((b != editierbar) && ggfEditierbar()) {
+			editierbar = b;
+			getView().update();
+		}
+	}
+
+	public boolean isEditierbar() {
+		return editierbar;
 	}
 
 	@Override
@@ -26,21 +47,26 @@ public class KonfBemEinzelController
 	}
 
 	@Override
-	public boolean isEditierbar() {
-		boolean b1 = (R.mode == Mode.ADMIN) ||  (R.mode == Mode.KONFERENZ);
-		boolean b2 = (konfBem.isPinned() == false) ;
-		boolean b3 = epkCtrl.isAktuelleEpk(); 
-		return b1 && b2 && b3;
+	public boolean ggfEditierbar() {
+		if (konfBem.isPinned())
+			return false;
+		if (R.mode == Mode.ADMIN)
+			return true;
+		if ((R.mode == Mode.KONFERENZ) && epkCtrl.isAktuelleEpk())
+			return true;
+		return false;
 	}
 
 	@Override
 	protected void insertInDB() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	protected void updateInDB() {
+		if (isEditierbar()) {
+			konfBem.setText(getView().getText());
+		}
 		R.DB.konfBemerkungDao.update(konfBem);
 	}
 
@@ -62,34 +88,36 @@ public class KonfBemEinzelController
 
 	public boolean isStrongable() {
 		boolean s = (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ);
-		return s && ! isPinned();
+		return s && !isPinned();
 	}
-	
+
 	public boolean isPinnable() {
 		return (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ);
 	}
 
 	public boolean isOKbar() {
-		// TODO Auto-generated method stub
-		return false;
+		return isEditierbar();
 	}
 
 	public void strongClicked() {
 		Boolean strong = konfBem.isStrong();
-		konfBem.setStrong(! strong);
+		konfBem.setStrong(!strong);
 		updateInDB();
 		getView().update();
 	}
 
 	public void pinClicked() {
 		Boolean pinned = konfBem.isPinned();
-		konfBem.setPinned(! pinned);
+		konfBem.setPinned(!pinned);
 		konfBem.setStrong(true);
 		updateInDB();
 		R.State.bemerkungUndKonferenzTab.buildKonferenzSpalte();
 	}
 
 	public void okClicked() {
-
+		writeToDB();
+		setReadOnly();
+		setNeuUndChangedFalse();
+		getView().update();
 	}
 }

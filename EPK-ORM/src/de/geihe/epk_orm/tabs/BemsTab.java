@@ -46,7 +46,6 @@ public class BemsTab extends Tab {
 	private static final String KONFERENZ = "konferenz";
 	private static final String KONFERENZSPALTE = "konferenzspalte";
 	private static final String GUTACHTEN_POPOVER = "gutachten-popover";
-	private static final String PINNED_KONFBEM = "pinned-konfbem";
 	private static final String KONFERENZ_BOX = "konferenz-box";
 
 	private VBox box1;
@@ -85,6 +84,10 @@ public class BemsTab extends Tab {
 		return 2;
 	}
 
+	public void setMouseListener(Node node) {
+		
+	}
+	
 	private void createManager() {
 		epkBoxManager = new EpkBoxManager();
 
@@ -129,13 +132,12 @@ public class BemsTab extends Tab {
 			VBox konferenzBox = new VBox();
 			konferenzBox.getStyleClass().add(KONFERENZ_BOX);
 
-			addPinnedKonfBems(ctrl);
-
 			Boolean hatKonferenzText = ctrl.hatKonferenzText();
 			Boolean konfBemVorhanden = ctrl.konfBemVorhanden();
 
 			if (hatKonferenzText || konfBemVorhanden) {
 				konferenzBox.getChildren().add(buildTitel(ctrl));
+				box2.getChildren().add(konferenzBox);
 			}
 
 			if (hatKonferenzText) {
@@ -145,13 +147,9 @@ public class BemsTab extends Tab {
 			if (konfBemVorhanden) {
 				konferenzBox.getChildren().add(buildKonfBemBox(ctrl));
 			}
-			box2.getChildren().add(konferenzBox);
+			
+			ctrl.addNode(konferenzBox);
 		}
-	}
-
-	private void addPinnedKonfBems(EpkController ctrl) {
-		epkGruppenManager.getPinnedKonfBems(ctrl.getEpk_id());
-
 	}
 
 	private Node buildKonferenz(EpkController ctrl) {
@@ -169,6 +167,8 @@ public class BemsTab extends Tab {
 
 			if (view.getController().isPinned()) {
 				pinnedBox.getChildren().add(node);
+				ctrl.addNode(node);
+				
 			} else {
 				node.getStyleClass().add(KONF_BEM);
 				konfBemBox.getChildren().add(node);

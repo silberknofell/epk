@@ -14,6 +14,6 @@ public abstract class AbstractController<V extends View> implements Controller<V
 	}
 
 	public void setView(V view) {
-		this.view = view;
+		this.view = view;		
 	}
 }

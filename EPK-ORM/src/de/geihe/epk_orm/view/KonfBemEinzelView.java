@@ -6,18 +6,20 @@ import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 import de.geihe.epk_orm.view.abstr_and_interf.EditView;
 import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
-public class KonfBemEinzelView 
-	extends AbstractControlledView<KonfBemEinzelController>
-	implements EditView	{
+public class KonfBemEinzelView extends AbstractControlledView<KonfBemEinzelController>implements EditView {
 
 	private ScrollFreetextArea textField;
 	private HBox box;
 	private static final String STRONG = "strong";
-	
+	private HoverLabel lblEnter = null;
+
 	public KonfBemEinzelView(KonfBemEinzelController controller) {
 		super(controller);
 		box = new HBox(3);
@@ -32,14 +34,17 @@ public class KonfBemEinzelView
 	private void baueBoxAuf() {
 		box.getChildren().clear();
 		addTextBox();
+
+		if (getController().isOKbar()) {
+			addOKLabel();
+		}
+
 		if (getController().isStrongable()) {
 			addStrongLabel();
 		}
+
 		if (getController().isPinnable()) {
 			addPinLabel();
-		}
-		if (getController().isOKbar()) {
-			addOKLabel();
 		}
 	}
 
@@ -67,12 +72,9 @@ public class KonfBemEinzelView
 	}
 
 	private void addOKLabel() {
-		HoverLabel hl;
-		if (true) { // TODO
-			hl = new HoverLabel(R.Icons.OK_INACTIVE, R.Icons.OK_ACTIVE);
-			box.getChildren().add(hl);
-			hl.setOnMouseClicked(e -> getController().okClicked());
-		}
+		lblEnter = new HoverLabel(R.Icons.OK_INACTIVE, R.Icons.OK_ACTIVE);
+		box.getChildren().add(lblEnter);
+		lblEnter.setOnMouseClicked(e -> getController().okClicked());
 	}
 
 	private void addTextBox() {
@@ -81,7 +83,7 @@ public class KonfBemEinzelView
 			textNode = getEditTextBox();
 		} else {
 			textNode = getReadOnlyTextBox();
-		}		
+		}
 
 		HBox textBox = new HBox(textNode);
 		HBox.setHgrow(textBox, Priority.ALWAYS);
@@ -94,13 +96,32 @@ public class KonfBemEinzelView
 		if (getController().isStrong()) {
 			text.getStyleClass().add(STRONG);
 		}
-		return text;
+		TextFlow tf = new TextFlow(text);
+		tf.setOnMouseClicked(e -> getController().setEditierbar());
+		return tf;
 	}
 
 	private Node getEditTextBox() {
 		textField = new ScrollFreetextArea();
 		textField.setTextAndHeight(getController().getText());
+		textField.setEditable(true);
+
+		textField.textProperty().addListener((obs, alt, neu) -> getController().textChanged());
+		textField.focusedProperty().addListener((obs, alt, neu) -> focusChanged(neu));
+		textField.setOnKeyPressed((e) -> keyTyped(e));
 		return textField;
+	}
+
+	private void keyTyped(KeyEvent e) {
+		if ((e.getCode() == KeyCode.ENTER) && getController().isChanged()) {
+			getController().okClicked();
+		}
+	}
+
+	private void focusChanged(Boolean neu) {
+		if ((neu == false) && getController().isChanged()) {
+			getController().okClicked();
+		}
 	}
 
 	@Override
@@ -110,13 +131,16 @@ public class KonfBemEinzelView
 
 	@Override
 	public void setText(String text) {
-//		textField.setTextAndHeight(text);
+		// textField.setTextAndHeight(text);
 	}
 
 	@Override
 	public String getText() {
-//		return textField.getText();
-		return null;
+		if (textField == null) {
+			return "";
+		} else {
+			return textField.getText();
+		}
 	}
 
 }

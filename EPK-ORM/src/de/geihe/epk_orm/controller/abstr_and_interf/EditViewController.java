@@ -9,5 +9,5 @@ public interface EditViewController<V extends View> extends Controller<V> {
 
 	public void updateFromDB();
 
-	public boolean isEditierbar();
+	public boolean ggfEditierbar();
 }

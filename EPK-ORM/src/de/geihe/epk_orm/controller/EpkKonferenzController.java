@@ -23,7 +23,7 @@ public class EpkKonferenzController extends EditWebController<Konferenz> {
 	}
 
 	@Override
-	public boolean isEditierbar() {
+	public boolean ggfEditierbar() {
 //		return (R.mode == Mode.ADMIN) || (R.mode == Mode.KONFERENZ);
 		return false;
 	}

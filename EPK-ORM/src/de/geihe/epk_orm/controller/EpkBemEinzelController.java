@@ -113,7 +113,7 @@ public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEin
 	}
 
 	@Override
-	public boolean isEditierbar() {
+	public boolean ggfEditierbar() {
 		return ((R.mode == Mode.EINGABE) && isAktuelleEPK() && keinAndererUnterzeichner()) || (R.mode == Mode.ADMIN);
 	}
 
@@ -122,7 +122,7 @@ public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEin
 	}
 
 	public boolean isOKbar() {
-		return isChanged() && isEditierbar();
+		return isChanged() && ggfEditierbar();
 	}
 
 	public boolean isUnter1Woche() {

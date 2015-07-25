@@ -66,7 +66,6 @@ public class EpkView extends AbstractControlledView<EpkController> {
 
 		activeNode = new VBox();
 		activeNode.getChildren().addAll(titelZeile, notenZeile, bemsBox);
-
 	}
 
 	private void createBemsBox() {

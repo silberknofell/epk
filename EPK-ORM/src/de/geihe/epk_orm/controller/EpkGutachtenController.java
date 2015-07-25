@@ -16,7 +16,7 @@ public class EpkGutachtenController extends EditWebController<Sos> {
 	}
 
 	@Override
-	public boolean isEditierbar() {
+	public boolean ggfEditierbar() {
 		return true;
 		// return R.mode==Mode.ADMIN || R.mode == Mode.VORBEREITEN;
 	}

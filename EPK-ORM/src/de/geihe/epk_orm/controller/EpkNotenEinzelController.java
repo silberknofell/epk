@@ -38,7 +38,7 @@ public class EpkNotenEinzelController extends AbstractEditViewController<EpkNote
 	}
 
 	@Override
-	public boolean isEditierbar() {
+	public boolean ggfEditierbar() {
 		if ((R.mode == Mode.ADMIN) || (R.mode == Mode.KONFERENZ)) {
 			return true;
 		}

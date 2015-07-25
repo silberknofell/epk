@@ -207,14 +207,13 @@
 .rahmen-unsichtbar {
 	-fx-border-color:  rgba(0,0,0,0);
 	-fx-border-radius: 5.0;
-	-fx-border-width: 2.0;
-
+	-fx-border-width: 3.0;
 }
 
-.rahmen-rot {
+.rahmen-farbig {
 	-fx-border-color: red;
 	-fx-border-radius: 5.0;
-	-fx-border-width: 2.0;
+	-fx-border-width: 3.0;
 	-fx-border-style: solid;
 }
 
