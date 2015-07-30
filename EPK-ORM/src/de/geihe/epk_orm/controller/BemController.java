@@ -9,20 +9,20 @@ import de.geihe.epk_orm.manager.BemerkungSuchErgebnis;
 import de.geihe.epk_orm.manager.BemerkungUtils;
 import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.Lehrer;
-import de.geihe.epk_orm.view.EpkBemEinzelView;
+import de.geihe.epk_orm.view.BemView;
 import javafx.scene.control.Tooltip;
 
-public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEinzelView> {
+public class BemController extends AbstractEditViewController<BemView> {
 
 	private Bemerkung bem;
 	private EpkController epkContr;
 	private boolean laengeGewarnt;
 
-	public EpkBemEinzelController(Bemerkung bem, EpkController epkContr) {
+	public BemController(Bemerkung bem, EpkController epkContr) {
 		super();
 		this.bem = bem;
 		this.epkContr = epkContr;
-		setView(new EpkBemEinzelView(this));
+		setView(new BemView(this));
 		laengeGewarnt = false;
 	}
 

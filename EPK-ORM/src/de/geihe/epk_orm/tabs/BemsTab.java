@@ -10,14 +10,14 @@ import org.controlsfx.control.PopOver.ArrowLocation;
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.EpkController;
-import de.geihe.epk_orm.controller.EpkGutachtenController;
-import de.geihe.epk_orm.controller.KonfBemEinzelController;
+import de.geihe.epk_orm.controller.GutachtenController;
+import de.geihe.epk_orm.controller.KonfBemController;
 import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
 import de.geihe.epk_orm.manager.EpkBoxManager;
 import de.geihe.epk_orm.manager.EpkGruppenManager;
 import de.geihe.epk_orm.pojo.Sos;
 import de.geihe.epk_orm.view.EditWebView;
-import de.geihe.epk_orm.view.KonfBemEinzelView;
+import de.geihe.epk_orm.view.KonfBemView;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -98,7 +98,7 @@ public class BemsTab extends Tab {
 	private void buildBemerkungSpalte() {
 		box1.getChildren().clear();
 
-		EditWebController<Sos> gutachtenController = new EpkGutachtenController(sos);
+		EditWebController<Sos> gutachtenController = new GutachtenController(sos);
 		gutachtenController.getView().setPrefHeight(160);
 
 		Node gaNode = gutachtenController.getView().getNode();
@@ -155,7 +155,7 @@ public class BemsTab extends Tab {
 
 	public Node buildKonfBemBox(EpkController ctrl) {
 		VBox konfBemBox = new VBox(2);
-		for (KonfBemEinzelView view : ctrl.getKonfBemViewList()) {
+		for (KonfBemView view : ctrl.getKonfBemViewList()) {
 
 			Node node = view.getNode();
 
@@ -177,8 +177,8 @@ public class BemsTab extends Tab {
 	}
 
 	public void addLeereKonfBem(EpkController ctrl, VBox konfBemBox) {
-		KonfBemEinzelController konfBemCtrl 
-			= new KonfBemEinzelController(sos , ctrl.getEpk_id(), ctrl);
+		KonfBemController konfBemCtrl 
+			= new KonfBemController(sos , ctrl.getEpk_id(), ctrl);
 		Node node = konfBemCtrl.getView().getNode();
 		node.getStyleClass().add(KONF_BEM);
 		konfBemBox.getChildren().add(node);

@@ -4,9 +4,9 @@ import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
 import de.geihe.epk_orm.pojo.Sos;
 
-public class EpkGutachtenController extends EditWebController<Sos> {
+public class GutachtenController extends EditWebController<Sos> {
 
-	public EpkGutachtenController(Sos element) {
+	public GutachtenController(Sos element) {
 		super(element);
 	}
 

@@ -5,7 +5,7 @@ import org.controlsfx.control.PopOver.ArrowLocation;
 
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.EpkController;
-import de.geihe.epk_orm.controller.EpkNotenEinzelController;
+import de.geihe.epk_orm.controller.NoteController;
 import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
@@ -43,7 +43,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 
 	private void addEinzelNote(Note note) {
 		if (note.hatEintrag()) {
-			Node node = new EpkNotenEinzelController(note).getView().getNode();
+			Node node = new NoteController(note).getView().getNode();
 			notenZeile.getChildren().add(node);
 		}
 	}
@@ -142,7 +142,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	public void updateBemBox() {
 		bemsBox.getChildren().clear();
 
-		for (EpkBemEinzelView view : getController().getBemerkungViewList()) {
+		for (BemView view : getController().getBemerkungViewList()) {
 			bemsBox.getChildren().add(view.getNode());
 			view.updateHeight();
 		}

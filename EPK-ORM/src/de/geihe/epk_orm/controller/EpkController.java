@@ -24,8 +24,8 @@ import de.geihe.epk_orm.pojo.Konferenz;
 import de.geihe.epk_orm.pojo.Note;
 import de.geihe.epk_orm.tabs.BemsTab;
 import de.geihe.epk_orm.view.EditWebView;
-import de.geihe.epk_orm.view.EpkBemEinzelView;
-import de.geihe.epk_orm.view.KonfBemEinzelView;
+import de.geihe.epk_orm.view.BemView;
+import de.geihe.epk_orm.view.KonfBemView;
 import de.geihe.epk_orm.view.EpkView;
 import de.geihe.epk_orm.view.abstr_and_interf.View;
 import javafx.collections.ObservableList;
@@ -109,8 +109,8 @@ public class EpkController extends AbstractController<EpkView> {
 		changeCssClass(node, RAHMEN_FARBIG, RAHMEN_UNSICHTBAR);
 	}
 
-	public List<EpkBemEinzelView> addLeereBemerkung(List<EpkBemEinzelView> list) {
-		EpkBemEinzelController contr = BemerkungUtils.createLeereBemerkungController(this);
+	public List<BemView> addLeereBemerkung(List<BemView> list) {
+		BemController contr = BemerkungUtils.createLeereBemerkungController(this);
 		contr.setEpkController(this);
 		list.add(contr.getView());
 
@@ -123,11 +123,11 @@ public class EpkController extends AbstractController<EpkView> {
 		return bems == null ? new TreeSet<Bemerkung>() : bems;
 	}
 
-	public List<EpkBemEinzelView> getBemerkungViewList() {
-		List<EpkBemEinzelView> list = new ArrayList<EpkBemEinzelView>();
+	public List<BemView> getBemerkungViewList() {
+		List<BemView> list = new ArrayList<BemView>();
 
 		for (Bemerkung bem : getBemerkungen()) {
-			EpkBemEinzelController contr = new EpkBemEinzelController(bem, this);
+			BemController contr = new BemController(bem, this);
 			contr.setEpkController(this);
 			list.add(contr.getView());
 		}
@@ -157,11 +157,11 @@ public class EpkController extends AbstractController<EpkView> {
 		return epk.getNrString();
 	}
 
-	public List<KonfBemEinzelView> getKonfBemViewList() {
-		List<KonfBemEinzelView> list = new ArrayList<KonfBemEinzelView>();
+	public List<KonfBemView> getKonfBemViewList() {
+		List<KonfBemView> list = new ArrayList<KonfBemView>();
 
 		for (KonfBem konfBem : epkGgruppenManager.getKonfBems(epk_id)) {
-			KonfBemEinzelController contr = new KonfBemEinzelController(konfBem, this);
+			KonfBemController contr = new KonfBemController(konfBem, this);
 			list.add(contr.getView());
 		}
 
@@ -170,12 +170,12 @@ public class EpkController extends AbstractController<EpkView> {
 
 	public View getKonferenzView() {
 		Konferenz konf = epkGgruppenManager.getKonferenz(epk_id);
-		EpkKonferenzController ctrl;
+		KonferenzController ctrl;
 
 		if ((konf == null) || (konf.getId() == 0)) {
-			ctrl = new EpkKonferenzController(getEpk_id());
+			ctrl = new KonferenzController(getEpk_id());
 		} else {
-			ctrl = new EpkKonferenzController(konf);
+			ctrl = new KonferenzController(konf);
 		}
 		return ctrl.getView();
 	}

@@ -4,16 +4,16 @@ import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.abstr_and_interf.AbstractEditViewController;
 import de.geihe.epk_orm.pojo.Note;
-import de.geihe.epk_orm.view.EpkNoteEinzelView;
+import de.geihe.epk_orm.view.NoteView;
 
-public class EpkNotenEinzelController extends AbstractEditViewController<EpkNoteEinzelView> {
+public class NoteController extends AbstractEditViewController<NoteView> {
 
 	private Note note;
 
-	public EpkNotenEinzelController(Note note) {
+	public NoteController(Note note) {
 		super();
 		this.note = note;
-		setView(new EpkNoteEinzelView(this));
+		setView(new NoteView(this));
 	}
 
 	public String getFachString() {

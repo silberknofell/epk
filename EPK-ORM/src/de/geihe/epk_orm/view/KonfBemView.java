@@ -1,7 +1,7 @@
 package de.geihe.epk_orm.view;
 
 import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.controller.KonfBemEinzelController;
+import de.geihe.epk_orm.controller.KonfBemController;
 import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 import de.geihe.epk_orm.view.abstr_and_interf.EditView;
 import javafx.application.Platform;
@@ -13,14 +13,14 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class KonfBemEinzelView extends AbstractControlledView<KonfBemEinzelController>implements EditView {
+public class KonfBemView extends AbstractControlledView<KonfBemController>implements EditView {
 
 	private ScrollFreetextArea textField;
 	private HBox box;
 	private static final String STRONG = "strong";
 	private HoverLabel lblEnter = null;
 
-	public KonfBemEinzelView(KonfBemEinzelController controller) {
+	public KonfBemView(KonfBemController controller) {
 		super(controller);
 		box = new HBox(3);
 		update();

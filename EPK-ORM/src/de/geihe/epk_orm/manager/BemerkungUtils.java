@@ -6,7 +6,7 @@ import java.util.List;
 import org.controlsfx.control.Notifications;
 
 import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.controller.EpkBemEinzelController;
+import de.geihe.epk_orm.controller.BemController;
 import de.geihe.epk_orm.controller.EpkController;
 import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.Lehrer;
@@ -45,9 +45,9 @@ public class BemerkungUtils {
 		return bem;
 	}
 
-	public static EpkBemEinzelController createLeereBemerkungController(EpkController epkController) {
+	public static BemController createLeereBemerkungController(EpkController epkController) {
 		Bemerkung leereBem = leereBemerkung(R.State.sos, R.State.epk.getId());
-		EpkBemEinzelController contr = new EpkBemEinzelController(leereBem, epkController);
+		BemController contr = new BemController(leereBem, epkController);
 		contr.setNeu();
 		return contr;
 	}

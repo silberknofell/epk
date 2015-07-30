@@ -6,13 +6,13 @@ import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
 import de.geihe.epk_orm.pojo.Konferenz;
 import javafx.scene.Node;
 
-public class EpkKonferenzController extends EditWebController<Konferenz> {
+public class KonferenzController extends EditWebController<Konferenz> {
 
-	public EpkKonferenzController(Konferenz element) {
+	public KonferenzController(Konferenz element) {
 		super(element);
 	}
 
-	public EpkKonferenzController(int epk_id) {
+	public KonferenzController(int epk_id) {
 		this(Konferenz.neueKonferenz(R.State.sos, epk_id));
 		setNeu();
 	}

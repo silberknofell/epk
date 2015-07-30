@@ -6,15 +6,15 @@ import de.geihe.epk_orm.controller.abstr_and_interf.AbstractEditViewController;
 import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.KonfBem;
 import de.geihe.epk_orm.pojo.Sos;
-import de.geihe.epk_orm.view.KonfBemEinzelView;
+import de.geihe.epk_orm.view.KonfBemView;
 
-public class KonfBemEinzelController extends AbstractEditViewController<KonfBemEinzelView> {
+public class KonfBemController extends AbstractEditViewController<KonfBemView> {
 
 	private KonfBem konfBem;
 	private EpkController epkCtrl;
 	private boolean editierbar;
 
-	public KonfBemEinzelController(Sos sos, int epk_id, EpkController epkController) {
+	public KonfBemController(Sos sos, int epk_id, EpkController epkController) {
 		super();
 		KonfBem leereKonfBem = new KonfBem();
 		
@@ -26,16 +26,16 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 		this.editierbar = true;
 
 
-		setView(new KonfBemEinzelView(this));				
+		setView(new KonfBemView(this));				
 		setNeu();
 	}
 	
-	public KonfBemEinzelController(KonfBem konfBem, EpkController epkCtrl) {
+	public KonfBemController(KonfBem konfBem, EpkController epkCtrl) {
 		super();
 		this.konfBem = konfBem;
 		this.epkCtrl = epkCtrl;
 		this.editierbar = false;
-		setView(new KonfBemEinzelView(this));
+		setView(new KonfBemView(this));
 	}
 
 	public void setEditierbar() {

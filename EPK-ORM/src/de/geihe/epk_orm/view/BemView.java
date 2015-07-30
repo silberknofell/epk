@@ -2,7 +2,7 @@ package de.geihe.epk_orm.view;
 
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.controller.EpkBemEinzelController;
+import de.geihe.epk_orm.controller.BemController;
 import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 import de.geihe.epk_orm.view.abstr_and_interf.EditView;
 import javafx.animation.ScaleTransition;
@@ -19,7 +19,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-public class EpkBemEinzelView extends AbstractControlledView<EpkBemEinzelController> implements EditView {
+public class BemView extends AbstractControlledView<BemController> implements EditView {
 
 	private static final String AKTUELL_IST_UNTERZEICHNER = "aktuell-ist-unterzeichner";
 	private static final String NEU_UNTERSCHRIEBEN = "neu-unterschrieben";
@@ -37,7 +37,7 @@ public class EpkBemEinzelView extends AbstractControlledView<EpkBemEinzelControl
 	private HoverLabel lblEnter;
 	private Label lblUnterschriften;
 
-	public EpkBemEinzelView(EpkBemEinzelController controller) {
+	public BemView(BemController controller) {
 		super(controller);
 		box = new HBox(4);
 		box.getStyleClass().add(BEM_EINZEL);

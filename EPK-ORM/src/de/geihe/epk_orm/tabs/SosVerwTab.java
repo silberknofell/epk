@@ -2,7 +2,7 @@ package de.geihe.epk_orm.tabs;
 
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
-import de.geihe.epk_orm.controller.EpkGutachtenController;
+import de.geihe.epk_orm.controller.GutachtenController;
 import de.geihe.epk_orm.controller.SosVerwController;
 import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
 import de.geihe.epk_orm.pojo.Klasse;
@@ -131,7 +131,7 @@ public class SosVerwTab extends Tab {
 		if (sos == null) {
 			return;
 		}
-		EditWebController<Sos> gutachtenController = new EpkGutachtenController(sos);
+		EditWebController<Sos> gutachtenController = new GutachtenController(sos);
 		WebView gaNode = gutachtenController.getView().getNode();
 		gaNode.setPrefHeight(400);
 		gridPane.add(gaNode, 1, 2);

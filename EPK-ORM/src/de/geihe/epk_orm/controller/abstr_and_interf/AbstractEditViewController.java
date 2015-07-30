@@ -44,6 +44,8 @@ public abstract class AbstractEditViewController<V extends EditView> extends Abs
 
 	@Override
 	public void writeToDB() {
+		
+		
 		if (changed) {
 			String text = getView().getText().trim();
 			boolean leer = text.isEmpty();

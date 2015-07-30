@@ -1,13 +1,13 @@
 package de.geihe.epk_orm.view;
 
-import de.geihe.epk_orm.controller.EpkNotenEinzelController;
+import de.geihe.epk_orm.controller.NoteController;
 import de.geihe.epk_orm.view.abstr_and_interf.AbstractControlledView;
 import de.geihe.epk_orm.view.abstr_and_interf.EditView;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class EpkNoteEinzelView extends AbstractControlledView<EpkNotenEinzelController>implements EditView {
+public class NoteView extends AbstractControlledView<NoteController>implements EditView {
 
 	private static final String NOTE_SCHLECHT = "note-schlecht";
 	private static final String NOTE_GUT = "note-gut";
@@ -16,7 +16,7 @@ public class EpkNoteEinzelView extends AbstractControlledView<EpkNotenEinzelCont
 	Label lblFach;
 	Label lblNote;
 
-	public EpkNoteEinzelView(EpkNotenEinzelController controller) {
+	public NoteView(NoteController controller) {
 		super(controller);
 
 		box = new VBox(2);
