@@ -187,11 +187,9 @@ public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEin
 	}
 
 	public void updateInDBAdmin() {
-		System.out.println("de.geihe.epk_orm.controller.EpkBemEinzelController.updateInDBAdmin()");
 		List<Lehrer> lehrerListe;
 		lehrerListe = bem.getUnterzeichner();
 		String neuText = getView().getText();
-		System.out.println(neuText);
 		int epk_id = bem.getEpk_id();
 		delete();
 		if (neuText.trim().isEmpty()) {
@@ -253,5 +251,4 @@ public class EpkBemEinzelController extends AbstractEditViewController<EpkBemEin
 		insertInDbAdmin(lehrerListe, teil2, epk_id);
 
 	}
-
 }

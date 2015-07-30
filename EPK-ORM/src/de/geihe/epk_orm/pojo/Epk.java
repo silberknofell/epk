@@ -79,7 +79,7 @@ public class Epk extends EntityMitArchiv {
 
 	public String toLangString() {
 		return    klassenstring 
-				+ "  EPK " + getNr()
+				+ "  EPK " + getNrString()
 				+ " (" + EPKBEZ[nr] + ")  ---  " 
 				+ getDatum();
 	}

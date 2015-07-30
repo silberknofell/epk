@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
-import com.j256.ormlite.support.GeneratedKeyHolder;
-
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.EpkController;
@@ -17,23 +15,17 @@ import de.geihe.epk_orm.controller.KonfBemEinzelController;
 import de.geihe.epk_orm.controller.abstr_and_interf.EditWebController;
 import de.geihe.epk_orm.manager.EpkBoxManager;
 import de.geihe.epk_orm.manager.EpkGruppenManager;
-import de.geihe.epk_orm.pojo.KonfBem;
 import de.geihe.epk_orm.pojo.Sos;
 import de.geihe.epk_orm.view.EditWebView;
 import de.geihe.epk_orm.view.KonfBemEinzelView;
-import de.geihe.epk_orm.view.KonferenzView;
-import de.geihe.epk_orm.view.abstr_and_interf.View;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.scene.web.WebView;
 
 public class BemsTab extends Tab {
 
@@ -70,6 +62,7 @@ public class BemsTab extends Tab {
 		sp.setDividerPositions(0.7f);
 		scrollPane = new ScrollPane(sp);
 		scrollPane.setFitToWidth(true);
+		scrollPane.setFitToHeight(true);
 
 		R.State.bemerkungUndKonferenzTab = this;
 	}
@@ -124,6 +117,7 @@ public class BemsTab extends Tab {
 
 	public void buildKonferenzSpalte() {
 		box2.getChildren().clear();
+		box2.setPrefHeight(Double.MAX_VALUE);
 		pinnedBox = new VBox(3);
 		pinnedBox.getStyleClass().add(PINNED_BOX);
 		box2.getChildren().add(pinnedBox);
@@ -133,7 +127,7 @@ public class BemsTab extends Tab {
 			konferenzBox.getStyleClass().add(KONFERENZ_BOX);
 
 			Boolean hatKonferenzText = ctrl.hatKonferenzText();
-			Boolean konfBemVorhanden = ctrl.konfBemVorhanden();
+			Boolean konfBemVorhanden = ctrl.konfBemVorhanden() || ctrl.isAktuelleEpk();
 
 			if (hatKonferenzText || konfBemVorhanden) {
 				konferenzBox.getChildren().add(buildTitel(ctrl));
@@ -172,9 +166,22 @@ public class BemsTab extends Tab {
 			} else {
 				node.getStyleClass().add(KONF_BEM);
 				konfBemBox.getChildren().add(node);
-			}
+			}			
 		}
+		
+		if ((R.mode == Mode.KONFERENZ || R.mode == Mode.ADMIN ) && ctrl.isAktuelleEpk()) {
+			addLeereKonfBem(ctrl, konfBemBox);
+		}
+		
 		return konfBemBox;
+	}
+
+	public void addLeereKonfBem(EpkController ctrl, VBox konfBemBox) {
+		KonfBemEinzelController konfBemCtrl 
+			= new KonfBemEinzelController(sos , ctrl.getEpk_id(), ctrl);
+		Node node = konfBemCtrl.getView().getNode();
+		node.getStyleClass().add(KONF_BEM);
+		konfBemBox.getChildren().add(node);
 	}
 
 	public Node buildTitel(EpkController ctrl) {

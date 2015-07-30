@@ -3,7 +3,9 @@ package de.geihe.epk_orm.controller;
 import de.geihe.epk_orm.Mode;
 import de.geihe.epk_orm.R;
 import de.geihe.epk_orm.controller.abstr_and_interf.AbstractEditViewController;
+import de.geihe.epk_orm.pojo.Bemerkung;
 import de.geihe.epk_orm.pojo.KonfBem;
+import de.geihe.epk_orm.pojo.Sos;
 import de.geihe.epk_orm.view.KonfBemEinzelView;
 
 public class KonfBemEinzelController extends AbstractEditViewController<KonfBemEinzelView> {
@@ -12,6 +14,22 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 	private EpkController epkCtrl;
 	private boolean editierbar;
 
+	public KonfBemEinzelController(Sos sos, int epk_id, EpkController epkController) {
+		super();
+		KonfBem leereKonfBem = new KonfBem();
+		
+		leereKonfBem.setSos(sos);
+		leereKonfBem.setEpk_id(epk_id);
+		
+		this.konfBem = leereKonfBem;
+		this.epkCtrl = epkController;
+		this.editierbar = true;
+
+
+		setView(new KonfBemEinzelView(this));				
+		setNeu();
+	}
+	
 	public KonfBemEinzelController(KonfBem konfBem, EpkController epkCtrl) {
 		super();
 		this.konfBem = konfBem;
@@ -59,20 +77,28 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 
 	@Override
 	protected void insertInDB() {
+		konfBem.setText(getView().getText().trim());		
+		R.DB.konfBemerkungDao.create(konfBem);
 
+		R.State.bemerkungUndKonferenzTab.update();
 	}
 
 	@Override
 	protected void updateInDB() {
-		if (isEditierbar()) {
-			konfBem.setText(getView().getText());
-		}
-		R.DB.konfBemerkungDao.update(konfBem);
+		String text = getView().getText().trim();
+		boolean leer = text.isEmpty();
+		if (leer) {
+			R.DB.konfBemerkungDao.delete(konfBem);
+		} else if (isEditierbar()) {
+			konfBem.setText(getView().getText().trim());
+			R.DB.konfBemerkungDao.update(konfBem);			
+		}		
+
 	}
 
 	public String getText() {
 		if (konfBem.isPinned()) {
-			return "EPK: " + konfBem.getText();
+			return epkCtrl.getEpkKurztitel() + ": " +  konfBem.getText();
 		} else {
 			return konfBem.getText();
 		}
@@ -116,8 +142,11 @@ public class KonfBemEinzelController extends AbstractEditViewController<KonfBemE
 
 	public void okClicked() {
 		writeToDB();
-		setReadOnly();
-		setNeuUndChangedFalse();
-		getView().update();
+	}
+	@Override
+	public void writeToDB() {
+		super.writeToDB();
+		R.State.bemerkungUndKonferenzTab.update();
+		//TODO : Views differenzierter updaten
 	}
 }

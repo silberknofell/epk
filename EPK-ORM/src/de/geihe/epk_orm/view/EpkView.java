@@ -122,12 +122,12 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	}
 
 	public void hidePopOver() {
-		System.out.println("hidePopup");
+//		System.out.println("hidePopup");
 		epkPopOver.hide(new Duration(300));
 	}
 
 	public void showPopOver() {
-		System.out.println("showPopup");
+//		System.out.println("showPopup");
 		epkPopOver.show(getNode());
 	}
 

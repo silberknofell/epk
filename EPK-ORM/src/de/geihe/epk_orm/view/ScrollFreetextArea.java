@@ -9,8 +9,8 @@ public class ScrollFreetextArea extends TextArea {
 	private double oldHeight = 0;
 
 	public ScrollFreetextArea() {
-		setPrefSize(200, 25);
-		setMinSize(50, 10);
+		setPrefSize(200, 27);
+		setMinSize(50, 27);
 		setWrapText(true);
 
 		textHolder = new Text();

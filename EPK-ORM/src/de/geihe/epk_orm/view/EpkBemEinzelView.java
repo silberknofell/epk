@@ -201,5 +201,4 @@ public class EpkBemEinzelView extends AbstractControlledView<EpkBemEinzelControl
 	public String getText() {
 		return textField.getText().trim();
 	}
-
 }

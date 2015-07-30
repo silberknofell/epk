@@ -93,11 +93,15 @@ public class KonfBemEinzelView extends AbstractControlledView<KonfBemEinzelContr
 	private Node getReadOnlyTextBox() {
 		Text text = new Text(getController().getText());
 		text.prefWidth(Double.MAX_VALUE);
+		TextFlow tf = new TextFlow(text);
+		tf.setOnMouseClicked(e -> getController().setEditierbar());
 		if (getController().isStrong()) {
 			text.getStyleClass().add(STRONG);
 		}
-		TextFlow tf = new TextFlow(text);
-		tf.setOnMouseClicked(e -> getController().setEditierbar());
+		if (getController().ggfEditierbar()) {
+			tf.getStyleClass().add("editierbar");
+		}
+
 		return tf;
 	}
 

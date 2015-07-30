@@ -99,7 +99,6 @@ public class EpkController extends AbstractController<EpkView> {
 		ObservableList<String> v = node.getStyleClass();
 		v.remove(alt);
 		v.add(neu);
-		System.out.println(v);
 	}
 
 	private void setRahmenSichtbar(Node node) {
@@ -155,7 +154,7 @@ public class EpkController extends AbstractController<EpkView> {
 	}
 
 	public String getInactiveNodeText() {
-		return "EPK " + epk.getNrString();
+		return epk.getNrString();
 	}
 
 	public List<KonfBemEinzelView> getKonfBemViewList() {
@@ -165,18 +164,13 @@ public class EpkController extends AbstractController<EpkView> {
 			KonfBemEinzelController contr = new KonfBemEinzelController(konfBem, this);
 			list.add(contr.getView());
 		}
-		if ((R.mode == Mode.EINGABE) && isAktuelleEpk) {
-			// addLeereBemerkung(list);
-		}
+
 		return list;
 	}
 
 	public View getKonferenzView() {
 		Konferenz konf = epkGgruppenManager.getKonferenz(epk_id);
 		EpkKonferenzController ctrl;
-
-		System.out.println("EpkController.getKonferenzView");
-		System.out.println(konf == null ? konf : konf.getId());
 
 		if ((konf == null) || (konf.getId() == 0)) {
 			ctrl = new EpkKonferenzController(getEpk_id());

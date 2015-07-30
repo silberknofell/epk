@@ -66,9 +66,7 @@ public class EditWebView extends AbstractControlledView<EditWebController>implem
 	@Override
 	public String getText() {
 		String html = getController().getHTML();
-		System.out.println(html);
 		String text = HtmlPage.getPlainText(html);
-		System.out.println(text);
 		return text.trim();		
 	}
 	
