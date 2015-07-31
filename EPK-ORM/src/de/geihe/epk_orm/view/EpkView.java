@@ -4,6 +4,7 @@ import org.controlsfx.control.PopOver;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
 import de.geihe.epk_orm.R;
+import de.geihe.epk_orm.Util;
 import de.geihe.epk_orm.controller.EpkController;
 import de.geihe.epk_orm.controller.NoteController;
 import de.geihe.epk_orm.pojo.Bemerkung;
@@ -24,11 +25,12 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	private static final String EPKBOX_POPOVER = "epkbox-popover";
 	private static final String ACTIVE = "active";
 	private static final String INACTIVE = "inactive";
+	private static final String MINI = "mini";
 
 	private HBox notenZeile;
 	private VBox bemsBox;
 	private VBox activeNode;
-	private Node inactiveNode;
+	private Node miniNode;
 	private PopOver epkPopOver;
 	private HBox titelZeile;
 
@@ -54,7 +56,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 
 	private void createActiveNode() {
 		titelZeile = new HBox();
-		titelZeile.getStyleClass().addAll(EPKBOX_TITEL, ACTIVE, getController().getClassAktuell());
+		titelZeile.getStyleClass().addAll(EPKBOX_TITEL, getController().getClassAktuell());
 		if (!getController().isAktuelleEpk()) {
 			titelZeile.setOnMouseClicked(e -> click());
 		}
@@ -75,12 +77,13 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	private void createInactiveNode() {
 
 		Button button = new Button(getController().getInactiveNodeText());
-		button.getStyleClass().addAll(EPKBOX_TITEL, INACTIVE, getController().getClassAktuell());
-
-		inactiveNode = button;
-		inactiveNode.setOnMouseEntered(e -> showPopOver());
-		inactiveNode.setOnMouseExited(e -> hidePopOver());
-		inactiveNode.setOnMouseClicked(e -> click());
+		button.getStyleClass().addAll(EPKBOX_TITEL, MINI, getController().getClassAktuell());
+		miniNode = button;
+		if (!getController().isAktuelleEpk()) {
+			miniNode.setOnMouseMoved(e -> showPopOver());
+			miniNode.setOnMouseExited(e -> hidePopOver());
+			miniNode.setOnMouseClicked(e -> click());
+		}
 	}
 
 	private void createPopOver() {
@@ -93,13 +96,13 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		return activeNode;
 	}
 
-	public Node getInactiveNode() {
-		return inactiveNode;
+	public Node getMiniNode() {
+		return miniNode;
 	}
 
 	@Override
 	public Node getNode() {
-		return getController().isActive() ? activeNode : inactiveNode;
+		return getController().isActive() ? activeNode : miniNode;
 	}
 
 	private Node getPopOverNode() {
@@ -118,17 +121,18 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		Text text = new Text(sb.toString());
 		text.setFont(new Font(14));
 		box.getChildren().addAll(header, text);
+		box.setMouseTransparent(true);
 		return box;
 	}
 
 	public void hidePopOver() {
-//		System.out.println("hidePopup");
+		// System.out.println("hidePopup");
 		epkPopOver.hide(new Duration(300));
 	}
 
 	public void showPopOver() {
-//		System.out.println("showPopup");
-		epkPopOver.show(getNode());
+		// System.out.println("showPopup");
+		epkPopOver.show(miniNode);
 	}
 
 	@Override
@@ -136,6 +140,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		updateTitelZeile();
 		updateNotenZeile();
 		updateBemBox();
+		updateActiveClass();
 		R.State.setzeFocus();
 	}
 
@@ -157,5 +162,22 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		titelZeile.getChildren().clear();
 		Text text = new Text(getController().getEpkString());
 		titelZeile.getChildren().add(text);
+	}
+
+	public void updateActiveClass() {
+		if (getController().isActive()) {
+			setMiniClassInactive();
+		} else {
+			setMiniClassActive();
+		}
+
+	}
+
+	private void setMiniClassActive() {
+		Util.changeCssClass(miniNode, INACTIVE, ACTIVE);
+	}
+
+	private void setMiniClassInactive() {
+		Util.changeCssClass(miniNode, ACTIVE, INACTIVE);
 	}
 }

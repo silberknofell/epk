@@ -70,9 +70,8 @@ public class EpkBoxManager {
 			Node node = ctrl.getView().getNode();
 			if (ctrl.isActive()) {
 				activeBox.getChildren().add(node);
-			} else {
+			} 
 				inactiveBox.getChildren().add(node);
-			}
 		}
 	}
 
@@ -86,36 +85,12 @@ public class EpkBoxManager {
 
 	public void update(EpkController epkController) {
 		Node activeNode = epkController.getView().getActiveNode();
-		Node inactiveNode = epkController.getView().getInactiveNode();
-		final Duration DURATION = Duration.millis(400);
-		ScaleTransition sthide;
-		ScaleTransition stshow;
 
 		if (epkController.isActive() && !activeBox.getChildren().contains(activeNode)) {
-			sthide = new ScaleTransition(DURATION, inactiveNode);
-			sthide.setFromY(1.0);
-			sthide.setToY(0.0);
-			sthide.setOnFinished(e -> inactiveBox.getChildren().remove(inactiveNode));
-			sthide.play();
-
 			activeBox.getChildren().add(getPosition(epkController), activeNode);
-			stshow = new ScaleTransition(DURATION, activeNode);
-			stshow.setFromY(0.0);
-			stshow.setToY(1.0);
-			stshow.play();
 		}
-		if (!epkController.isActive() && !inactiveBox.getChildren().contains(inactiveNode)) {
-			sthide = new ScaleTransition(DURATION, activeNode);
-			sthide.setFromY(1.0);
-			sthide.setToY(0.0);
-			sthide.setOnFinished(e -> activeBox.getChildren().remove(activeNode));
-			sthide.play();
-
-			inactiveBox.getChildren().add(getPosition(epkController), inactiveNode);
-			stshow = new ScaleTransition(DURATION, inactiveNode);
-			stshow.setFromY(0.0);
-			stshow.setToY(1.0);
-			stshow.play();
+		if (!epkController.isActive() && activeBox.getChildren().contains(activeNode)) {
+			activeBox.getChildren().remove(activeNode);
 		}
 	}
 

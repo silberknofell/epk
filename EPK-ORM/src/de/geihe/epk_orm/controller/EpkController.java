@@ -1,5 +1,6 @@
 package de.geihe.epk_orm.controller;
 
+import java.awt.Event;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -71,7 +72,7 @@ public class EpkController extends AbstractController<EpkView> {
 		setView(view);
 		
 		addNode(view.getActiveNode());
-		addNode(view.getInactiveNode());
+		addNode(view.getMiniNode());
 		
 		mouseExited();
 	}
@@ -86,8 +87,8 @@ public class EpkController extends AbstractController<EpkView> {
 	
 	public void addNode(Node node) {
 		nodeSet.add(node);
-		node.setOnMouseEntered(e -> mouseEntered());
-		node.setOnMouseExited(e -> mouseExited());
+		node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> mouseEntered());
+		node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> mouseExited());
 		setRahmenUnsichtbar(node);
 	}
 	
@@ -207,6 +208,7 @@ public class EpkController extends AbstractController<EpkView> {
 		if (this.active == active)
 			return;
 		this.active = active;
+		getView().updateActiveClass();
 		boxManager.update(this);
 	}
 
