@@ -80,7 +80,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		button.getStyleClass().addAll(EPKBOX_TITEL, MINI, getController().getClassAktuell());
 		miniNode = button;
 		if (!getController().isAktuelleEpk()) {
-			miniNode.setOnMouseMoved(e -> showPopOver());
+			miniNode.setOnMouseEntered(e -> showPopOver());
 			miniNode.setOnMouseExited(e -> hidePopOver());
 			miniNode.setOnMouseClicked(e -> click());
 		}
@@ -88,7 +88,7 @@ public class EpkView extends AbstractControlledView<EpkController> {
 
 	private void createPopOver() {
 		epkPopOver = new PopOver(getPopOverNode());
-		epkPopOver.setArrowLocation(ArrowLocation.LEFT_CENTER);
+		epkPopOver.setArrowLocation(ArrowLocation.BOTTOM_LEFT);
 		epkPopOver.setDetachable(false);
 	}
 
@@ -113,6 +113,23 @@ public class EpkView extends AbstractControlledView<EpkController> {
 		header.setFont(new Font(18));
 
 		StringBuilder sb = new StringBuilder();
+		boolean firstNote = true;
+		for (Note note : getController().getNoten()) {
+
+			if (note.hatEintrag()) {
+				NoteController notenCtrl = new NoteController(note);
+				if (firstNote) {
+					firstNote = false;
+				} else {
+					sb.append(" / ");
+				}
+				sb.append(notenCtrl.getFachString());
+				sb.append(": ");
+				sb.append(notenCtrl.getNoteString());
+			}
+
+		}
+		sb.append("\n");
 		for (Bemerkung bem : getController().getBemerkungen()) {
 			sb.append(bem.toString());
 			sb.append("\n");
@@ -131,8 +148,9 @@ public class EpkView extends AbstractControlledView<EpkController> {
 	}
 
 	public void showPopOver() {
-		// System.out.println("showPopup");
-		epkPopOver.show(miniNode);
+		if (getController().isActive() == false) {
+			epkPopOver.show(miniNode, -20);
+		}
 	}
 
 	@Override
