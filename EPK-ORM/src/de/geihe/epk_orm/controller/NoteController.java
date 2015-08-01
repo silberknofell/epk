@@ -60,6 +60,5 @@ public class NoteController extends AbstractEditViewController<NoteView> {
 	protected void updateInDB() {
 		// TODO Auto-generated method stub
 
-	}
-
+	}	
 }

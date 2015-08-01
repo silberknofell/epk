@@ -114,11 +114,11 @@ public class KonfBemController extends AbstractEditViewController<KonfBemView> {
 
 	public boolean isStrongable() {
 		boolean s = (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ);
-		return s && !isPinned();
+		return s && !isPinned() && (! isEditierbar());
 	}
 
 	public boolean isPinnable() {
-		return (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ);
+		return (R.mode == Mode.ADMIN || R.mode == Mode.KONFERENZ) && (! isEditierbar());
 	}
 
 	public boolean isOKbar() {

@@ -78,10 +78,12 @@ public class EpkController extends AbstractController<EpkView> {
 	}
 	
 	public void mouseEntered() {
+		getView().showPopOver();
 		nodeSet.stream().forEach((node) -> setRahmenSichtbar(node));
 	}
 
 	public void mouseExited() {
+		getView().hidePopOver();
 		nodeSet.stream().forEach((node) -> setRahmenUnsichtbar(node));		
 	}
 	

@@ -99,7 +99,7 @@ public class KonfBemView extends AbstractControlledView<KonfBemController>implem
 			text.getStyleClass().add(STRONG);
 		}
 		if (getController().ggfEditierbar()) {
-			tf.getStyleClass().add("editierbar");
+			box.getStyleClass().add("editierbar");
 		}
 
 		return tf;
