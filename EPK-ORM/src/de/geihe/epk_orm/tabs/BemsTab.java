@@ -37,7 +37,6 @@ public class BemsTab extends Tab {
 	private static final String EPKBOX_TITEL = "epkbox-titel";
 	private static final String KONFERENZ = "konferenz";
 	private static final String KONFERENZSPALTE = "konferenzspalte";
-	private static final String GUTACHTEN_POPOVER = "gutachten-popover";
 	private static final String KONFERENZ_BOX = "konferenz-box";
 
 	private VBox box1;
@@ -105,7 +104,6 @@ public class BemsTab extends Tab {
 		tpGutachten = new TitledPane("Grundschulgutachten", gaNode);
 
 		Node gaPopOverNode = gutachtenController.getView().getPopOverNode();
-		gaPopOverNode.getStyleClass().add(GUTACHTEN_POPOVER);
 		PopOver gaPopOver = new PopOver(gaPopOverNode);
 		gaPopOver.setArrowLocation(ArrowLocation.LEFT_CENTER);
 		tpGutachten.setOnMouseEntered(e -> gaPopOver.show(tpGutachten));
