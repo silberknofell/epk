@@ -128,6 +128,7 @@ public class KonfBemController extends AbstractEditViewController<KonfBemView> {
 	public void strongClicked() {
 		Boolean strong = konfBem.isStrong();
 		konfBem.setStrong(!strong);
+		hasChanged();
 		updateInDB();
 		getView().update();
 	}
@@ -136,6 +137,7 @@ public class KonfBemController extends AbstractEditViewController<KonfBemView> {
 		Boolean pinned = konfBem.isPinned();
 		konfBem.setPinned(!pinned);
 		konfBem.setStrong(true);
+		hasChanged();
 		updateInDB();
 		R.State.bemerkungUndKonferenzTab.buildKonferenzSpalte();
 	}

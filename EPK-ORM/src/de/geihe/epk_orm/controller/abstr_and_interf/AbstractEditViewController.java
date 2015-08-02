@@ -36,7 +36,7 @@ public abstract class AbstractEditViewController<V extends EditView> extends Abs
 	}
 
 	@Override
-	public void textChanged() {
+	public void hasChanged() {
 		changed = true;
 	}
 

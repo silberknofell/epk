@@ -8,12 +8,15 @@ import de.geihe.epk_orm.view.abstr_and_interf.EditView;
 import javafx.application.Platform;
 import javafx.concurrent.Worker.State;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class EditWebView extends AbstractControlledView<EditWebController>implements EditView {
+	private static final String GUTACHTEN_POPOVER = "gutachten-popover";
 	private WebView webView;
 	private int prefHeight=100;
 
@@ -57,11 +60,6 @@ public class EditWebView extends AbstractControlledView<EditWebController>implem
 	public void setText(String text) {
 		webView.getEngine().loadContent(text);		
 	}
-	
-//	public void setJSColor(String color) {
-//		String js = "document.body.style.backgroundColor = 'red'";
-//		Platform.runLater(() -> webView.getEngine().executeScript(js));
-//	}
 
 	@Override
 	public String getText() {
@@ -69,8 +67,7 @@ public class EditWebView extends AbstractControlledView<EditWebController>implem
 		String text = HtmlPage.getPlainText(html);
 		return text.trim();		
 	}
-	
-	
+		
 	public Node getTextNode() {
 		Text text = new Text(getText());
 		return text;
@@ -86,12 +83,9 @@ public class EditWebView extends AbstractControlledView<EditWebController>implem
 	}
 	
 	public Node getPopOverNode() {
-		return getTextNode();
-//		WebView popOverNode = new WebView();
-//		popOverNode.setPrefHeight(300);
-//		popOverNode.getEngine().loadContent(getController().getHTML());
-//		return popOverNode;
-		
+		VBox pane = new VBox();
+		pane.getStyleClass().add(GUTACHTEN_POPOVER);
+		pane.getChildren().add(getTextNode());
+		return pane;
 	}
-
 }

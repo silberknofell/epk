@@ -80,7 +80,7 @@ public class BemView extends AbstractControlledView<BemController> implements Ed
 		}
 		;
 
-		textField.textProperty().addListener((obs, alt, neu) -> getController().textChanged());
+		textField.textProperty().addListener((obs, alt, neu) -> getController().hasChanged());
 		textField.focusedProperty().addListener((obs, alt, neu) -> focusChanged(neu));
 		textField.setOnKeyPressed((e) -> keyTyped(e));
 

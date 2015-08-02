@@ -93,6 +93,7 @@
 }
 
 .gutachten-popover {
+	-fx-background-color: lightblue ;
 	-fx-padding: 10.0px;
 }
 
@@ -104,7 +105,7 @@
 }
 
 .epkbox-titel.alt {
-	-fx-background-color: cadetBlue;	
+	-fx-background-color: lightsteelblue;	
 }
 
 .epkbox-titel.aktuell {
@@ -120,14 +121,14 @@
 }
 
 .epkbox-popover.alt {
-	-fx-background-color: #90eff2;	
+	-fx-background-color: lightsteelblue ;
 }
 .epkbox-popover.aktuell {
 	-fx-background-color: #bcf7bc;	
 }
 
 .epkbox-notenzeile {
-	-fx-background-color: rgb(219.0,217.0,242.0);
+	-fx-background-color: thistle ;
 	-fx-background-radius: 5.0;
 	-fx-background-insets: 0.0 0.0 5.0 0.0;
 	-fx-padding: 8.0 2.0 5.0 8.0;

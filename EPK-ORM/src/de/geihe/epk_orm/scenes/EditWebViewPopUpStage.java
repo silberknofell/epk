@@ -90,7 +90,7 @@ public class EditWebViewPopUpStage extends Stage {
 	private void saveClicked() {
 		String text = editor.getHtmlText().trim();
 		controller.setHTML(text);
-		controller.textChanged();
+		controller.hasChanged();
 		controller.writeToDB();
 		close();
 	}

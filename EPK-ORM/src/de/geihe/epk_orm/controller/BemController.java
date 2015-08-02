@@ -63,9 +63,9 @@ public class BemController extends AbstractEditViewController<BemView> {
 		if (!bem.isAlt()) {
 			ttText = bem.getZeitString();
 		}
-		if (bem.getText().length() > 80) {
-			ttText = bem.getText() + "\n" + ttText;
-		}
+//		if (bem.getText().length() > 80) {
+//			ttText = bem.getText() + "\n" + ttText;
+//		}
 		return new Tooltip(ttText);
 	}
 
@@ -150,8 +150,8 @@ public class BemController extends AbstractEditViewController<BemView> {
 	}
 
 	@Override
-	public void textChanged() {
-		super.textChanged();
+	public void hasChanged() {
+		super.hasChanged();
 		getView().addEnterLabel();
 		if (!laengeGewarnt) {
 			int laenge = getView().getText().length();

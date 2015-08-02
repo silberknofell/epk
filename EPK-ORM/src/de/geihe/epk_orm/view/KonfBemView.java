@@ -91,6 +91,7 @@ public class KonfBemView extends AbstractControlledView<KonfBemController>implem
 	}
 
 	private Node getReadOnlyTextBox() {
+		textField = null;
 		Text text = new Text(getController().getText());
 		text.prefWidth(Double.MAX_VALUE);
 		TextFlow tf = new TextFlow(text);
@@ -110,7 +111,7 @@ public class KonfBemView extends AbstractControlledView<KonfBemController>implem
 		textField.setTextAndHeight(getController().getText());
 		textField.setEditable(true);
 
-		textField.textProperty().addListener((obs, alt, neu) -> getController().textChanged());
+		textField.textProperty().addListener((obs, alt, neu) -> getController().hasChanged());
 		textField.focusedProperty().addListener((obs, alt, neu) -> focusChanged(neu));
 		textField.setOnKeyPressed((e) -> keyTyped(e));
 		return textField;
@@ -141,7 +142,7 @@ public class KonfBemView extends AbstractControlledView<KonfBemController>implem
 	@Override
 	public String getText() {
 		if (textField == null) {
-			return "";
+			return getController().getText();
 		} else {
 			return textField.getText();
 		}
